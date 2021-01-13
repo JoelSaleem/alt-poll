@@ -29,5 +29,17 @@ spec:
       containers:
         - name: auth
           image: jsaleem/alt-poll-auth:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef: 
+                  name: google-client
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef: 
+                  name: google-client
+                  key: GOOGLE_CLIENT_SECRET
