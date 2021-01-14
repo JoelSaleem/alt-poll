@@ -6,8 +6,13 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 });
 
 export const logger = createLogger({
-  level: "info",
+  levels: {
+    error: 0,
+    warn: 1,
+    info: 2,
+    debug: 3,
+  },
   format: combine(label({ label: "auth" }), timestamp(), myFormat),
   defaultMeta: { service: "auth" },
-  transports: [new transports.Console()]
+  transports: [new transports.Console()],
 });
