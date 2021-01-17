@@ -1,15 +1,13 @@
 import { Express } from "express";
-import jwt from "jsonwebtoken";
 import passport from "passport";
 
-export const googleAuth = (app: Express) => {
+export const initAuthRoutes = (app: Express) => {
   app.get(
     "/auth/google",
     passport.authenticate("google", {
       scope: ["https://www.googleapis.com/auth/plus.login"],
     }),
     (req, res) => {
-      console.log("success");
       res.send({});
     }
   );
@@ -18,7 +16,6 @@ export const googleAuth = (app: Express) => {
     "/auth/callback",
     passport.authenticate("google", { failureRedirect: "/auth/failed" }),
     (req, res) => {
-      console.log("success");
       res.redirect("/");
     }
   );
@@ -31,5 +28,9 @@ export const googleAuth = (app: Express) => {
 
   app.get("/auth/failed", (req, res) => {
     res.send("failed");
+  });
+
+  app.get("/auth/current_user", (req, res) => {
+    res.send(req.user);
   });
 };

@@ -1,6 +1,6 @@
 import passport from "passport";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
-import { query } from "./db";
+import { createUser, getUserByGoogleId, getUserById } from "./db/util";
 import { logger } from "./logger";
 import { User } from "./types/User";
 
@@ -18,24 +18,18 @@ if (!process.env.JWT_SECRET) {
 }
 
 passport.serializeUser((user, done) => {
-  console.log("serialise user", user);
-  done(null, (user as User[])?.[0].id);
+  done(null, (user as User).id);
 });
 
 passport.deserializeUser(async (id: string, done) => {
-  const lookupUser = `
-        SELECT * FROM "Users"
-        WHERE id = $1
-        LIMIT 1
-      `;
   let err = null;
   let user: User | undefined;
+
   try {
-    user = (await query(lookupUser, [id]))?.[0];
+    user = await getUserById(id);
   } catch (e) {
     err = e;
   }
-  console.log("deserialize", user);
 
   done(err, user);
 });
@@ -45,7 +39,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID.trim(),
       clientSecret: process.env.GOOGLE_CLIENT_SECRET.trim(),
-      callbackURL: "http://alt-poll.dev/auth/callback",
+      callbackURL: "http://alt-poll.dev/auth/callback", // TODO: PUT IN CONFIG MAP
     },
 
     async function (accessToken, refreshToken, profile, done) {
@@ -53,38 +47,25 @@ passport.use(
       const googleId = profile.id;
 
       let err = null;
-      let user = null;
-      const lookupUser = `
-        SELECT * FROM "Users"
-        WHERE google_id = $1
-        LIMIT 1
-      `;
+
+      let existingUser = null;
       try {
-        user = await query(lookupUser, [googleId]);
-        logger.info("existing user: " + JSON.stringify(user));
+        existingUser = await getUserByGoogleId(googleId);
+        logger.info("existing user found: " + JSON.stringify(existingUser));
       } catch (e) {
         err = e;
-        logger.error(e);
       }
 
-      if ((user ?? []).length == 0) {
-        const insertUser = `
-        INSERT INTO "Users"(name, google_id)
-        VALUES($1, $2)
-        `;
+      let createdUser = null;
+      if (!err && !existingUser) {
         try {
-          await query(insertUser, [name, googleId]);
-          user = await query(lookupUser, [googleId]);
-          logger.info("created user " + JSON.stringify(user));
+          createdUser = await createUser(name, googleId);
         } catch (e) {
           err = e;
-          logger.error(e);
         }
       }
-      console.log("found user", user);
-      logger.info(user);
 
-      done(err, user);
+      done(err, existingUser ?? createdUser);
     }
   )
 );

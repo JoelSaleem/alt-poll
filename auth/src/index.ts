@@ -7,7 +7,7 @@ import { logger } from "./logger";
 
 import "./passport-setup";
 
-import { googleAuth } from "./routes/googleAuth";
+import { initAuthRoutes } from "./routes/googleAuth";
 
 const app = express();
 app.set("trust proxy", true);
@@ -23,11 +23,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-googleAuth(app);
-
-app.get("/auth/current_user", (req, res) => {
-  res.send(req.user);
-});
+initAuthRoutes(app);
 
 app.listen(3000, () => {
   logger.info("listenning on port 3000");
