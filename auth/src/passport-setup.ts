@@ -24,8 +24,6 @@ passport.deserializeUser(async (id: string, done) => {
   let err = null;
   let user: User | undefined;
 
-  console.log("deserialise", id);
-
   try {
     user = await User.getUserById(id);
   } catch (e) {
