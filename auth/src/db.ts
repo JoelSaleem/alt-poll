@@ -1,24 +1,27 @@
-import { Client, QueryResult } from "pg";
+import { Pool, PoolClient, QueryResult } from "pg";
 import { logger } from "./logger";
 
-const client = new Client({
-  user: "postgres",
-  password: "foobar",
-  host: "alt-poll-auth.default.svc.cluster.local",
-  port: 5432,
-  database: "auth",
-});
-
-export const execute = async (query: string, params: string[]) => {
+export const query = async (query: string, params: string[]) => {
+  const pool = new Pool({
+    user: "postgres",
+    password: "foobar",
+    host: "alt-poll-auth.default.svc.cluster.local",
+    port: 5432,
+    database: "auth",
+  });
   let results: QueryResult | undefined;
 
+  let client: PoolClient | null = null;
   try {
-    await client.connect();
+    client = await pool.connect();
+    console.log('QUERY ', query)
+    console.log('PARAMS ', params)
     results = await client.query(query, params);
+    console.log('RESULTS ', results)
   } catch (err) {
     logger.error(err);
   } finally {
-    await client.end();
+    client?.release();
   }
   return results?.rows;
 };

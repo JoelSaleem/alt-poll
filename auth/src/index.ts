@@ -3,18 +3,14 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
-
-// import "./passport-setup";
-
 import { logger } from "./logger";
-import { initRoutes } from "./routes";
 
-// logger.info("secret key", process.env);
-logger.info("this is a test");
-logger.warn("this is a test");
+import "./passport-setup";
+
+import { googleAuth } from "./routes/googleAuth";
 
 const app = express();
-
+app.set("trust proxy", true);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
@@ -27,4 +23,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-initRoutes(app);
+googleAuth(app);
+
+app.get("/auth/current_user", (req, res) => {
+  res.send(req.user);
+});
+
+app.listen(3000, () => {
+  logger.info("listenning on port 3000");
+});
