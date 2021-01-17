@@ -1,8 +1,7 @@
 import passport from "passport";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
-import { createUser, getUserByGoogleId, getUserById } from "./db/util";
 import { logger } from "./logger";
-import { User } from "./types/User";
+import { User, UserDbProps } from "./models/User";
 
 logger.info("secret key", process.env);
 if (!process.env.GOOGLE_CLIENT_ID) {
@@ -18,20 +17,22 @@ if (!process.env.JWT_SECRET) {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, (user as User).id);
+  done(null, (user as UserDbProps).id);
 });
 
 passport.deserializeUser(async (id: string, done) => {
   let err = null;
   let user: User | undefined;
 
+  console.log("deserialise", id);
+
   try {
-    user = await getUserById(id);
+    user = await User.getUserById(id);
   } catch (e) {
     err = e;
   }
 
-  done(err, user);
+  done(err, user?.serialise());
 });
 
 passport.use(
@@ -48,18 +49,18 @@ passport.use(
 
       let err = null;
 
-      let existingUser = null;
+      let existingUser: UserDbProps | undefined;
       try {
-        existingUser = await getUserByGoogleId(googleId);
+        existingUser = (await User.getUserByGoogleId(googleId))?.serialise();
         logger.info("existing user found: " + JSON.stringify(existingUser));
       } catch (e) {
         err = e;
       }
 
-      let createdUser = null;
+      let createdUser: UserDbProps | undefined;
       if (!err && !existingUser) {
         try {
-          createdUser = await createUser(name, googleId);
+          createdUser = (await User.createUser(name, googleId))?.serialise();
         } catch (e) {
           err = e;
         }
