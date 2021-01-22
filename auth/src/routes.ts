@@ -1,6 +1,5 @@
 import { Express } from "express";
 import passport from "passport";
-import { execute } from "./db";
 import { logger } from "./logger";
 
 export const initRoutes = (app: Express) => {
