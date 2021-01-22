@@ -3,7 +3,7 @@ import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 import { logger } from "./logger";
 import { User, UserDbProps } from "./models/User";
 
-logger.info("secret key", process.env);
+// logger.debug("secret key  " + JSON.stringify(process.env, null, 4));
 if (!process.env.GOOGLE_CLIENT_ID) {
   throw new Error("No Google Client Id found");
 }
@@ -62,6 +62,10 @@ passport.use(
         } catch (e) {
           err = e;
         }
+      }
+
+      if (!err && !(existingUser ?? createdUser)) {
+        err = "Could not find user for session";
       }
 
       done(err, existingUser ?? createdUser);

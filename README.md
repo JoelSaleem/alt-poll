@@ -32,3 +32,25 @@ To connect to your database from outside the cluster execute the following comma
 
     kubectl port-forward --namespace default svc/alt-poll-auth 5432:5432 &
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432
+
+## RABBITMQ FORWARDING
+
+Credentials:
+
+    echo "Username      : user"
+    echo "Password      : $(kubectl get secret --namespace default my-release-rabbitmq -o jsonpath="{.data.rabbitmq-password}" | base64 --decode)"
+    echo "ErLang Cookie : $(kubectl get secret --namespace default my-release-rabbitmq -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)"
+
+RabbitMQ can be accessed within the cluster on port at my-release-rabbitmq.default.svc.
+
+To access for outside the cluster, perform the following steps:
+
+To Access the RabbitMQ AMQP port:
+
+    echo "URL : amqp://127.0.0.1:5672/"
+    kubectl port-forward --namespace default svc/my-release-rabbitmq 5672:5672
+
+To Access the RabbitMQ Management interface:
+
+    echo "URL : http://127.0.0.1:15672/"
+    kubectl port-forward --namespace default svc/my-release-rabbitmq 15672:15672

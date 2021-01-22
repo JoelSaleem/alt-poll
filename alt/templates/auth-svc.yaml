@@ -48,3 +48,8 @@ spec:
                 secretKeyRef: 
                   name: jwt-secret
                   key: JWT_SECRET
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: auth-db-password
+                  key: DB_PASSWORD
