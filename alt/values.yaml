@@ -85,7 +85,7 @@ affinity: {}
 auth:
   global:
     postgresql: 
-      postgresqlPassword: foobar
+      postgresqlPassword: foobar # Fed as secret in auth deployment
 
   # enabled: true
   # postgresqlUsername: postgres
