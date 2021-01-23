@@ -23,6 +23,7 @@ deploy:
         setValues:
           auth.postgresqlPassword: foobar
         recreatePods: true
+        skipBuildDependencies: true
     # flags:
     #   upgrade:
     #     - --set
