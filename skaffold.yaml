@@ -8,8 +8,6 @@ build:
   artifacts:
     - image: jsaleem/alt-poll-auth
       context: ./auth
-  # - image: jsaleem/alt-poll-auth
-  #   context: ./auth
   local:
     push: true
 
