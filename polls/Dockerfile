@@ -15,7 +15,7 @@ COPY Cargo.lock /usr/src/PROJ/
 
 WORKDIR /usr/src/PROJ
 
-RUN cargo build
+RUN cargo build --release
 
 COPY src /usr/src/PROJ/src
 
