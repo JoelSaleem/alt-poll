@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@types/passport": "^1.0.5",
-    "passport": "^0.4.1"
-  }
-}

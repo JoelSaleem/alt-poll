@@ -8,6 +8,8 @@ build:
   artifacts:
     - image: jsaleem/alt-poll-auth
       context: ./auth
+    - image: jsaleem/alt-poll-polls
+      context: ./polls
   local:
     push: true
 
@@ -15,8 +17,8 @@ deploy:
   helm:
     releases:
       - name: alt-poll
-        artifactOverrides:
-          image: jsaleem/alt-poll-auth
+        # artifactOverrides:
+        #   image: jsaleem/alt-poll-auth
         # Skaffold continuously tags your image, so no need to put one here.
         chartPath: /Users/joelsaleem/Documents/GitHub/alt-poll/alt
         # valuesFile: /Users/joelsaleem/Documents/GitHub/alt-poll/alt/values.yaml
