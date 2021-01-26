@@ -27,7 +27,7 @@ spec:
         app: auth
     spec:
       containers:
-        - name: auth
+        - name: auth 
           image: jsaleem/alt-poll-auth:latest
           imagePullPolicy: Always
           ports:

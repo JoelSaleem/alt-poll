@@ -8,6 +8,9 @@ import { logger } from "./logger";
 import "./passport-setup";
 
 import { initAuthRoutes } from "./routes/googleAuth";
+import { attemptInitMq } from "./messaging";
+
+attemptInitMq();
 
 const app = express();
 app.set("trust proxy", true);

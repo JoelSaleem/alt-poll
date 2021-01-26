@@ -87,6 +87,12 @@ auth:
     postgresql: 
       postgresqlPassword: foobar # Fed as secret in auth deployment
 
+rabbitmq:
+  auth:
+    username: admin
+    password: foobar
+    erlangCookie: secretcookie
+
   # enabled: true
   # postgresqlUsername: postgres
   # postgresqlPostgresPassword: foobar
