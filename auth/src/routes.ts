@@ -2,7 +2,17 @@ import { Express } from "express";
 import passport from "passport";
 import { logger } from "./logger";
 
+logger.info('hello world') 
+
 export const initRoutes = (app: Express) => {
+  app.get(
+    "/",
+    (req, res) => {
+      console.log("health check");
+      res.send({});
+    }
+  );
+
   app.get(
     "/auth/google",
     passport.authenticate("google", {

@@ -1,5 +1,5 @@
 import { query } from "../db/executeQuery";
-import {
+import { 
   CREATE_USER,
   GET_USER_BY_GOOGLE_ID,
   GET_USER_BY_ID,
@@ -40,7 +40,7 @@ export class User {
       user = (await query(GET_USER_BY_ID, [id]))?.[0];
     } catch (e) {
       err = e;
-      logger.error(e);
+      logger.error(e); 
     }
     if (err) {
       throw new Error(err);

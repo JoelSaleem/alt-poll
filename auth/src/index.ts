@@ -9,8 +9,11 @@ import "./passport-setup";
 
 import { initAuthRoutes } from "./routes/googleAuth";
 import { attemptInitMq } from "./messaging";
+import { Producer } from "./messaging/Producer";
+import { Consumer } from "./messaging/Consumer";
 
-attemptInitMq();
+new Producer("hello").init();
+new Consumer("hello").init();
 
 const app = express();
 app.set("trust proxy", true);

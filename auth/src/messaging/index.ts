@@ -1,4 +1,4 @@
-import amqp, { connect } from "amqplib";
+import amqp from "amqplib";
 
 export const connectMq = async () => {
   const ch = await amqp.connect({
