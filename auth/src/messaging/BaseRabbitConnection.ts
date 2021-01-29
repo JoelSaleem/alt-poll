@@ -25,7 +25,7 @@ export abstract class BaseRabbitConnection {
 
     this.channel = await this.connection.createChannel();
 
-    this.channel.assertQueue("hello", { durable: false });
+    this.channel.assertQueue("hello", { durable: true });
   };
 
   attemptInitMq = async () => {

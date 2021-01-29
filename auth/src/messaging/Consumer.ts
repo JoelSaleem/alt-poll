@@ -1,29 +1,31 @@
-import amqp, { Connection, Channel } from "amqplib";
-import { sleep } from "../utils";
+import amqp, { ConsumeMessage } from "amqplib";
 import { BaseRabbitConnection } from "./BaseRabbitConnection";
 
-export class Consumer extends BaseRabbitConnection {
+export abstract class Consumer extends BaseRabbitConnection {
   constructor(queueName: string) {
     super(queueName);
   }
 
   init = async () => {
     await this.attemptInitMq();
-    
-    this.setupListners();
+
+    this.setupListner();
   };
 
-  setupListners = () => {
-    console.log("setting up listners");
+  abstract onMessage = async (msg: ConsumeMessage) => {};
+
+  setupListner = () => {
+    console.log(`setting up listner for ${this.queueName}`);
     if (!this.channel) {
       throw new Error("Will no cahannel configured");
     }
 
     this.channel.consume(
       this.queueName,
-      (msg) => {
-        console.log("message received!", msg);
-        console.log("msg content: ", msg?.content.toString());
+      async (msg) => {
+        if (msg) {
+          await this.onMessage(msg);
+        }
       },
       { noAck: true }
     );

@@ -1,5 +1,4 @@
-import amqp, { Connection, Channel } from "amqplib";
-import { sleep } from "../utils";
+import amqp from "amqplib";
 import { BaseRabbitConnection } from "./BaseRabbitConnection";
 
 export class Producer extends BaseRabbitConnection {
@@ -9,20 +8,17 @@ export class Producer extends BaseRabbitConnection {
 
   init = async () => {
     await this.attemptInitMq();
-
-    this.sendMessage();
   };
 
-  sendMessage = () => {
+  sendMessage = (msg: string) => {
     if (!this.channel) {
       throw Error(
         `Could not send message, channel does not exist: ${this.queueName}`
       );
     }
 
-    this.channel.sendToQueue(
-      this.queueName,
-      Buffer.from("this is  a test msg")
-    );
+    this.channel.sendToQueue(this.queueName, Buffer.from(msg), {
+      persistent: true,
+    });
   };
 }
