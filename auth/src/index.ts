@@ -15,7 +15,7 @@ p.init();
 
 const app = express();
 
-app.get("/auth/sm", (req, res) => {
+app.get("/auth/testMessage", (req, res) => {
   p.publish("user.updated", "test msg");
   res.send("message sent");
 });
