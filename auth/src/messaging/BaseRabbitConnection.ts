@@ -3,13 +3,13 @@ import { sleep } from "../utils";
 
 export abstract class BaseRabbitConnection {
   attempts: number;
-  queueName: string;
+  exchange: string;
   connection?: Connection;
   channel?: Channel;
 
-  constructor(queueName: string) {
+  constructor(exchange: string) {
     this.attempts = 0;
-    this.queueName = queueName;
+    this.exchange = exchange;
   }
 
   abstract init = async () => {};
@@ -25,7 +25,9 @@ export abstract class BaseRabbitConnection {
 
     this.channel = await this.connection.createChannel();
 
-    this.channel.assertQueue("hello", { durable: true });
+    await this.channel.assertExchange(this.exchange, 'topic', {
+      durable: true
+    })
   };
 
   attemptInitMq = async () => {

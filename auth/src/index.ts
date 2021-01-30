@@ -8,14 +8,18 @@ import { logger } from "./logger";
 import "./passport-setup";
 
 import { initAuthRoutes } from "./routes/googleAuth";
-import { attemptInitMq } from "./messaging";
 import { Producer } from "./messaging/Producer";
-import { Consumer } from "./messaging/Consumer";
 
-new Producer("hello").init();
-new Consumer("hello").init();
+const p = new Producer("userProducer", "myExchange");
+p.init();
 
 const app = express();
+
+app.get("/auth/sm", (req, res) => {
+  p.publish("user.updated", "test msg");
+  res.send("message sent");
+});
+
 app.set("trust proxy", true);
 app.use(cors());
 app.use(bodyParser.json());
