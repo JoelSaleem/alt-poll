@@ -35,7 +35,11 @@ impl Client {
             };
 
             match connection {
-                Some(conn) => self.connection = Some(conn),
+                Some(conn) => {
+                    println!("Connection established");
+                    self.connection = Some(conn);
+                    break;
+                }
                 None => {}
             }
             self.attempts += 1;
