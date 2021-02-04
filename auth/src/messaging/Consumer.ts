@@ -25,10 +25,6 @@ export abstract class Consumer extends BaseRabbitConnection {
       throw new Error("Will no cahannel configured");
     }
 
-    await this.channel.assertExchange(this.exchange, "topic", {
-      durable: true,
-    });
-
     const q = await this.channel.assertQueue(this.queueName, {
       exclusive: false,
     });

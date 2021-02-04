@@ -11,5 +11,4 @@ path = "src/main.rs"
 
 [dependencies]
 rocket = "0.4.6"
-lapin = "1.6.6"
-async-global-executor = "2.0.2"
+amiquip = "0.4.0"

@@ -52,11 +52,12 @@ RUN cargo build --release
 
 COPY src /usr/src/PROJ/src
 
+RUN cargo fix --allow-dirty
 RUN cargo build --release
 RUN mv /usr/src/PROJ/target/x86_64-unknown-linux-musl/release/app /bin 
 RUN rm -rf /usr/src/PROJ
 
-# CMD ["tail", "-f", "/dev/null"]
 EXPOSE 8000
 WORKDIR /
 CMD [ "/bin/app" ]
+# CMD ["tail", "-f", "/dev/null"]
