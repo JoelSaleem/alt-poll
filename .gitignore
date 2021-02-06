@@ -5,3 +5,4 @@ google-client-secret.yaml
 jwt-secret.yaml
 auth-db-secret.yaml
 skaffold
+__pycache__
