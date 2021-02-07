@@ -1,0 +1,13 @@
+2021-02-07T13:19:38+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 20.3.0 (/Users/joelsaleem/.local/share/virtualenvs/polls-u8JulIqs/bin/python 3.7.7) starting up.
+2021-02-07T13:19:38+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.selectreactor.SelectReactor.
+2021-02-07T13:19:38+0000 [-] Site starting on 8080
+2021-02-07T13:19:38+0000 [twisted.web.server.Site#info] Starting factory <twisted.web.server.Site object at 0x7f8b5b63f750>
+2021-02-07T13:19:50+0000 [twisted.python.log#info] "127.0.0.1" - - [07/Feb/2021:13:19:50 +0000] "GET /render HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
+2021-02-07T13:20:50+0000 [twisted.web.http.HTTPChannel#info] Timing out client: IPv4Address(type='TCP', host='127.0.0.1', port=62240)
+2021-02-07T13:20:50+0000 [twisted.web.http.HTTPChannel#info] Timing out client: IPv4Address(type='TCP', host='127.0.0.1', port=62239)
+2021-02-07T13:20:53+0000 [twisted.python.log#info] "127.0.0.1" - - [07/Feb/2021:13:20:52 +0000] "GET /render HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
+2021-02-07T13:20:54+0000 [twisted.python.log#info] "127.0.0.1" - - [07/Feb/2021:13:20:54 +0000] "GET / HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
+2021-02-07T13:20:59+0000 [twisted.python.log#info] "127.0.0.1" - - [07/Feb/2021:13:20:59 +0000] "GET /Simple HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
+2021-02-07T13:21:53+0000 [twisted.web.http.HTTPChannel#info] Timing out client: IPv4Address(type='TCP', host='127.0.0.1', port=62248)
+2021-02-07T13:21:59+0000 [twisted.web.http.HTTPChannel#info] Timing out client: IPv4Address(type='TCP', host='127.0.0.1', port=62247)
+2021-02-07T13:37:09+0000 [twisted.web.http.HTTPChannel#info] Timing out client: IPv4Address(type='TCP', host='127.0.0.1', port=62387)

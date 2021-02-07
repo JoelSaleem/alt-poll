@@ -7,5 +7,4 @@ RUN pipenv install --system --deploy
 ENV FLASK_APP /app/app.py
 
 EXPOSE 5000
-ENTRYPOINT [ "python" ]
-CMD ["app.py"]
+CMD ["python", "-u", "app.py"]

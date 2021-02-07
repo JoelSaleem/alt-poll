@@ -1,11 +1,20 @@
-from flask import Flask
+from tornado import (
+    ioloop, web, ioloop
+)
+from base_message_connection import BaseMessageConsumer
 
-app = Flask(__name__)
+# BaseMessageConsumer().attempt_connection()
 
+class MainHandler(web.RequestHandler):
+    def get(self):
+        self.write("Hello, world")
 
-@app.route('/polls/')
-def hello_world():
-    return "hello"
+def make_app():
+    return web.Application([
+        (r"/", MainHandler),
+    ])
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+if __name__ == "__main__":
+    app = make_app()
+    app.listen(8888)
+    ioloop.IOLoop.current().start()
