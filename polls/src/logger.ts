@@ -1,3 +1,3 @@
 import { createLogger } from "@js-alt-poll/common";
 
-export const logger = createLogger("auth");
+export const logger = createLogger("polls");
