@@ -1,5 +1,6 @@
 node_modules
 dist
+build
 .cache
 google-client-secret.yaml
 jwt-secret.yaml
