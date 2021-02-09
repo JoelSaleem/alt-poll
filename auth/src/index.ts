@@ -8,7 +8,7 @@ import { logger } from "./logger";
 import "./passport-setup";
 
 import { initAuthRoutes } from "./routes/googleAuth";
-import { Producer } from "./messaging/Producer";
+import { Producer } from "@js-alt-poll/common";
 
 const p = new Producer("userProducer", "myExchange");
 p.init();
