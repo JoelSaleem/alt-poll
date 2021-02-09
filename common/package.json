@@ -1,11 +1,12 @@
 {
   "name": "@js-alt-poll/common",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "unsafe__publish": "tsc && npm version patch && npm publish"
   },
   "author": "",
   "description": "",

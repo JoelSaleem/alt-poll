@@ -4,7 +4,7 @@ import { BaseRabbitConnection } from "./BaseRabbitConnection";
 export abstract class Consumer extends BaseRabbitConnection {
   queueName: string;
   pattern: string;
-  constructor(exchange: string, queueName: string = "", pattern: string) {
+  constructor(exchange: string, pattern: string, queueName: string = "") {
     super(exchange);
 
     this.queueName = queueName;
