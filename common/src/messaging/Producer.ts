@@ -22,3 +22,4 @@ export class Producer extends BaseRabbitConnection {
     this.channel.publish(this.exchange, key, Buffer.from(msg));
   };
 }
+

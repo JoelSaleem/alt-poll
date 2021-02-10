@@ -4,3 +4,6 @@ export * from "./logger/logger";
 export * from "./messaging/BaseRabbitConnection";
 export * from "./messaging/Consumer";
 export * from "./messaging/Producer";
+
+// events
+export * from "./messaging/events";

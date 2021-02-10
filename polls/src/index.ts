@@ -9,11 +9,11 @@ class TestConsumer extends Consumer {
   }
 
   onMessage = async (msg: ConsumeMessage) => {
-    console.log("msg", msg);
+    console.log("msg", msg.content);
   };
 }
 
-const a = new TestConsumer("myExchange", "user.#", "polls");
+const a = new TestConsumer("alt-poll-exchange", "user.#", "polls");
 a.init();
 
 const app = express();

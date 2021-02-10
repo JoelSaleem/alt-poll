@@ -2,10 +2,10 @@ import amqp, { Connection, Channel } from "amqplib";
 import { sleep } from "../utils";
 
 export abstract class BaseRabbitConnection {
-  attempts: number;
-  exchange: string;
-  connection?: Connection;
-  channel?: Channel;
+  protected attempts: number;
+  protected exchange: string;
+  protected connection?: Connection;
+  protected channel?: Channel;
 
   constructor(exchange: string) {
     this.attempts = 0;
@@ -14,7 +14,7 @@ export abstract class BaseRabbitConnection {
 
   abstract init = async () => {};
 
-  connectMq = async () => {
+  protected connectMq = async () => {
     this.connection = await amqp.connect({
       protocol: "amqp",
       hostname: "alt-poll-rabbitmq.default.svc.cluster.local",
@@ -30,7 +30,7 @@ export abstract class BaseRabbitConnection {
     })
   };
 
-  attemptInitMq = async () => {
+  protected attemptInitMq = async () => {
     let interval = 1000 * 10;
     let error = null;
 

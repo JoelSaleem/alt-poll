@@ -1,9 +1,9 @@
-import amqp, { ConsumeMessage } from "amqplib";
+import { ConsumeMessage } from "amqplib";
 import { BaseRabbitConnection } from "./BaseRabbitConnection";
 
 export abstract class Consumer extends BaseRabbitConnection {
-  queueName: string;
-  pattern: string;
+  protected queueName: string;
+  protected pattern: string;
   constructor(exchange: string, pattern: string, queueName: string = "") {
     super(exchange);
 
@@ -19,7 +19,7 @@ export abstract class Consumer extends BaseRabbitConnection {
 
   abstract onMessage = async (msg: ConsumeMessage) => {};
 
-  setupListner = async () => {
+  protected setupListner = async () => {
     console.log(`setting up listner for ${this.exchange}`);
     if (!this.channel) {
       throw new Error("Will no cahannel configured");

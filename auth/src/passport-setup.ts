@@ -2,7 +2,8 @@ import passport from "passport";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
 import { logger } from "./logger";
 import { User, UserDbProps } from "./models/User";
-
+import { userProducer } from "./messaging/userProducer";
+import { UserEvents } from "@js-alt-poll/common";
 // logger.debug("secret key  " + JSON.stringify(process.env, null, 4));
 if (!process.env.GOOGLE_CLIENT_ID) {
   throw new Error("No Google Client Id found");
@@ -59,6 +60,10 @@ passport.use(
       if (!err && !existingUser) {
         try {
           createdUser = (await User.createUser(name, googleId))?.serialise();
+          userProducer.publish(
+            UserEvents.USER_CREATED,
+            JSON.stringify(createdUser)
+          );
         } catch (e) {
           err = e;
         }
