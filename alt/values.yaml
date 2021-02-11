@@ -87,6 +87,11 @@ auth:
     postgresql: 
       postgresqlPassword: foobar # Fed as secret in auth deployment
 
+polls-db:
+  global:
+    postgresql: 
+      postgresqlPassword: foobar # Fed as secret in auth deployment
+
 rabbitmq:
   auth:
     username: admin

@@ -27,6 +27,10 @@ dependencies:
     version: "10.2.1"
     repository: https://charts.bitnami.com/bitnami
     alias: auth
+  - name: postgresql
+    version: "10.2.1"
+    repository: https://charts.bitnami.com/bitnami
+    alias: polls-db
   - name: rabbitmq
     version: "8.7.4"
     repository: https://charts.bitnami.com/bitnami
