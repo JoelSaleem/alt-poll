@@ -861,14 +861,16 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@js-alt-poll/common@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.12.tgz#0b76141027094f0cf44a1a6daf2ccb7403d5d7ce"
-  integrity sha512-5Ut6hMpX6DaJPd6zdnTV3ZcX48iOiKKEoQcUvzbjJP+vERNSGBGIVR9pbjmay7p9FwVCxe67NdqW1fy4+MaFdg==
+"@js-alt-poll/common@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.15.tgz#cab03bedcbbdd16257becbf4661c0a732f8ad970"
+  integrity sha512-YU/VWJcOgtUU/tSW/ai+bACVcl8BKb0hViLOdheT0lakeOVaHMyT5N3fIpzBnwA5+vMr/QyuJWIMvNKNSBdMXA==
   dependencies:
     "@types/amqplib" "^0.5.17"
     "@types/node" "^14.14.25"
+    "@types/pg" "^7.14.9"
     amqplib "^0.6.0"
+    pg "^8.5.1"
     winston "^3.3.3"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -1027,6 +1029,14 @@
   dependencies:
     "@types/node" "*"
     "@types/pg-types" "*"
+
+"@types/pg@^7.14.9":
+  version "7.14.9"
+  resolved "https://registry.yarnpkg.com/@types/pg/-/pg-7.14.9.tgz#5f09544d0b5b19fca48b63dd15644c475555ba60"
+  integrity sha512-ThTOEwOvYM++zRSGiajRqKyTQboCEJE2VI+30d93WX94sQ7CnrcJ7CICT9oC+QD8Co9JTYJkKEfEXSb5DjUOFA==
+  dependencies:
+    "@types/node" "*"
+    pg-types "^2.2.0"
 
 "@types/q@^1.5.1":
   version "1.5.4"
@@ -4380,7 +4390,7 @@ pg-protocol@^1.4.0:
   resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.4.0.tgz#43a71a92f6fe3ac559952555aa3335c8cb4908be"
   integrity sha512-El+aXWcwG/8wuFICMQjM5ZSAm6OWiJicFdNYo+VY3QP+8vI4SvLIWVe51PppTzMhikUJR+PsyIFKqfdXPz/yxA==
 
-pg-types@^2.1.0:
+pg-types@^2.1.0, pg-types@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-2.2.0.tgz#2d0250d636454f7cfa3b6ae0382fdfa8063254a3"
   integrity sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==

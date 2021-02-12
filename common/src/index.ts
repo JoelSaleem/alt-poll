@@ -7,3 +7,6 @@ export * from "./messaging/Producer";
 
 // events
 export * from "./messaging/events";
+
+// db
+export * from "./db/PgPool";

@@ -1,4 +1,4 @@
-import { query } from "../db/executeQuery";
+import { pool } from "../db/dbConnection";
 import { 
   CREATE_USER,
   GET_USER_BY_GOOGLE_ID,
@@ -37,7 +37,7 @@ export class User {
     let user: UserDbProps | undefined;
     let err;
     try {
-      user = (await query(GET_USER_BY_ID, [id]))?.[0];
+      user = (await pool.query(GET_USER_BY_ID, [id]))?.[0];
     } catch (e) {
       err = e;
       logger.error(e); 
@@ -55,7 +55,7 @@ export class User {
     let user: UserDbProps | undefined;
     let err;
     try {
-      user = (await query(GET_USER_BY_GOOGLE_ID, [googleId]))?.[0];
+      user = (await pool.query(GET_USER_BY_GOOGLE_ID, [googleId]))?.[0];
     } catch (e) {
       err = e;
       logger.error(e);
@@ -74,7 +74,7 @@ export class User {
     let err;
 
     try {
-      await query(CREATE_USER, [name, googleId]);
+      await pool.query(CREATE_USER, [name, googleId]);
       user = await User.getUserByGoogleId(googleId);
       logger.info("created user " + JSON.stringify(user));
     } catch (e) {
