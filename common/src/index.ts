@@ -10,3 +10,6 @@ export * from "./messaging/events";
 
 // db
 export * from "./db/PgPool";
+
+// models
+export * from "./db/models/User";

@@ -1,5 +1,6 @@
+import { BaseUserModel } from "@js-alt-poll/common";
 import { pool } from "../db/dbConnection";
-import { 
+import {
   CREATE_USER,
   GET_USER_BY_GOOGLE_ID,
   GET_USER_BY_ID,
@@ -13,25 +14,10 @@ export interface UserDbProps {
   created_at: string;
 }
 
-export class User {
-  public name: string;
-  public googleId: string;
-  public id: string;
-  public createdAt: Date;
-
+export class User extends BaseUserModel {
   constructor(id: string, googleId: string, name: string, createdAt: string) {
-    this.id = id;
-    this.googleId = googleId;
-    this.name = name;
-    this.createdAt = new Date(createdAt);
+    super(id, googleId, name, createdAt);
   }
-
-  serialise = (): UserDbProps => ({
-    id: this.id,
-    google_id: this.googleId,
-    name: this.name,
-    created_at: this.createdAt.toISOString(),
-  });
 
   static getUserById = async (id: string) => {
     let user: UserDbProps | undefined;
@@ -40,7 +26,7 @@ export class User {
       user = (await pool.query(GET_USER_BY_ID, [id]))?.[0];
     } catch (e) {
       err = e;
-      logger.error(e); 
+      logger.error(e);
     }
     if (err) {
       throw new Error(err);
