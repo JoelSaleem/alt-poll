@@ -4,7 +4,7 @@ import { sleep } from "../utils";
 export abstract class BaseRabbitConnection {
   protected attempts: number;
   protected exchange: string;
-  protected connection?: Connection;
+  protected connection?: Connection; // TODO: handle errors -- close connections
   protected channel?: Channel;
 
   constructor(exchange: string) {
@@ -25,9 +25,9 @@ export abstract class BaseRabbitConnection {
 
     this.channel = await this.connection.createChannel();
 
-    await this.channel.assertExchange(this.exchange, 'topic', {
-      durable: true
-    })
+    await this.channel.assertExchange(this.exchange, "topic", {
+      durable: true,
+    });
   };
 
   protected attemptInitMq = async () => {

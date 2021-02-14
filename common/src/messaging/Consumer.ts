@@ -19,6 +19,16 @@ export abstract class Consumer extends BaseRabbitConnection {
 
   abstract onMessage = async (msg: ConsumeMessage) => {};
 
+  ack = (msg: ConsumeMessage) => {
+    this.channel?.ack(msg);
+  };
+
+  nack = (msg: ConsumeMessage, delayMS: number = 0) => {
+    setTimeout(() => {
+      this.channel?.nack(msg);
+    }, delayMS);
+  };
+
   protected setupListner = async () => {
     console.log(`setting up listner for ${this.exchange}`);
     if (!this.channel) {
@@ -34,7 +44,6 @@ export abstract class Consumer extends BaseRabbitConnection {
     this.channel.consume(
       q.queue,
       async (msg) => {
-        console.log("msg received for " + this.exchange, msg);
         if (msg) {
           await this.onMessage(msg);
         }

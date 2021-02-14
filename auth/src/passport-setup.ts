@@ -31,6 +31,10 @@ passport.deserializeUser(async (id: string, done) => {
     err = e;
   }
 
+  if (!user && !err) {
+    err = `No user found for id: ${id}`;
+  }
+
   done(err, user?.serialise());
 });
 

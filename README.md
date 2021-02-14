@@ -54,3 +54,17 @@ To Access the RabbitMQ Management interface:
 
     echo "URL : http://127.0.0.1:15672/"
     kubectl port-forward --namespace default svc/my-release-rabbitmq 15672:15672
+
+
+
+
+
+
+
+
+
+
+
+
+kubectl port-forward --namespace default svc/alt-poll-polls-db 5432:5432 &
+    PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432

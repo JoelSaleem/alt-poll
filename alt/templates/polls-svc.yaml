@@ -32,4 +32,11 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: polls-db-password
+                  key: DB_PASSWORD
+
           

@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
 import { logger } from "./logger";
+import { userProducer } from "./messaging/userProducer";
 
 import "./passport-setup";
 
@@ -25,6 +26,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 initAuthRoutes(app);
+
+let counter = 0;
+
+app.get("/auth/testMsg", (req, res) => {
+  userProducer.publish("test.created", String(counter++));
+  res.send({});
+});
 
 app.listen(3000, () => {
   logger.info("listenning on port 3000");

@@ -861,10 +861,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@js-alt-poll/common@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.17.tgz#16705f3bf8bbab9165ad1af3adf0c15a78e33f88"
-  integrity sha512-x0lNRKKUvZSEEIIcpY+F7LwvtoxcnMPd7UcwLLHAgz62e1/EeNoBEUY/wHYwDyxY4AqbqR4Il2OGTnBd7uhN6w==
+"@js-alt-poll/common@^1.0.19":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.20.tgz#e53108d70afc297db0f29f9b87a8ebd6305f5193"
+  integrity sha512-Rd5odDdoYNqDu/DUUND+W8+pxAkd56FRzt6pj0dLBdj0DMBqlbuicydYO4qUv+GBDd7/5ojQcXFjigNa06hUkQ==
   dependencies:
     "@types/amqplib" "^0.5.17"
     "@types/node" "^14.14.25"
