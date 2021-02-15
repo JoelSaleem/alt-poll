@@ -1,9 +1,35 @@
-import express from "express";
+import express, { Express } from "express";
+import passport from "passport";
+import cors from "cors";
+import bodyParser from "body-parser";
+import cookieSession from "cookie-session";
+
 import { logger } from "./logger";
 import { UserCreatedConsumer } from "./messaging/UserCreatedConsumer";
+import { initPollRoutes } from "./routes/pollRoutes";
+
+import "./passport-setup";
 
 const app = express();
 
+app.set("trust proxy", true);
+app.use(cors());
+app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    signed: false,
+    secure: false,
+  }) as Express
+);
+
+// passport setup
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
+initPollRoutes(app);
+
+// Messaging Consumers
 new UserCreatedConsumer().init();
 
 app.listen(3000, () => {
