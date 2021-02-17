@@ -10,6 +10,8 @@ build:
       context: ./auth
     - image: jsaleem/alt-poll-polls
       context: ./polls
+    - image: jsaleem/alt-poll-client
+      context: ./client
   local:
     push: true
 

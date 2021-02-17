@@ -21,7 +21,7 @@ export class PgPool {
     });
   }
 
-  query = async (query: string, params: string[]) => {
+  query = async (query: string, params: string[] = []) => {
     let results: QueryResult | undefined;
 
     let client: PoolClient | null = null;

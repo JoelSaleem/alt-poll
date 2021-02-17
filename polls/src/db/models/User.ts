@@ -6,8 +6,7 @@ import { format } from "sqlstring";
 export class User extends BaseUserModel {
   static getUserById = async (id: string): Promise<User | undefined> => {
     const users = (await pool.query(
-      format(GET_USER_BY_ID, [id]),
-      []
+      format(GET_USER_BY_ID, [id])
     )) as UserDbProps[];
 
     if ((users?.length ?? 0) >= 1) {
@@ -49,10 +48,7 @@ export class User extends BaseUserModel {
 
     const { id, name, google_id, created_at } = this.serialise();
 
-    await pool.query(
-      format(CREATE_USER, [id, name, google_id, created_at]),
-      []
-    );
+    await pool.query(format(CREATE_USER, [id, name, google_id, created_at]));
 
     return this;
   };

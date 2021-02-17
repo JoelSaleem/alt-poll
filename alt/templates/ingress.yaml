@@ -25,3 +25,10 @@ spec:
             name: {{ .Release.Name }}-polls-svc
             port:
               number: 3000
+      - path: /?(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-client-svc
+            port:
+              number: 3000
