@@ -1,10 +1,14 @@
 import { BaseUserModel, UserDbProps } from "@js-alt-poll/common";
 import { GET_USER_BY_ID, CREATE_USER } from "../queries";
 import { pool } from "../dbConnection";
+import { format } from "sqlstring";
 
 export class User extends BaseUserModel {
   static getUserById = async (id: string): Promise<User | undefined> => {
-    const users = (await pool.query(GET_USER_BY_ID, [id])) as UserDbProps[];
+    const users = (await pool.query(
+      format(GET_USER_BY_ID, [id]),
+      []
+    )) as UserDbProps[];
 
     if ((users?.length ?? 0) >= 1) {
       const u = users?.[0];
@@ -45,7 +49,10 @@ export class User extends BaseUserModel {
 
     const { id, name, google_id, created_at } = this.serialise();
 
-    await pool.query(CREATE_USER, [id, name, google_id, created_at]);
+    await pool.query(
+      format(CREATE_USER, [id, name, google_id, created_at]),
+      []
+    );
 
     return this;
   };

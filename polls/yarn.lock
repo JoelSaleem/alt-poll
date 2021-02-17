@@ -861,10 +861,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@js-alt-poll/common@^1.0.19":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.20.tgz#e53108d70afc297db0f29f9b87a8ebd6305f5193"
-  integrity sha512-Rd5odDdoYNqDu/DUUND+W8+pxAkd56FRzt6pj0dLBdj0DMBqlbuicydYO4qUv+GBDd7/5ojQcXFjigNa06hUkQ==
+"@js-alt-poll/common@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.21.tgz#b21f04aaf83f5ae5ad55306c812710bfbd713d45"
+  integrity sha512-5xRLVnFz3UN7pSWOx5UX0siOge+AbqJfqSNOMt918KCdSkVsRwzwZLkx6Yb9SYVT7En6W4RDAfjtQj0wtPUOOw==
   dependencies:
     "@types/amqplib" "^0.5.17"
     "@types/node" "^14.14.25"
@@ -1067,6 +1067,11 @@
   dependencies:
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/sqlstring@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@types/sqlstring/-/sqlstring-2.3.0.tgz#5960ade0166cfaaa4673fc74ec8157a08d06c89e"
+  integrity sha512-kMFecDYYFk/f5fljO0UFrSPwU1JxY4mIjX6ic7MHv5nD6sEd3NYLoWcOV/3s6Drs7RHdCwTQdD5NdgVl0I2zzg==
 
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
@@ -5533,6 +5538,11 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
+
+sqlstring@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/sqlstring/-/sqlstring-2.3.2.tgz#cdae7169389a1375b18e885f2e60b3e460809514"
+  integrity sha512-vF4ZbYdKS8OnoJAWBmMxCQDkiEBkGQYU7UZPtL8flbDRSNkhaXvRJ279ZtI6M+zDaQovVU4tuRgzK5fVhvFAhg==
 
 srcset@^3.0.0:
   version "3.0.0"

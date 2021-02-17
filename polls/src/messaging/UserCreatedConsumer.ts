@@ -14,7 +14,7 @@ export class UserCreatedConsumer extends Consumer {
     logger.info("user created msg received", msg.content.toString());
     const userProps = JSON.parse(msg.content.toString()) as UserDbProps;
 
-    logger.info("usr", userProps);
+    logger.info(`usr ${userProps}`);
     try {
       const u = new User(
         userProps.id,

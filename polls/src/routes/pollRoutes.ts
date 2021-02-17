@@ -1,4 +1,3 @@
-import { UserDbProps } from "@js-alt-poll/common";
 import { Express } from "express";
 import { body } from "express-validator";
 
@@ -12,7 +11,7 @@ declare global {
 }
 
 export const initPollRoutes = (app: Express) => {
-  app.get("/polls", body("title").exists(), (req, res) => {
+  app.post("/polls", body("title").exists(), (req, res) => {
     console.log("req.user", req?.user);
     res.send({});
   });
