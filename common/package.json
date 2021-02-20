@@ -1,6 +1,6 @@
 {
   "name": "@js-alt-poll/common",
-  "version": "1.0.22",
+  "version": "1.0.24",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "license": "MIT",
@@ -12,9 +12,11 @@
   "description": "",
   "dependencies": {
     "@types/amqplib": "^0.5.17",
+    "@types/express": "^4.17.11",
     "@types/node": "^14.14.25",
     "@types/pg": "^7.14.9",
     "amqplib": "^0.6.0",
+    "express": "^4.17.1",
     "pg": "^8.5.1",
     "winston": "^3.3.3"
   }

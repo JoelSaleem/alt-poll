@@ -13,3 +13,6 @@ export * from "./db/PgPool";
 
 // models
 export * from "./db/models/User";
+
+// middlewares
+export * from "./middleware/requireAuth";
