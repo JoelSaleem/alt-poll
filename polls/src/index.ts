@@ -7,8 +7,15 @@ import cookieSession from "cookie-session";
 import { logger } from "./logger";
 import { UserCreatedConsumer } from "./messaging/UserCreatedConsumer";
 import { initPollRoutes } from "./routes/pollRoutes";
+import { UserDbProps } from "@js-alt-poll/common";
 
 import "./passport-setup";
+
+declare namespace Express {
+  interface Request {
+    currentUser: UserDbProps | undefined;
+  }
+}
 
 const app = express();
 

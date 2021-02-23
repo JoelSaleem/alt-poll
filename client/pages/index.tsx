@@ -13,9 +13,11 @@ const client = new QueryClient();
 
 const App: React.FC = () => {
   const [path, setPath] = useState("");
+  const [title, setTitle] = useState("");
   const { mutateAsync, data, error, status, isLoading } = useMutation(() =>
-    axios.post(path)
+    axios.post(path, { title })
   );
+
   console.log(
     "%c stuff ",
     "background: purple; color: white",
@@ -28,6 +30,7 @@ const App: React.FC = () => {
   return (
     <>
       <input value={path} onChange={(e) => setPath(e.target.value)} />
+      <input value={title} onChange={(e) => setTitle(e.target.value)} />
       <button
         onClick={async () => {
           await mutateAsync();

@@ -9,6 +9,11 @@ export const CREATE_USER = `
     VALUES(?, ?, ?, ?)
 `;
 
+export const GET_POLLS = `
+    SELECT * FROM "Polls"
+    WHERE user_id = ?
+`;
+
 export const CREATE_POLL = `
     INSERT INTO "Polls"(title, description, user_id)
     VALUES(?, ?, ?)

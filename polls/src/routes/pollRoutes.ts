@@ -1,23 +1,56 @@
 import { Express } from "express";
+import { format } from "sqlstring";
 import { body, validationResult } from "express-validator";
-import { requireAuth } from "@js-alt-poll/common";
+import { requireAuth, UserDbProps } from "@js-alt-poll/common";
+import { pool } from "../db/dbConnection";
+import { CREATE_POLL, GET_POLLS } from "../db/queries";
+import { logger } from "../logger";
 
 declare global {
   namespace Express {
     interface Request {
-      // @ts-ignore
-      user: User | undefined;
+      currentUser?: UserDbProps;
     }
   }
 }
 
 export const initPollRoutes = (app: Express) => {
-  app.post("/polls", requireAuth, body("title").exists(), (req, res) => {
+  app.get("/polls", requireAuth, async (req, res) => {
+    let polls = [];
+    try {
+      polls =
+        (await pool.query(format(GET_POLLS, [req.currentUser!.id]))) ?? [];
+    } catch (e) {
+      logger.error(e);
+      return res.status(500).send();
+    }
+
+    res.send(polls);
+  });
+
+  app.post("/polls", requireAuth, body("title").exists(), async (req, res) => {
+    console.log(req.body);
     const errs = validationResult(req);
     if (!errs.isEmpty()) {
       return res.status(400).json({ errors: errs.array() });
-    } 
-    console.log("req.user", req?.user);
-    res.send({});
+    }
+
+    let polls = [];
+    try {
+      polls =
+        (await pool.query(
+          format(CREATE_POLL, [
+            req.body.title,
+            req.body.description,
+            req.currentUser!.id,
+          ])
+        )) ?? [];
+      console.log("response", polls);
+    } catch (e) {
+      logger.error(e);
+      return res.status(500).send(e);
+    }
+
+    res.status(201).send(polls?.[0]);
   });
 };
