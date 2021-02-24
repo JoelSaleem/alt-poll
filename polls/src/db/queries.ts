@@ -14,6 +14,11 @@ export const GET_POLLS = `
     WHERE user_id = ?
 `;
 
+export const GET_POLL = `
+    SELECT * FROM "Polls"
+    WHERE user_id = ? AND id = ?
+`;
+
 export const CREATE_POLL = `
     INSERT INTO "Polls"(title, description, user_id)
     VALUES(?, ?, ?)
