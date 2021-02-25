@@ -23,7 +23,7 @@ export class User extends BaseUserModel {
     let user: UserDbProps | undefined;
     let err;
     try {
-      user = (await pool.query(GET_USER_BY_ID, [id]))?.[0];
+      user = (await pool.query(GET_USER_BY_ID, [id]))?.rows?.[0];
     } catch (e) {
       err = e;
       logger.error(e);
@@ -41,7 +41,7 @@ export class User extends BaseUserModel {
     let user: UserDbProps | undefined;
     let err;
     try {
-      user = (await pool.query(GET_USER_BY_GOOGLE_ID, [googleId]))?.[0];
+      user = (await pool.query(GET_USER_BY_GOOGLE_ID, [googleId]))?.rows?.[0];
     } catch (e) {
       err = e;
       logger.error(e);

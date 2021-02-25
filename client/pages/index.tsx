@@ -14,9 +14,26 @@ const client = new QueryClient();
 const App: React.FC = () => {
   const [path, setPath] = useState("");
   const [title, setTitle] = useState("");
-  const { mutateAsync, data, error, status, isLoading } = useMutation(() =>
-    axios.post(path, { title })
-  );
+  const [description, setDescription] = useState("");
+  const [open, setOpen] = useState("");
+  const [closed, setClosed] = useState("");
+
+  const { mutateAsync, data, error, status, isLoading } = useMutation(() => {
+    return axios.post(path, {
+      open: open == "true",
+      closed: closed == "true",
+      title,
+      description,
+    });
+  });
+  const { mutateAsync: updateMut } = useMutation(() => {
+    return axios.put(path, {
+      open: open == "true",
+      closed: closed == "true",
+      title,
+      description,
+    });
+  });
 
   console.log(
     "%c stuff ",
@@ -29,15 +46,30 @@ const App: React.FC = () => {
 
   return (
     <>
-      <input value={path} onChange={(e) => setPath(e.target.value)} />
-      <input value={title} onChange={(e) => setTitle(e.target.value)} />
-      <button
-        onClick={async () => {
-          await mutateAsync();
-        }}
-      >
-        test
-      </button>
+      <div>
+        <input value={path} onChange={(e) => setPath(e.target.value)} />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} />
+        <input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input value={open} onChange={(e) => setOpen(e.target.value)} />
+        <input value={closed} onChange={(e) => setClosed(e.target.value)} />
+        <button
+          onClick={async () => {
+            await mutateAsync();
+          }}
+        >
+          create
+        </button>
+        <button
+          onClick={async () => {
+            await updateMut();
+          }}
+        >
+          update
+        </button>
+      </div>
     </>
   );
 };

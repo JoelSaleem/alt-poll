@@ -20,9 +20,9 @@ export class Poll extends BasePollModel {
     description: string,
     userId: string
   ) => {
-    const poll = await pool.query(
-      format(CREATE_POLL, [title, description, userId])
-    );
+    const poll = (
+      await pool.query(format(CREATE_POLL, [title, description, userId]))
+    )?.rows;
 
     console.log("poll", poll);
     console.log("poll", poll?.[0]);

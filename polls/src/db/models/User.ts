@@ -5,9 +5,8 @@ import { format } from "sqlstring";
 
 export class User extends BaseUserModel {
   static getUserById = async (id: string): Promise<User | undefined> => {
-    const users = (await pool.query(
-      format(GET_USER_BY_ID, [id])
-    )) as UserDbProps[];
+    const users = (await pool.query(format(GET_USER_BY_ID, [id])))
+      ?.rows as UserDbProps[];
 
     if ((users?.length ?? 0) >= 1) {
       const u = users?.[0];

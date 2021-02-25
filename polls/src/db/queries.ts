@@ -22,4 +22,5 @@ export const GET_POLL = `
 export const CREATE_POLL = `
     INSERT INTO "Polls"(title, description, user_id)
     VALUES(?, ?, ?)
+    RETURNING *
 `;

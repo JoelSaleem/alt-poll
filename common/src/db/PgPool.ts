@@ -39,6 +39,6 @@ export class PgPool {
       throw error;
     }
 
-    return results?.rows;
+    return results
   };
 }
