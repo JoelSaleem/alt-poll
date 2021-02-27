@@ -24,3 +24,19 @@ export const CREATE_POLL = `
     VALUES(?, ?, ?)
     RETURNING *
 `;
+
+export const GET_OPTIONS = `
+    SELECT * FROM "Options"
+    WHERE user_id = ? AND poll_id = ?
+`
+
+export const GET_OPTION = `
+    SELECT * FROM "Options"
+    WHERE user_id = ? AND poll_id = ? AND id = ?
+`
+
+export const CREATE_OPTION = `
+    INSERT INTO "Options"(title, description, poll_id)
+    VALUES(?, ?, ?)
+    RETURNING *
+`

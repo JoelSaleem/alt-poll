@@ -7,14 +7,6 @@ import { CREATE_POLL, GET_POLLS, GET_POLL } from "../db/queries";
 import { logger } from "../logger";
 import { pollProducer } from "../messaging/pollProducer";
 
-declare global {
-  namespace Express {
-    interface Request {
-      currentUser?: UserDbProps;
-    }
-  }
-}
-
 export const initPollRoutes = (app: Express) => {
   app.get("/polls/:id", requireAuth, async (req, res) => {
     console.log(req.params);

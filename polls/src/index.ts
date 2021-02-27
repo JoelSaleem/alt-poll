@@ -13,7 +13,7 @@ import "./passport-setup";
 
 declare namespace Express {
   interface Request {
-    currentUser: UserDbProps | undefined;
+    currentUser?: UserDbProps;
   }
 }
 
