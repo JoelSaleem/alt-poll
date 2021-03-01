@@ -36,7 +36,7 @@ export const GET_OPTION = `
 `
 
 export const CREATE_OPTION = `
-    INSERT INTO "Options"(title, description, poll_id)
-    VALUES(?, ?, ?)
+    INSERT INTO "Options"(title, description, poll_id, user_id)
+    VALUES(?, ?, ?, ?)
     RETURNING *
 `
