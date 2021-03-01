@@ -28,15 +28,16 @@ export const CREATE_POLL = `
 export const GET_OPTIONS = `
     SELECT * FROM "Options"
     WHERE user_id = ? AND poll_id = ?
-`
+`;
 
 export const GET_OPTION = `
     SELECT * FROM "Options"
     WHERE user_id = ? AND poll_id = ? AND id = ?
-`
+    LIMIT 1
+`;
 
 export const CREATE_OPTION = `
     INSERT INTO "Options"(title, description, poll_id, user_id)
     VALUES(?, ?, ?, ?)
     RETURNING *
-`
+`;

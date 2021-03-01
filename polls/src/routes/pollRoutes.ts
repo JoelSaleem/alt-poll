@@ -20,7 +20,7 @@ export const initPollRoutes = (app: Express) => {
         )?.rows ?? [];
     } catch (e) {
       logger.error(e);
-      return res.status(500).send();
+      return res.sendStatus(500);
     }
 
     res.send(polls);
