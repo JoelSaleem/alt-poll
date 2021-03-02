@@ -1,8 +1,9 @@
 import { requireAuth } from "@js-alt-poll/common";
 import { Express, query } from "express";
+import { body, validationResult } from "express-validator";
 import { format } from "sqlstring";
 import { pool } from "../db/dbConnection";
-import { GET_OPTION, GET_OPTIONS } from "../db/queries";
+import { CREATE_OPTION, GET_OPTION, GET_OPTIONS } from "../db/queries";
 import { logger } from "../logger";
 
 export const initOptionRoutes = (app: Express) => {
@@ -47,4 +48,37 @@ export const initOptionRoutes = (app: Express) => {
 
     res.send(option);
   });
+
+  app.post(
+    "/polls/:pollId/options",
+    requireAuth,
+    body("title").exists().isString(),
+    body("description").isString().optional({ nullable: true }),
+    async (req, res) => {
+      const errs = validationResult(req);
+      if (!errs.isEmpty()) {
+        return res.status(400).json({ errors: errs.array() });
+      }
+
+      const { pollId } = req.params;
+      const { title, description } = req.body;
+
+      try {
+        const option = (
+          await pool.query(
+            format(CREATE_OPTION, [
+              title,
+              description,
+              pollId,
+              req.currentUser!.id,
+            ])
+          )
+        )?.rows?.[0];
+        return res.send(option);
+      } catch (e) {
+        logger.error(e);
+        res.status(500).send({ errors: ["Could not create option"] });
+      }
+    }
+  );
 };

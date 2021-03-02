@@ -81,16 +81,14 @@ export const initPollRoutes = (app: Express) => {
     "/polls/:id",
     requireAuth,
     body("title").isString(),
-    body("description").isString(),
-    body("open").isBoolean(),
-    body("closed").isBoolean(),
+    body("description").isString().optional({ nullable: true }),
+    body("open").isBoolean().optional({ nullable: true }),
+    body("closed").isBoolean().optional({ nullable: true }),
     async (req, res) => {
       const errs = validationResult(req);
       if (!errs.isEmpty()) {
         return res.status(400).json({ errors: errs.array() });
       }
-
-      console.log(req.body);
 
       const fields = ["title", "description", "closed", "open"];
 

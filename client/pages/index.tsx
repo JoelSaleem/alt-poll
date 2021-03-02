@@ -35,18 +35,28 @@ const App: React.FC = () => {
     });
   });
 
-  console.log(
-    "%c stuff ",
-    "background: purple; color: white",
-    status,
-    error,
-    data,
-    isLoading
-  );
+  const {
+    mutateAsync: createOption,
+    error: optErr,
+    data: optData,
+  } = useMutation(() => {
+    return axios.post(path, {
+      title: "some title",
+    });
+  });
+
+  console.log("%c stuff ", "background: purple; color: white", optErr, optData);
 
   return (
     <>
       <div>
+        <button
+          onClick={() => {
+            createOption();
+          }}
+        >
+          click
+        </button>
         <input value={path} onChange={(e) => setPath(e.target.value)} />
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
         <input
