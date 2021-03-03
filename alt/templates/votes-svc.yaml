@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-votes-svc
+spec:
+  selector:
+    app: votes
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-votes-depl
+  labels:
+    app: votes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: votes
+  template:
+    metadata:
+      labels:
+        app: votes
+    spec:
+      containers:
+        - name: votes
+          image: jsaleem/alt-poll-votes:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: 
+                  name: polls-db-password
+                  key: DB_PASSWORD
+
+          

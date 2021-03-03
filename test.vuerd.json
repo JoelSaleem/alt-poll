@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 365,
-    "scrollLeft": 0,
+    "scrollTop": 116.66666412353516,
+    "scrollLeft": 680,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -232,29 +232,6 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 63,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "30186ebe-71d4-8b79-a71b-75303a4124bb"
-          },
-          {
-            "name": "created_at",
-            "comment": "",
-            "dataType": "",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
               "widthName": 64,
               "widthComment": 60,
               "widthDataType": 60,
@@ -287,10 +264,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 975.6666641235352,
           "top": 214.5,
-          "zIndex": 279,
+          "zIndex": 293,
           "widthName": 60,
           "widthComment": 60
         },
@@ -630,7 +607,7 @@
             "id": "173efa15-f36e-5395-4429-aa278781d7cf"
           },
           {
-            "name": "",
+            "name": "user_id",
             "comment": "",
             "dataType": "",
             "default": "",
@@ -697,13 +674,59 @@
               "widthDefault": 60
             },
             "id": "c49a0727-381a-49cb-f58c-a410039505eb"
+          },
+          {
+            "name": "rank",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "7a22ad58-9f44-c199-866f-23470ed29ae6"
+          },
+          {
+            "name": "poll_id",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "70fb2c06-8774-4153-64b1-49d713970b1b"
           }
         ],
         "ui": {
           "active": false,
           "left": 1055.6000003814697,
           "top": 387,
-          "zIndex": 249,
+          "zIndex": 291,
           "widthName": 60,
           "widthComment": 60
         },
@@ -778,18 +801,18 @@
           "columnIds": [
             "ceae46e8-3282-a341-c1de-7e8e2b5d17d5"
           ],
-          "x": 907.5,
-          "y": 655.2000002861023,
-          "direction": "top"
+          "x": 1083,
+          "y": 740.9500002861023,
+          "direction": "right"
         },
         "end": {
           "tableId": "b2c32fc2-5c42-3305-1d06-b97781658819",
           "columnIds": [
             "45e9f32c-d922-34a8-7ee2-2276317a84b8"
           ],
-          "x": 1055.6000003814697,
-          "y": 462.5,
-          "direction": "left"
+          "x": 1231.1000003814697,
+          "y": 579,
+          "direction": "bottom"
         },
         "id": "34ac1314-9abe-a35f-bc34-c46a669f7045",
         "relationshipType": "One"
@@ -811,7 +834,7 @@
             "5aa7239c-051d-5493-8acd-8446b79cc8f4"
           ],
           "x": 975.6666641235352,
-          "y": 300.25,
+          "y": 290,
           "direction": "left"
         },
         "id": "abc9fd12-4cd2-ec4f-c0c8-eec1727e4b84",

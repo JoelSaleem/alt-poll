@@ -12,6 +12,8 @@ build:
       context: ./polls
     - image: jsaleem/alt-poll-client
       context: ./client
+    - image: jsaleem/alt-poll-votes
+      context: ./votes
   local:
     push: true
 
