@@ -6,6 +6,7 @@ import { pool } from "../db/dbConnection";
 import { CREATE_POLL, GET_POLLS, GET_POLL } from "../db/queries";
 import { logger } from "../logger";
 import { pollProducer } from "../messaging/pollProducer";
+import { buildUpdateQuery } from "../db/utils";
 
 export const initPollRoutes = (app: Express) => {
   app.get("/polls/:id", requireAuth, async (req, res) => {
@@ -91,34 +92,10 @@ export const initPollRoutes = (app: Express) => {
       }
 
       const fields = ["title", "description", "closed", "open"];
-
-      // Build update command
-      let command = ['UPDATE "Polls"'];
-      if (!fields.some((field) => field in req.body)) {
-        return res
-          .status(400)
-          .send({ errors: ["You must provide some fields to update"] });
-      } else {
-        const updateFields = ["SET"];
-        fields.forEach((field) => {
-          if (field in req.body) {
-            updateFields.push(`${field} = ?,`);
-          }
-        });
-
-        // Remove trailing comma
-        const finalUpdatePhrase = updateFields[updateFields.length - 1];
-        updateFields[updateFields.length - 1] = finalUpdatePhrase.substring(
-          0,
-          finalUpdatePhrase.length - 1
-        );
-
-        command.push(updateFields.join(" "));
-      }
-      command.push("WHERE user_id = ? AND id = ?");
-      command.push("RETURNING *");
-
-      console.log(command.join("\n"));
+      const command = buildUpdateQuery("Polls", fields, req.body, [
+        "user_id",
+        "id",
+      ]);
 
       let poll;
       try {
@@ -126,7 +103,7 @@ export const initPollRoutes = (app: Express) => {
           (
             await pool.query(
               format(
-                command.join("\n"),
+                command,
                 [
                   req.body.title,
                   req.body.description,
