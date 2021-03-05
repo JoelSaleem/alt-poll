@@ -10,6 +10,7 @@ todo:
 
 - move package.json dev and types to devDependencies
 - xss-filters
+- use CUIDs
 
 ### DB PORT FORWARDING
 
