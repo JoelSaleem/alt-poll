@@ -84,18 +84,24 @@ affinity: {}
 
 auth:
   global:
-    postgresql: 
+    postgresql:
       postgresqlPassword: foobar # Fed as secret in auth deployment
+  persistence:
+    size: 5Gi
 
 polls-db:
   global:
-    postgresql: 
+    postgresql:
       postgresqlPassword: foobar # Fed as secret in auth deployment
+  persistence:
+    size: 5Gi
 
 votes-db:
   global:
-    postgresql: 
+    postgresql:
       postgresqlPassword: foobar # Fed as secret in auth deployment
+  persistence:
+    size: 5Gi
 
 rabbitmq:
   auth:

@@ -12,75 +12,33 @@ import { useState } from "react";
 const client = new QueryClient();
 
 const App: React.FC = () => {
-  const [path, setPath] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [open, setOpen] = useState("");
-  const [closed, setClosed] = useState("");
+  const [text, setText] = useState("");
+  const [path, setPath] = useState("https://alt-poll.dev/");
 
-  const { mutateAsync, data, error, status, isLoading } = useMutation(() => {
-    return axios.post(path, {
-      open: open == "true",
-      closed: closed == "true",
-      title,
-      description,
-    });
-  });
-  const { mutateAsync: updateMut } = useMutation(() => {
-    return axios.put(path, {
-      open: open == "true",
-      closed: closed == "true",
-      title,
-      description,
-    });
+  const { mutateAsync: post, data: postData, error: postErr } = useMutation(
+    () => {
+      return axios.post(path, JSON.parse(text));
+    }
+  );
+  const { mutateAsync: put, data: putData, error: putErr } = useMutation(() => {
+    return axios.put(path, JSON.parse(text));
   });
 
-  const {
-    mutateAsync: createOption,
-    error: optErr,
-    data: optData,
-  } = useMutation(() => {
-    return axios.post(path, {
-      title: "some title",
-    });
-  });
-
-  console.log("%c stuff ", "background: purple; color: white", optErr, optData);
+  console.log(
+    "%c post ",
+    "background: purple; color: white",
+    postData,
+    postErr
+  );
+  console.log("%c put ", "background: purple; color: white", putData, putErr);
 
   return (
-    <>
-      <div>
-        <button
-          onClick={() => {
-            createOption();
-          }}
-        >
-          click
-        </button>
-        <input value={path} onChange={(e) => setPath(e.target.value)} />
-        <input value={title} onChange={(e) => setTitle(e.target.value)} />
-        <input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input value={open} onChange={(e) => setOpen(e.target.value)} />
-        <input value={closed} onChange={(e) => setClosed(e.target.value)} />
-        <button
-          onClick={async () => {
-            await mutateAsync();
-          }}
-        >
-          create
-        </button>
-        <button
-          onClick={async () => {
-            await updateMut();
-          }}
-        >
-          update
-        </button>
-      </div>
-    </>
+    <div>
+      <input value={path} onChange={(e) => setPath(e.target.value)} />
+      <button onClick={() => post()}>post</button>
+      <button onClick={() => put()}>put</button>
+      <textarea onChange={(e) => setText(e.target.value)} value={text} />
+    </div>
   );
 };
 
