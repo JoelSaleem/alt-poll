@@ -20,8 +20,8 @@ export const GET_POLL = `
 `;
 
 export const CREATE_POLL = `
-    INSERT INTO "Polls"(title, description, user_id)
-    VALUES(?, ?, ?)
+    INSERT INTO "Polls"(id, title, description, user_id, open, closed, created_at)
+    VALUES(?, ?, ?, ?, ?, ?, ?)
     RETURNING *
 `;
 

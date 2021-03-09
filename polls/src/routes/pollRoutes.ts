@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { format } from "sqlstring";
 import { body, validationResult } from "express-validator";
-import { requireAuth, UserDbProps } from "@js-alt-poll/common";
+import { requireAuth, PollEvents } from "@js-alt-poll/common";
 import { pool } from "../db/dbConnection";
 import { CREATE_POLL, GET_POLLS, GET_POLL } from "../db/queries";
 import { logger } from "../logger";
@@ -56,25 +56,23 @@ export const initPollRoutes = (app: Express) => {
 
       let poll;
       try {
-        poll =
-          (
-            await pool.query(
-              format(CREATE_POLL, [
-                req.body.title,
-                req.body.description,
-                req.currentUser!.id,
-              ])
-            )
-          )?.rows ?? [];
+        poll = (
+          await pool.query(
+            format(CREATE_POLL, [
+              req.body.title,
+              req.body.description,
+              req.currentUser!.id,
+            ])
+          )
+        )?.rows?.[0];
 
-        console.log(poll);
-        pollProducer.publish("poll.created", JSON.stringify(poll));
+        pollProducer.publish(PollEvents.POLL_CREATED, JSON.stringify(poll));
       } catch (e) {
         logger.error(e);
         return res.status(500).send(e);
       }
 
-      res.status(201).send(poll?.[0]);
+      res.status(201).send(poll);
     }
   );
 
@@ -117,7 +115,7 @@ export const initPollRoutes = (app: Express) => {
           )?.rows ?? [];
 
         console.log(poll);
-        pollProducer.publish("poll.created", JSON.stringify(poll));
+        pollProducer.publish(PollEvents.POLL_UPDATED, JSON.stringify(poll));
       } catch (e) {
         logger.error(e);
         return res.status(500).send(e);
