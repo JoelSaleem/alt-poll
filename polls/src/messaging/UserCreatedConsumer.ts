@@ -7,7 +7,7 @@ const DEFAULT_RABBIT_NACK_DELAY = 10 * 1000; // 10 secs
 
 export class UserCreatedConsumer extends Consumer {
   constructor() {
-    super("alt-poll-exchange", "user.created", "polls");
+    super("alt-poll-exchange", "user.created", "polls-user-created");
   }
 
   onMessage = async (msg: ConsumeMessage) => {
