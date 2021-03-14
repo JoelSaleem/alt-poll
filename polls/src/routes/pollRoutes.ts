@@ -79,7 +79,7 @@ export const initPollRoutes = (app: Express) => {
   app.put(
     "/polls/:id",
     requireAuth,
-    body("title").isString(),
+    body("title").isString().optional({ nullable: true }),
     body("description").isString().optional({ nullable: true }),
     body("open").isBoolean().optional({ nullable: true }),
     body("closed").isBoolean().optional({ nullable: true }),
@@ -89,11 +89,36 @@ export const initPollRoutes = (app: Express) => {
         return res.status(400).json({ errors: errs.array() });
       }
 
-      const fields = ["title", "description", "closed", "open"];
-      const command = buildUpdateQuery("Polls", fields, req.body, [
-        "user_id",
-        "id",
-      ]);
+      const { title, description, open, closed } = req.body as {
+        title?: string;
+        description?: string;
+        open?: boolean;
+        closed?: boolean;
+      };
+
+      const fields: any[] = [];
+      if (title != null || title != undefined) fields.push("title");
+      if (description != null || description != undefined)
+        fields.push("description");
+      if (open != null || open != undefined) fields.push("open");
+      if (closed != null || closed != undefined) fields.push("closed");
+
+      const command = buildUpdateQuery("Polls", fields, ["user_id", "id"]);
+      console.log("command", command);
+      console.log(
+        "formatted",
+        format(
+          command,
+          [
+            req.body.title,
+            req.body.description,
+            req.body.closed,
+            req.body.open,
+            req.currentUser!.id,
+            req.params!.id,
+          ].filter((x) => x != null && x != undefined)
+        )
+      );
 
       let poll;
       try {
@@ -112,9 +137,9 @@ export const initPollRoutes = (app: Express) => {
                 ].filter((x) => x != null && x != undefined)
               )
             )
-          )?.rows ?? [];
+          )?.rows?.[0];
 
-        console.log(poll);
+        console.log(poll, PollEvents.POLL_UPDATED);
         pollProducer.publish(PollEvents.POLL_UPDATED, JSON.stringify(poll));
       } catch (e) {
         logger.error(e);

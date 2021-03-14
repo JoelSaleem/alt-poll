@@ -1,19 +1,13 @@
 export const buildUpdateQuery = (
   tableName: string,
   fields: string[],
-  body: { [key: string]: any },
   whereParams: string[]
 ) => {
   // Build update command
   let command = [`UPDATE "${tableName}"`];
-  if (!fields.some((field) => field in body)) {
-    throw new Error("You must provide some fields to update");
-  }
   const updateFields = ["SET"];
   fields.forEach((field) => {
-    if (field in body) {
-      updateFields.push(`${field} = ?,`);
-    }
+    updateFields.push(`${field} = ?,`);
   });
 
   // Remove trailing comma

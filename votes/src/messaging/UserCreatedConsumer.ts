@@ -4,10 +4,12 @@ import { User } from "../db/models/User";
 
 export class UserCreatedConsumer extends Consumer {
   constructor() {
-    super("alt-poll-exchange", UserEvents.USER_CREATED, "votes");
+    super("alt-poll-exchange", UserEvents.USER_CREATED, "votes-user-created");
   }
 
   onMessage = async (msg: ConsumeMessage) => {
+    console.log("msg", msg.fields.routingKey);
+    console.log("patt", this.pattern);
     const userData: UserDbProps = JSON.parse(msg.content.toString());
     console.log("user", userData);
 

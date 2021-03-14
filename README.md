@@ -54,7 +54,7 @@ To Access the RabbitMQ AMQP port:
 To Access the RabbitMQ Management interface:
 
     echo "URL : http://127.0.0.1:15672/"
-    kubectl port-forward --namespace default svc/my-release-rabbitmq 15672:15672
+    kubectl port-forward --namespace default svc/alt-poll-rabbitmq 15672:15672
 
 
 

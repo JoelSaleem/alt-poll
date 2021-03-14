@@ -4,7 +4,7 @@ import { Poll } from "../db/models/Poll";
 
 export class PollCreatedConsumer extends Consumer {
   constructor() {
-    super("alt-poll-exchange", "poll.created", "votes");
+    super("alt-poll-exchange", "poll.created", "votes-poll-created");
   }
 
   onMessage = async (msg: ConsumeMessage) => {

@@ -74,7 +74,6 @@ export const initOptionRoutes = (app: Express) => {
         const command = buildUpdateQuery(
           "Options",
           ["title", "description"],
-          req.body,
           ["user_id", "poll_id", "id"]
         );
 
