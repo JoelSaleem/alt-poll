@@ -17,20 +17,22 @@ export class PollUpdatedConsumer extends Consumer {
       open,
       title,
     }: PollDbProps = JSON.parse(msg.content.toString());
-    console.log("msg received", msg.content.toString());
 
     const poll = await Poll.getPollById(id, user_id);
     if (!poll) {
       this.nack(msg, 20 * 1000);
       return;
     }
-    console.log("found poll", poll);
 
     poll.title = title;
     poll.description = description;
     poll.open = open;
     poll.closed = closed;
 
-    await poll?.save();
+    try {
+      await poll?.save();
+    } catch (e) {
+      this.nack(msg, 20 * 1000);
+    }
   };
 }

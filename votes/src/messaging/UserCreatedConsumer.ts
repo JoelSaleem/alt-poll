@@ -8,10 +8,7 @@ export class UserCreatedConsumer extends Consumer {
   }
 
   onMessage = async (msg: ConsumeMessage) => {
-    console.log("msg", msg.fields.routingKey);
-    console.log("patt", this.pattern);
     const userData: UserDbProps = JSON.parse(msg.content.toString());
-    console.log("user", userData);
 
     const { created_at, google_id, id, name } = userData;
 
