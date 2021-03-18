@@ -23,6 +23,9 @@ const App: React.FC = () => {
   const { mutateAsync: put, data: putData, error: putErr } = useMutation(() => {
     return axios.put(path, JSON.parse(text));
   });
+  const { mutateAsync: get, data: getData, error: getErr } = useMutation(() => {
+    return axios.put(path, JSON.parse(text));
+  });
 
   console.log(
     "%c post ",
@@ -35,6 +38,7 @@ const App: React.FC = () => {
   return (
     <div>
       <input value={path} onChange={(e) => setPath(e.target.value)} />
+      <button onClick={() => get()}>get</button>
       <button onClick={() => post()}>post</button>
       <button onClick={() => put()}>put</button>
       <textarea onChange={(e) => setText(e.target.value)} value={text} />

@@ -31,13 +31,24 @@ export const GET_OPTIONS = `
 `;
 
 export const GET_OPTION = `
-    SELECT * FROM "Options"
+SELECT * FROM "Options"
     WHERE user_id = ? AND poll_id = ? AND id = ?
     LIMIT 1
 `;
 
 export const CREATE_OPTION = `
     INSERT INTO "Options"(title, description, poll_id, user_id)
+    VALUES(?, ?, ?, ?)
+    RETURNING *
+`;
+
+export const GET_VOTES = `
+SELECT * FROM "Votes"
+WHERE user_id = ? AND poll_id = ?
+`;
+
+export const CREATE_VOTE = `
+    INSERT INTO "Votes"(user_id, poll_id, option_id, rank)
     VALUES(?, ?, ?, ?)
     RETURNING *
 `;
