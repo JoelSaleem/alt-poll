@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { body, validationResult } from "express-validator";
+import { body, validationResult, query } from "express-validator";
 import { requireAuth, VoteDBProps } from "@js-alt-poll/common";
 import { pool } from "../db/dbConnection";
 import { format } from "sqlstring";
@@ -9,30 +9,28 @@ import { Vote } from "../db/models/Votes";
 export const initVoteRoutes = (app: Express) => {
   app.get(
     "/votes",
-    // requireAuth,
-    // body("pollId").isString().exists(),
+    requireAuth,
+    query("pollId").isString().exists(),
     async (req, res) => {
-      console.log(req.currentUser);
-      // const errs = validationResult(req);
-      // if (!errs.isEmpty()) {
-      //   return res.status(400).json({ errors: errs.array() });
-      // }
+      const errs = validationResult(req);
+      if (!errs.isEmpty()) {
+        return res.status(400).json({ errors: errs.array() });
+      }
 
-      // let votes: VoteDBProps[] = [];
-      // try {
-      //   votes = ((
-      //     await pool.query(
-      //       format(GET_VOTES, [req.currentUser!.id, req.body.pollId])
-      //     )
-      //   )?.rows ?? []) as VoteDBProps[];
-      // } catch (e) {
-      //   return res
-      //     .status(500)
-      //     .send({ errors: ["Could not get votes for poll"] });
-      // }
+      let votes: VoteDBProps[] = [];
+      try {
+        votes = ((
+          await pool.query(
+            format(GET_VOTES, [req.currentUser!.id, req.params.pollId])
+          )
+        )?.rows ?? []) as VoteDBProps[];
+      } catch (e) {
+        return res
+          .status(500)
+          .send({ errors: ["Could not get votes for poll"] });
+      }
 
-      // res.send(votes);
-      res.send({});
+      res.send(votes);
     }
   );
 
@@ -48,7 +46,7 @@ export const initVoteRoutes = (app: Express) => {
     body("rank").isNumeric().exists(),
     async (req, res) => {
       const vote = await Vote.create(
-        req.body.userId,
+        req.currentUser!.id,
         req.body.pollId,
         req.body.optionId,
         req.body.rank

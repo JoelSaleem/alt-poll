@@ -24,7 +24,7 @@ const App: React.FC = () => {
     return axios.put(path, JSON.parse(text));
   });
   const { mutateAsync: get, data: getData, error: getErr } = useMutation(() => {
-    return axios.put(path, JSON.parse(text));
+    return axios.get(path, JSON.parse(text));
   });
 
   console.log(
