@@ -1,11 +1,11 @@
 import { requireAuth } from "@js-alt-poll/common";
-import { Express, query } from "express";
+import { Express } from "express";
 import { body, validationResult } from "express-validator";
 import { format } from "sqlstring";
 import { pool } from "../db/dbConnection";
-import { CREATE_OPTION, GET_OPTION, GET_OPTIONS } from "../db/queries";
-import { buildUpdateQuery } from "../db/utils";
+import { GET_OPTIONS } from "../db/queries";
 import { logger } from "../logger";
+import { Option } from "../db/models/Option";
 
 export const initOptionRoutes = (app: Express) => {
   app.get("/polls/:pollId/options", requireAuth, async (req, res) => {
@@ -29,11 +29,11 @@ export const initOptionRoutes = (app: Express) => {
 
     let option = null;
     try {
-      option = (
-        await pool.query(
-          format(GET_OPTION, [req.currentUser!.id, pollId, optionId])
-        )
-      )?.rows?.[0];
+      option = await Option.getOptionById(
+        optionId,
+        pollId,
+        req.currentUser!.id
+      );
 
       if (!option) {
         throw new Error(
@@ -47,7 +47,7 @@ export const initOptionRoutes = (app: Express) => {
       return res.send({ errors: ["Failed to fetch option"] });
     }
 
-    res.send(option);
+    res.send(option.serialise());
   });
 
   app.put(
@@ -71,26 +71,18 @@ export const initOptionRoutes = (app: Express) => {
       };
 
       try {
-        const command = buildUpdateQuery(
-          "Options",
-          ["title", "description"],
-          ["user_id", "poll_id", "id"]
+        let option = await Option.getOptionById(
+          optionId,
+          pollId,
+          req.currentUser!.id
         );
 
-        logger.info(`update option: ${command}`);
+        if (title) option.title = title;
+        if (description) option.description = description;
 
-        const option = await pool.query(
-          format(
-            command,
-            [title, description, req.currentUser!.id, pollId, optionId].filter(
-              (x) => x != null && x != undefined
-            )
-          )
-        );
+        option = await option.save();
 
-        logger.info(`Created option: ${JSON.stringify(option)}`);
-
-        res.send(option);
+        res.send(option.serialise());
       } catch (e) {
         logger.error(e);
         return res
@@ -115,17 +107,13 @@ export const initOptionRoutes = (app: Express) => {
       const { title, description } = req.body;
 
       try {
-        const option = (
-          await pool.query(
-            format(CREATE_OPTION, [
-              title,
-              description,
-              pollId,
-              req.currentUser!.id,
-            ])
-          )
-        )?.rows?.[0];
-        return res.status(201).send(option);
+        const option = await Option.create({
+          title,
+          description,
+          pollId,
+          userId: req.currentUser!.id,
+        });
+        return res.status(201).send(option.serialise());
       } catch (e) {
         logger.error(e);
         res.status(500).send({ errors: ["Could not create option"] });

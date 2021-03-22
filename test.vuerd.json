@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 210.8333282470703,
-    "scrollLeft": 905.8333129882812,
+    "scrollTop": 474.9999694824219,
+    "scrollLeft": 702.5,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -567,13 +567,36 @@
               "widthDefault": 60
             },
             "id": "f33fd214-c1f4-168d-2e70-1d6e05befcde"
+          },
+          {
+            "name": "user_id",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "3b1e3576-1379-aeb7-286c-364bb65d2d61"
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 732,
           "top": 655.2000002861023,
-          "zIndex": 269,
+          "zIndex": 299,
           "widthName": 60,
           "widthComment": 60
         },
@@ -788,7 +811,7 @@
             "f1040a6f-fcd3-4729-e1ff-edb5d0df5610"
           ],
           "x": 732,
-          "y": 740.9500002861023,
+          "y": 751.2000002861023,
           "direction": "left"
         },
         "id": "eaa1b9e8-8ebe-dfde-2613-dd37d5f186d9",
@@ -801,18 +824,18 @@
           "columnIds": [
             "ceae46e8-3282-a341-c1de-7e8e2b5d17d5"
           ],
-          "x": 1083,
-          "y": 740.9500002861023,
-          "direction": "right"
+          "x": 907.5,
+          "y": 655.2000002861023,
+          "direction": "top"
         },
         "end": {
           "tableId": "b2c32fc2-5c42-3305-1d06-b97781658819",
           "columnIds": [
             "45e9f32c-d922-34a8-7ee2-2276317a84b8"
           ],
-          "x": 1231.1000003814697,
-          "y": 579,
-          "direction": "bottom"
+          "x": 1055.6000003814697,
+          "y": 483,
+          "direction": "left"
         },
         "id": "34ac1314-9abe-a35f-bc34-c46a669f7045",
         "relationshipType": "One"

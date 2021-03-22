@@ -15,6 +15,7 @@ export * from "./db/PgPool";
 export * from "./db/models/User";
 export * from "./db/models/Poll";
 export * from "./db/models/Vote";
+export * from "./db/models/Option";
 
 // middlewares
 export * from "./middleware/requireAuth";
