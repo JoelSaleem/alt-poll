@@ -37,8 +37,8 @@ SELECT * FROM "Options"
 `;
 
 export const CREATE_OPTION = `
-    INSERT INTO "Options"(title, description, poll_id, user_id)
-    VALUES(?, ?, ?, ?)
+    INSERT INTO "Options"(id, created_at, title, description, poll_id, user_id)
+    VALUES(?, ?, ?, ?, ?, ?)
     RETURNING *
 `;
 

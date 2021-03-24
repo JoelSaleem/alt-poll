@@ -9,6 +9,7 @@ import { UserCreatedConsumer } from "./messaging/UserCreatedConsumer";
 import { initVoteRoutes } from "./routes/voteRoutes";
 
 import "./passport-setup";
+import { OptionCreatedConsumer } from "./messaging/OptionCreatedConsumer";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 new UserCreatedConsumer().init();
 new PollCreatedConsumer().init();
 new PollUpdatedConsumer().init();
+new OptionCreatedConsumer().init();
 
 initVoteRoutes(app);
 

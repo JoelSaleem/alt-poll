@@ -1,4 +1,4 @@
-import { requireAuth } from "@js-alt-poll/common";
+import { OptionEvents, requireAuth } from "@js-alt-poll/common";
 import { Express } from "express";
 import { body, validationResult } from "express-validator";
 import { format } from "sqlstring";
@@ -6,6 +6,7 @@ import { pool } from "../db/dbConnection";
 import { GET_OPTIONS } from "../db/queries";
 import { logger } from "../logger";
 import { Option } from "../db/models/Option";
+import { optionProducer } from "../messaging/optionProducer";
 
 export const initOptionRoutes = (app: Express) => {
   app.get("/polls/:pollId/options", requireAuth, async (req, res) => {
@@ -113,7 +114,15 @@ export const initOptionRoutes = (app: Express) => {
           pollId,
           userId: req.currentUser!.id,
         });
-        return res.status(201).send(option.serialise());
+        const serialisedOption = option.serialise();
+        console.log('serialised', JSON.stringify(serialisedOption))
+
+        optionProducer.publish(
+          OptionEvents.OPTION_CREATED,
+          JSON.stringify(serialisedOption)
+        );
+
+        return res.status(201).send(serialisedOption);
       } catch (e) {
         logger.error(e);
         res.status(500).send({ errors: ["Could not create option"] });
