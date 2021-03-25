@@ -78,10 +78,10 @@ export const initOptionRoutes = (app: Express) => {
           req.currentUser!.id
         );
 
-        if (title != null && title != undefined) {
+        if (title != null) {
           option.title = title;
         }
-        if (description != null && description != undefined) {
+        if (description != null) {
           option.description = description;
         }
 
