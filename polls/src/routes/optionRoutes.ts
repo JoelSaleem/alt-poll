@@ -78,12 +78,22 @@ export const initOptionRoutes = (app: Express) => {
           req.currentUser!.id
         );
 
-        if (title) option.title = title;
-        if (description) option.description = description;
+        if (title != null && title != undefined) {
+          option.title = title;
+        }
+        if (description != null && description != undefined) {
+          option.description = description;
+        }
 
         option = await option.save();
+        const serialisedOption = option.serialise();
 
-        res.send(option.serialise());
+        optionProducer.publish(
+          OptionEvents.OPTION_UPDATED,
+          JSON.stringify(serialisedOption)
+        );
+
+        res.send(serialisedOption);
       } catch (e) {
         logger.error(e);
         return res
@@ -115,7 +125,7 @@ export const initOptionRoutes = (app: Express) => {
           userId: req.currentUser!.id,
         });
         const serialisedOption = option.serialise();
-        console.log('serialised', JSON.stringify(serialisedOption))
+        console.log("serialised", JSON.stringify(serialisedOption));
 
         optionProducer.publish(
           OptionEvents.OPTION_CREATED,
