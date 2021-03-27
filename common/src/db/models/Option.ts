@@ -5,6 +5,7 @@ export interface OptionDbProps {
   poll_id: string;
   created_at: string;
   user_id: string;
+  version: number;
 }
 
 export interface OptionModelProps {
@@ -14,6 +15,7 @@ export interface OptionModelProps {
   pollId: string;
   createdAt: Date;
   userId: string;
+  version: number;
 }
 
 export class BaseOptionModel implements OptionModelProps {
@@ -23,6 +25,7 @@ export class BaseOptionModel implements OptionModelProps {
   public pollId: string;
   public createdAt: Date;
   public userId: string;
+  public version: number;
 
   constructor({
     id,
@@ -31,6 +34,7 @@ export class BaseOptionModel implements OptionModelProps {
     pollId,
     createdAt,
     userId,
+    version = 0,
   }: OptionModelProps) {
     this.id = id;
     this.title = title;
@@ -38,6 +42,7 @@ export class BaseOptionModel implements OptionModelProps {
     this.userId = userId;
     this.pollId = pollId;
     this.createdAt = (createdAt && new Date(createdAt)) || new Date();
+    this.version = version;
   }
 
   serialise = (): OptionDbProps => ({
@@ -47,5 +52,6 @@ export class BaseOptionModel implements OptionModelProps {
     poll_id: this.pollId,
     user_id: this.userId,
     created_at: this.createdAt.toISOString(),
+    version: this.version,
   });
 }

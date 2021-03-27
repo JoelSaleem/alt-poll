@@ -6,6 +6,18 @@ export interface PollDbProps {
   created_at: string;
   closed: boolean;
   open: boolean;
+  version: number;
+}
+
+export interface PollModelProps {
+  id: string;
+  title: string;
+  description: string;
+  userId: string;
+  createdAt: string;
+  closed: boolean;
+  open: boolean;
+  version: number;
 }
 
 export class BasePollModel {
@@ -16,6 +28,7 @@ export class BasePollModel {
   public createdAt: Date;
   public closed: boolean;
   public open: boolean;
+  public version: number;
 
   constructor(
     id: string,
@@ -24,7 +37,8 @@ export class BasePollModel {
     description: string = "",
     open: boolean = false,
     closed: boolean = false,
-    createdAt: string | null = null
+    createdAt: string | null = null,
+    version: number = 0
   ) {
     this.id = id;
     this.title = title;
@@ -33,6 +47,7 @@ export class BasePollModel {
     this.open = open;
     this.closed = closed;
     this.createdAt = (createdAt && new Date(createdAt)) || new Date();
+    this.version = version;
   }
 
   serialise = (): PollDbProps => ({
@@ -43,5 +58,6 @@ export class BasePollModel {
     user_id: this.userId,
     title: this.title,
     created_at: this.createdAt.toISOString(),
+    version: this.version,
   });
 }

@@ -5,6 +5,7 @@ export interface VoteDBProps {
   poll_id: string;
   created_at: string;
   rank: number;
+  version: number;
 }
 
 export class BaseVoteModel {
@@ -14,6 +15,7 @@ export class BaseVoteModel {
   public pollId: string;
   public createdAt: Date;
   public rank: number;
+  public version: number;
 
   constructor(
     id: string,
@@ -21,7 +23,8 @@ export class BaseVoteModel {
     optionId: string,
     pollId: string,
     rank: number,
-    createdAt: string | null = null
+    createdAt: string | null = null,
+    version: number = 0
   ) {
     this.id = id;
     this.userId = userId;
@@ -29,6 +32,7 @@ export class BaseVoteModel {
     this.pollId = pollId;
     this.rank = rank;
     this.createdAt = (createdAt && new Date(createdAt)) || new Date();
+    this.version = version;
   }
 
   serialise = (): VoteDBProps => ({
@@ -38,5 +42,6 @@ export class BaseVoteModel {
     poll_id: this.pollId,
     rank: this.rank,
     created_at: this.createdAt.toISOString(),
+    version: this.version,
   });
 }
