@@ -84,6 +84,7 @@ export const initOptionRoutes = (app: Express) => {
         if (description != null) {
           option.description = description;
         }
+        option.version++;
 
         option = await option.save();
         const serialisedOption = option.serialise();
@@ -123,6 +124,7 @@ export const initOptionRoutes = (app: Express) => {
           description,
           pollId,
           userId: req.currentUser!.id,
+          version: 0,
         });
         const serialisedOption = option.serialise();
         console.log("serialised", JSON.stringify(serialisedOption));

@@ -4,7 +4,7 @@ import { requireAuth, VoteDBProps } from "@js-alt-poll/common";
 import { pool } from "../db/dbConnection";
 import { format } from "sqlstring";
 import { GET_VOTES } from "../db/queries";
-import { Vote } from "../db/models/Votes";
+import { Vote } from "../db/models/Vote";
 
 export const initVoteRoutes = (app: Express) => {
   app.get(
@@ -34,8 +34,14 @@ export const initVoteRoutes = (app: Express) => {
     }
   );
 
-  app.get("/votes/:voteId", requireAuth, (req, res) => {
+  app.get("/votes/:voteId", requireAuth, async (req, res) => {
+    const voteId = req.params.voteId
+    
     res.send("init vote routes");
+  });
+
+  app.put("/votes/:voteId", requireAuth, (req, res) => {
+    // TODO
   });
 
   app.post(

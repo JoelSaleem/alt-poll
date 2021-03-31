@@ -41,6 +41,7 @@ export class Option extends BaseOptionModel {
       createdAt: new Date(option.created_at),
       pollId: option.poll_id,
       userId: option.user_id,
+      version: option.version,
     });
   };
 
@@ -59,6 +60,7 @@ export class Option extends BaseOptionModel {
       pollId: option.poll_id,
       userId: option.user_id,
       createdAt: new Date(option.created_at),
+      version: option.version,
     });
   };
 

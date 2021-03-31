@@ -25,6 +25,7 @@ export class OptionCreatedConsumer extends Consumer {
         pollId: poll_id,
         userId: user_id,
         createdAt: new Date(created_at),
+        version: 0,
       });
     } catch (e) {
       logger.error(e);

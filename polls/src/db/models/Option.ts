@@ -32,6 +32,7 @@ export class Option extends BaseOptionModel {
       createdAt: new Date(option.created_at),
       pollId: option.poll_id,
       userId: option.user_id,
+      version: 0,
     });
   };
 
@@ -50,21 +51,23 @@ export class Option extends BaseOptionModel {
       pollId: option.poll_id,
       userId: option.user_id,
       createdAt: new Date(option.created_at),
+      version: option.version,
     });
   };
 
   save = async (): Promise<Option> => {
     const command = buildUpdateQuery(
       "Options",
-      ["title", "description"],
+      ["title", "description", "version"],
       ["user_id", "poll_id", "id"]
     );
 
-    const { id, description, poll_id, title, user_id } = (
+    const { id, description, poll_id, title, user_id, version } = (
       await pool.query(
         format(command, [
           this.title,
           this.description,
+          this.version,
           this.userId,
           this.pollId,
           this.id,
@@ -77,6 +80,7 @@ export class Option extends BaseOptionModel {
     this.pollId = poll_id;
     this.title = title;
     this.userId = user_id;
+    this.version = version;
 
     return this;
   };

@@ -22,6 +22,7 @@ export class OptionUpdatedConsumer extends Consumer {
       option.title = title;
       option.description = description;
       option.createdAt = new Date(created_at);
+      option.version++;
 
       await option.save();
     } catch (e) {

@@ -11,7 +11,8 @@ export class Poll extends BasePollModel {
     description: string = "",
     open: boolean = false,
     closed: boolean = false,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
+    version: number = 0
   ) {
     super(
       id,
@@ -20,7 +21,8 @@ export class Poll extends BasePollModel {
       description,
       open,
       closed,
-      createdAt.toISOString()
+      createdAt.toISOString(),
+      version
     );
   }
 
@@ -31,7 +33,8 @@ export class Poll extends BasePollModel {
     userId: string,
     open: boolean = false,
     closed: boolean = false,
-    createdAt: string
+    createdAt: string,
+    version: number = 0
   ) => {
     const poll = (
       await pool.query(
@@ -71,20 +74,28 @@ export class Poll extends BasePollModel {
   };
 
   save = async () => {
-    const { title, open, closed, description, id, user_id } = this.serialise();
+    const {
+      title,
+      open,
+      closed,
+      description,
+      id,
+      user_id,
+      version,
+    } = this.serialise();
     const q = buildUpdateQuery(
       "Polls",
-      ["title", "description", "open", "closed"],
+      ["title", "description", "open", "closed", "version"],
       ["id", "user_id"]
     );
     console.log("query", q);
     console.log(
       "formatted",
-      format(q, [title, description, open, closed, id, user_id])
+      format(q, [title, description, open, closed, version, id, user_id])
     );
 
     await pool.query(
-      format(q, [title, description, open, closed, id, user_id])
+      format(q, [title, description, open, closed, version, id, user_id])
     );
   };
 }

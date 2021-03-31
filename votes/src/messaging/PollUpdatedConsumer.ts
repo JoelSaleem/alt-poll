@@ -1,6 +1,7 @@
 import { ConsumeMessage } from "amqplib";
 import { Consumer, PollDbProps } from "@js-alt-poll/common";
 import { Poll } from "../db/models/Poll";
+import { version } from "typescript";
 
 export class PollUpdatedConsumer extends Consumer {
   constructor() {
@@ -8,7 +9,7 @@ export class PollUpdatedConsumer extends Consumer {
   }
 
   onMessage = async (msg: ConsumeMessage) => {
-    console.log("poll updated");
+    console.log("poll updated", JSON.parse(msg.content.toString()));
     const {
       id,
       user_id,
@@ -16,6 +17,7 @@ export class PollUpdatedConsumer extends Consumer {
       description,
       open,
       title,
+      version,
     }: PollDbProps = JSON.parse(msg.content.toString());
 
     const poll = await Poll.getPollById(id, user_id);
@@ -28,6 +30,7 @@ export class PollUpdatedConsumer extends Consumer {
     poll.description = description;
     poll.open = open;
     poll.closed = closed;
+    poll.version = version;
 
     try {
       await poll?.save();

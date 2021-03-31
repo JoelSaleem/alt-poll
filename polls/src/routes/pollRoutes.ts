@@ -7,6 +7,8 @@ import { CREATE_POLL, GET_POLLS, GET_POLL } from "../db/queries";
 import { logger } from "../logger";
 import { pollProducer } from "../messaging/pollProducer";
 import { buildUpdateQuery } from "../db/utils";
+import { version } from "typescript";
+import { Poll } from "../db/models/Poll";
 
 export const initPollRoutes = (app: Express) => {
   app.get("/polls/:id", requireAuth, async (req, res) => {
@@ -84,6 +86,7 @@ export const initPollRoutes = (app: Express) => {
     body("open").isBoolean().optional({ nullable: true }),
     body("closed").isBoolean().optional({ nullable: true }),
     async (req, res) => {
+      console.log("req.user", req.currentUser);
       const errs = validationResult(req);
       if (!errs.isEmpty()) {
         return res.status(400).json({ errors: errs.array() });
@@ -96,57 +99,41 @@ export const initPollRoutes = (app: Express) => {
         closed?: boolean;
       };
 
-      const fields: any[] = [];
-      if (title != null || title != undefined) fields.push("title");
-      if (description != null || description != undefined)
-        fields.push("description");
-      if (open != null || open != undefined) fields.push("open");
-      if (closed != null || closed != undefined) fields.push("closed");
-
-      const command = buildUpdateQuery("Polls", fields, ["user_id", "id"]);
-      console.log("command", command);
-      console.log(
-        "formatted",
-        format(
-          command,
-          [
-            req.body.title,
-            req.body.description,
-            req.body.closed,
-            req.body.open,
-            req.currentUser!.id,
-            req.params!.id,
-          ].filter((x) => x != null && x != undefined)
-        )
-      );
-
+      let err = null;
+      let status = 400;
       let poll;
       try {
-        poll =
-          (
-            await pool.query(
-              format(
-                command,
-                [
-                  req.body.title,
-                  req.body.description,
-                  req.body.closed,
-                  req.body.open,
-                  req.currentUser!.id,
-                  req.params!.id,
-                ].filter((x) => x != null && x != undefined)
-              )
-            )
-          )?.rows?.[0];
+        poll = await Poll.getById(req.params!.id, req.currentUser!.id);
+        if (!poll) {
+          throw new Error(`Could not find poll with id ${req.params!.pollId}`);
+        }
+        poll && poll.version++;
+        if (title != null && title != undefined) poll.title = title;
+        if (description != null && description != undefined) {
+          poll.description = description;
+        }
+        if (open != null && open != undefined) {
+          poll.open = open;
+        }
+        if (closed != null && closed != undefined) {
+          poll.closed = closed;
+        }
 
-        console.log(poll, PollEvents.POLL_UPDATED);
-        pollProducer.publish(PollEvents.POLL_UPDATED, JSON.stringify(poll));
+        await poll?.save();
       } catch (e) {
-        logger.error(e);
-        return res.status(500).send(e);
+        err = e;
+        status = 500;
       }
 
-      res.status(201).send(poll?.[0]);
+      if (err || !poll) {
+        res.status(status).send(err);
+      }
+
+      pollProducer.publish(
+        PollEvents.POLL_UPDATED,
+        JSON.stringify(poll?.serialise())
+      );
+      res.send(poll?.serialise());
     }
   );
 };

@@ -11,10 +11,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@js-alt-poll/common@^1.0.29":
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.29.tgz#581a068c9e5ce22679569144a2be9e5c7bcbd59d"
-  integrity sha512-w2kMnK6CMwNc5tYl8yJcW7ssQR5TInDlvm37Nss8YV2RnBUNPk2/KP/g+fJOdDNMruwgbbZ9G/+6Bt30ghYzYA==
+"@js-alt-poll/common@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@js-alt-poll/common/-/common-1.0.30.tgz#013b84f08757df49fd996c0512a46cebef6b03fb"
+  integrity sha512-SIL4pEejnA5UTO0Tr3aCwUBoA4c/HimzDuyRilfqZ4aHDEO+wfPY8nulgyWCeEVY1ZU5EUAUssm4vHCNENE9XQ==
   dependencies:
     "@types/amqplib" "^0.5.17"
     "@types/express" "^4.17.11"
