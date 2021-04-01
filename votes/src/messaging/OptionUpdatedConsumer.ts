@@ -15,14 +15,22 @@ export class OptionUpdatedConsumer extends Consumer {
   onMessage = async (msg: ConsumeMessage) => {
     const optionData: OptionDbProps = JSON.parse(msg.content.toString());
     console.log("option creaed consumer received", optionData);
-    const { id, title, description, poll_id, user_id, created_at } = optionData;
+    const {
+      id,
+      title,
+      description,
+      poll_id,
+      user_id,
+      created_at,
+      version,
+    } = optionData;
 
     try {
       const option = await Option.getOptionById(id, poll_id, user_id);
       option.title = title;
       option.description = description;
       option.createdAt = new Date(created_at);
-      option.version++;
+      option.version = version;
 
       await option.save();
     } catch (e) {

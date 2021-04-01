@@ -67,44 +67,30 @@ export class Option extends BaseOptionModel {
   save = async (): Promise<Option> => {
     const command = buildUpdateQuery(
       "Options",
-      ["title", "description"],
+      ["title", "description", "version"],
       ["user_id", "poll_id", "id"]
-    );
-
-    console.log(command);
-    console.log(
-      "final",
-      format(command, [
-        this.title,
-        this.description,
-        this.userId,
-        this.pollId,
-        this.id,
-      ])
     );
 
     const opts = await pool.query(
       format(command, [
         this.title,
         this.description,
+        this.version,
         this.userId,
         this.pollId,
         this.id,
       ])
     );
-    console.log("opts", opts);
-
     const opt = opts?.rows?.[0];
-    console.log("opt", opt);
-
     console.log(opt);
-    const { id, description, poll_id, title, user_id } = opt;
+    const { id, description, poll_id, title, user_id, version } = opt;
 
     this.id = id;
     this.description = description;
     this.pollId = poll_id;
     this.title = title;
     this.userId = user_id;
+    this.version = version
 
     return this;
   };
