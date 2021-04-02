@@ -47,6 +47,11 @@ SELECT * FROM "Votes"
 WHERE user_id = ? AND poll_id = ?
 `;
 
+export const GET_VOTE = `
+SELECT * FROM "Votes"
+WHERE user_id = ? AND id = ?
+`;
+
 export const CREATE_VOTE = `
     INSERT INTO "Votes"(user_id, poll_id, option_id, rank)
     VALUES(?, ?, ?, ?)

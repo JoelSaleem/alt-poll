@@ -21,7 +21,7 @@ export const initVoteRoutes = (app: Express) => {
       try {
         votes = ((
           await pool.query(
-            format(GET_VOTES, [req.currentUser!.id, req.params.pollId])
+            format(GET_VOTES, [req.currentUser!.id, req.query.pollId])
           )
         )?.rows ?? []) as VoteDBProps[];
       } catch (e) {
@@ -35,9 +35,11 @@ export const initVoteRoutes = (app: Express) => {
   );
 
   app.get("/votes/:voteId", requireAuth, async (req, res) => {
-    const voteId = req.params.voteId
-    
-    res.send("init vote routes");
+    const voteId = req.params.voteId;
+
+    const vote = await Vote.getById(voteId, req.currentUser!.id);
+
+    res.send(vote?.serialise());
   });
 
   app.put("/votes/:voteId", requireAuth, (req, res) => {
