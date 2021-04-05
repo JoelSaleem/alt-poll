@@ -49,9 +49,11 @@ export class Option extends BaseOptionModel {
     id: string,
     pollId: string,
     userId: string
-  ): Promise<Option> => {
+  ): Promise<Option | undefined> => {
     const option = (await pool.query(format(GET_OPTION, [userId, pollId, id])))
-      ?.rows?.[0] as OptionDbProps;
+      ?.rows?.[0] as OptionDbProps | undefined;
+
+    if (!option) return;
 
     return new Option({
       id: option.id,
@@ -90,7 +92,7 @@ export class Option extends BaseOptionModel {
     this.pollId = poll_id;
     this.title = title;
     this.userId = user_id;
-    this.version = version
+    this.version = version;
 
     return this;
   };

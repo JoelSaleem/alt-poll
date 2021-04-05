@@ -27,6 +27,12 @@ export class OptionUpdatedConsumer extends Consumer {
 
     try {
       const option = await Option.getOptionById(id, poll_id, user_id);
+
+      if (!option || option.version != version - 1) {
+        throw new Error(
+          "Option could not be updated for option " + JSON.stringify(option)
+        );
+      }
       option.title = title;
       option.description = description;
       option.createdAt = new Date(created_at);

@@ -2,6 +2,7 @@ import { ConsumeMessage } from "amqplib";
 import { Consumer, PollDbProps } from "@js-alt-poll/common";
 import { Poll } from "../db/models/Poll";
 import { version } from "typescript";
+import { logger } from "../logger";
 
 export class PollUpdatedConsumer extends Consumer {
   constructor() {
@@ -21,7 +22,8 @@ export class PollUpdatedConsumer extends Consumer {
     }: PollDbProps = JSON.parse(msg.content.toString());
 
     const poll = await Poll.getPollById(id, user_id);
-    if (!poll) {
+    if (!poll || poll.version != version - 1) {
+      logger.error(`Could not update poll: ${poll}`);
       this.nack(msg, 20 * 1000);
       return;
     }
