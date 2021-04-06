@@ -108,7 +108,9 @@ export const initPollRoutes = (app: Express) => {
           throw new Error(`Could not find poll with id ${req.params!.pollId}`);
         }
         poll && poll.version++;
-        if (title != null && title != undefined) poll.title = title;
+        if (title != null && title != undefined) {
+          poll.title = title;
+        }
         if (description != null && description != undefined) {
           poll.description = description;
         }
