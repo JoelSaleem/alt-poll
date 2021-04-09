@@ -7,5 +7,8 @@ const config: ThemeConfig = {
   useSystemColorMode: true,
 };
 // 3. extend the theme
-const theme = extendTheme({ config, colors: { brand: { 100: "#1ca4ff" } } });
+const theme = extendTheme({
+  config,
+  colors: { brand: { accent: "#63B3ED", main: "#1ca4ff", shadow: "#1A365D" } },
+});
 export default theme;
