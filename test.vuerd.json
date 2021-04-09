@@ -2,8 +2,8 @@
   "canvas": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": 153.3333282470703,
-    "scrollLeft": 386.6666564941406,
+    "scrollTop": 84.16666412353516,
+    "scrollLeft": 333.33331298828125,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -307,13 +307,36 @@
               "widthDefault": 60
             },
             "id": "eff15c97-f979-4f97-8943-04ff5054ab56"
+          },
+          {
+            "name": "user_id",
+            "comment": "This is the user that created the otp",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 206,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "74e84405-04ba-6e84-2557-84d5bb9f6ccc"
           }
         ],
         "ui": {
           "active": false,
-          "left": 975.6666641235352,
-          "top": 214.5,
-          "zIndex": 314,
+          "left": 1034.6666641235352,
+          "top": 165.5,
+          "zIndex": 332,
           "widthName": 60,
           "widthComment": 60
         },
@@ -723,7 +746,7 @@
           },
           {
             "name": "user_id",
-            "comment": "",
+            "comment": "This it the user to which the poll/option belongs to",
             "dataType": "",
             "default": "",
             "option": {
@@ -738,7 +761,7 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 287,
               "widthDataType": 60,
               "widthDefault": 60
             },
@@ -862,9 +885,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1055.6000003814697,
-          "top": 387,
-          "zIndex": 317,
+          "left": 1062.6000003814697,
+          "top": 351,
+          "zIndex": 331,
           "widthName": 60,
           "widthComment": 60
         },
@@ -948,8 +971,8 @@
           "columnIds": [
             "45e9f32c-d922-34a8-7ee2-2276317a84b8"
           ],
-          "x": 1055.6000003814697,
-          "y": 493.25,
+          "x": 1062.6000003814697,
+          "y": 457.25,
           "direction": "left"
         },
         "id": "34ac1314-9abe-a35f-bc34-c46a669f7045",
@@ -971,8 +994,8 @@
           "columnIds": [
             "5aa7239c-051d-5493-8acd-8446b79cc8f4"
           ],
-          "x": 975.6666641235352,
-          "y": 300.25,
+          "x": 1034.6666641235352,
+          "y": 261.5,
           "direction": "left"
         },
         "id": "abc9fd12-4cd2-ec4f-c0c8-eec1727e4b84",

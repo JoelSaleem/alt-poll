@@ -86,7 +86,6 @@ export const initPollRoutes = (app: Express) => {
     body("open").isBoolean().optional({ nullable: true }),
     body("closed").isBoolean().optional({ nullable: true }),
     async (req, res) => {
-      console.log("req.user", req.currentUser);
       const errs = validationResult(req);
       if (!errs.isEmpty()) {
         return res.status(400).json({ errors: errs.array() });
