@@ -9,6 +9,13 @@ const config: ThemeConfig = {
 // 3. extend the theme
 const theme = extendTheme({
   config,
-  colors: { brand: { accent: "#63B3ED", main: "#1ca4ff", shadow: "#1A365D" } },
+  colors: {
+    brand: {
+      accent: "#63B3ED",
+      main: "#1ca4ff",
+      shadow: "#1A365D",
+      superAccent: "#BEE3F8",
+    },
+  },
 });
 export default theme;
