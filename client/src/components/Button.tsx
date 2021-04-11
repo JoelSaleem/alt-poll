@@ -2,7 +2,7 @@ import { Button as ChakraBtn } from "@chakra-ui/react";
 
 type ButtonTypes = "primary" | "secondary";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonTypes;
 }
 
@@ -31,9 +31,11 @@ const COLOUR_SCHEME: {
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = "primary",
+  ...rest
 }) => {
   return (
     <ChakraBtn
+      {...rest}
       bg={COLOUR_SCHEME[variant].bg}
       _hover={COLOUR_SCHEME[variant]._hover}
       _active={COLOUR_SCHEME[variant]._active}
