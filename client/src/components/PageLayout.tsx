@@ -1,14 +1,12 @@
-import { GridItem, Grid, Heading, Center } from "@chakra-ui/react";
+import { GridItem, Grid, Heading, Center, Flex } from "@chakra-ui/react";
+import { Button } from "./Button";
 import { Card } from "./Card";
 
 interface PageLayoutProps {
   title: string;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({
-  title,
-  children,
-}) => {
+export const PageLayout: React.FC<PageLayoutProps> = ({ title, children }) => {
   return (
     <Grid
       h="100%"
@@ -18,9 +16,14 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
     >
       <GridItem colSpan={3}>
         <Card depth={1}>
-          <Center h="100%">
-            <Heading>{title}</Heading>
-          </Center>
+          <Flex h={"100%"}>
+            <Center p={2} h={"100%"}>
+              <Button>Login</Button>
+            </Center>
+            <Center h="100%" flex={1}>
+              <Heading>{title}</Heading>
+            </Center>
+          </Flex>
         </Card>
       </GridItem>
       <GridItem colStart={2} colEnd={3}>
