@@ -8,8 +8,7 @@ import {
 import axios from "axios";
 import { ReactQueryDevtools } from "react-query-devtools";
 import { useState } from "react";
-
-const client = new QueryClient();
+import { hasClient } from "./_app";
 
 const App: React.FC = () => {
   const [text, setText] = useState("");
@@ -46,10 +45,10 @@ const App: React.FC = () => {
   );
 };
 
-export default function Home() {
+export default function Home({ queryClient }: hasClient) {
   return (
     <>
-      <QueryClientProvider client={client}>
+      <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </>

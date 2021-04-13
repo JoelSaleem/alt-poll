@@ -6,6 +6,7 @@ import { Card } from "../src/components/Card";
 import { Button } from "../src/components/Button";
 import { GetServerSideProps } from "next";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { hasClient } from "./_app";
 
 const client = new QueryClient();
 
@@ -34,11 +35,12 @@ const App: React.FC = () => {
   );
 };
 
-export default function Home() {
+export default function Home({ queryClient }: hasClient) {
+  console.log("queryClient", queryClient);
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-      <QueryClientProvider client={client}>
+      <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </>
