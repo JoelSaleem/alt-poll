@@ -4,6 +4,8 @@ import { useColorMode } from "@chakra-ui/react";
 import { PageLayout } from "../src/components/PageLayout";
 import { Card } from "../src/components/Card";
 import { Button } from "../src/components/Button";
+import { GetServerSideProps } from "next";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const client = new QueryClient();
 
@@ -13,6 +15,7 @@ const App: React.FC = () => {
   const router = useRouter();
   return (
     <PageLayout title="Polls">
+      <ReactQueryDevtools />
       <div style={{ height: "50%", padding: "20px" }}>
         <Button>Login</Button>
         <Card depth={2}>
@@ -41,3 +44,10 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log("context", context);
+  return {
+    props: {},
+  };
+};
