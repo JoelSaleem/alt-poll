@@ -18,7 +18,6 @@ if (!process.env.JWT_SECRET) {
 }
 
 passport.serializeUser((user, done) => {
-  console.log("serialise", user);
   done(null, (user as UserDbProps).id);
 });
 
@@ -35,8 +34,6 @@ passport.deserializeUser(async (id: string, done) => {
   if (!user && !err) {
     err = `No user found for id: ${id}`;
   }
-
-  console.log("des", id);
 
   done(err, user?.serialise());
 });

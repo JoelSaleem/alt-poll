@@ -1,3 +1,4 @@
+import { requireAuth } from "@js-alt-poll/common";
 import { Express } from "express";
 import passport from "passport";
 
@@ -30,7 +31,7 @@ export const initAuthRoutes = (app: Express) => {
     res.send("failed");
   });
 
-  app.get("/auth/current_user", (req, res) => {
-    res.send(req.user);
+  app.get("/auth/current_user", requireAuth, (req, res) => {
+    res.send(req.currentUser);
   });
 };

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { useColorMode } from "@chakra-ui/react";
 import { PageLayout } from "../src/components/PageLayout";
 import { Card } from "../src/components/Card";
@@ -7,9 +7,7 @@ import { Button } from "../src/components/Button";
 import { GetServerSideProps } from "next";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { hasClient } from "./_app";
-
-const client = new QueryClient();
-
+import axios from "axios";
 // purple 900, 700, 200
 
 const App: React.FC = () => {
@@ -36,8 +34,6 @@ const App: React.FC = () => {
 };
 
 export default function Home({ queryClient }: hasClient) {
-  console.log("queryClient", queryClient);
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -48,7 +44,13 @@ export default function Home({ queryClient }: hasClient) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("context", context);
+  try {
+    const res = await axios.get("https://alt-poll.dev/auth/current_user");
+    console.log("res", res.data);
+  } catch (e) {
+    console.log("e", e);
+  }
+
   return {
     props: {},
   };

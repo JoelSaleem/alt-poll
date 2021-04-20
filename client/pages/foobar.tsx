@@ -5,8 +5,8 @@ import {
   useQuery,
   QueryClientProvider,
 } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import axios from "axios";
-import { ReactQueryDevtools } from "react-query-devtools";
 import { useState } from "react";
 import { hasClient } from "./_app";
 
@@ -50,6 +50,7 @@ export default function Home({ queryClient }: hasClient) {
     <>
       <QueryClientProvider client={queryClient}>
         <App />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );

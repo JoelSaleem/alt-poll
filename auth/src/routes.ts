@@ -19,7 +19,6 @@ export const initRoutes = (app: Express) => {
       scope: ["https://www.googleapis.com/auth/plus.login"],
     }),
     (req, res) => {
-      console.log("success");
       res.send({});
     }
   );
