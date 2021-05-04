@@ -1,0 +1,10 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+      "name": "alt-poll",
+      "labels": {
+        "name": "alt-poll"
+      }
+    }
+  }

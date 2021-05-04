@@ -28,6 +28,8 @@ deploy:
         # valuesFile: /Users/joelsaleem/Documents/GitHub/alt-poll/alt/values.yaml
         setValues:
           auth.postgresqlPassword: foobar
+          polls-db.postgresqlPassword: foobar
+          votes-db.postgresqlPassword: foobar
         recreatePods: true
         skipBuildDependencies: true
     # flags:

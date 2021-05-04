@@ -41,6 +41,14 @@ const App: React.FC = () => {
       <button onClick={() => post()}>post</button>
       <button onClick={() => put()}>put</button>
       <textarea onChange={(e) => setText(e.target.value)} value={text} />
+      <style jsx>{`
+        input {
+          color: black;
+        }
+        textarea {
+          color: black;
+        }
+      `}</style>
     </div>
   );
 };

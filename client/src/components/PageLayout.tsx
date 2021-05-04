@@ -1,12 +1,19 @@
 import { GridItem, Grid, Heading, Center, Flex } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { Button } from "./Button";
 import { Card } from "./Card";
 
 interface PageLayoutProps {
   title: string;
+  userId?: string;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({ title, children }) => {
+export const PageLayout: React.FC<PageLayoutProps> = ({
+  title,
+  children,
+  userId,
+}) => {
+  const router = useRouter();
   return (
     <Grid
       h="100%"
@@ -18,7 +25,17 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ title, children }) => {
         <Card depth={1}>
           <Flex h={"100%"}>
             <Center p={2} h={"100%"}>
-              <Button>Login</Button>
+              <Button
+                onClick={() => {
+                  if (userId) {
+                    router.push("/auth/logout");
+                  } else {
+                    router.push("/auth/google");
+                  }
+                }}
+              >
+                {userId ? "Logout" : "Login"}
+              </Button>
             </Center>
             <Center h="100%" flex={1}>
               <Heading>{title}</Heading>

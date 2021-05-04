@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@js-alt-poll/common": "^1.0.30",
     "@chakra-ui/react": "^1.5.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
