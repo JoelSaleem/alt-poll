@@ -1,25 +1,16 @@
-import { useRouter } from "next/router";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { PageLayout } from "../src/components/PageLayout";
 import { Card } from "../src/components/Card";
 import { Button } from "../src/components/Button";
 import { ReactQueryDevtools } from "react-query/devtools";
 import axios from "axios";
 import { UserDbProps } from "@js-alt-poll/common";
-// purple 900, 700, 200
+import { UserProvider } from "./UserProvider";
 
-const App: React.FC = () => {
-  const queryClient = useQueryClient();
-
-  const { data } = useQuery("user", async () => {
-    const res = await axios.get("https://alt-poll.dev/auth/current_user");
-    console.log("%c res ", "background: purple; color: white", res);
-    return res.data;
-  });
-
-  const user = data as UserDbProps | undefined;
+const App = ({ user }: { user?: UserDbProps }) => {
+  console.log("user from indesx", user);
   return (
-    <PageLayout title="Polls" userId={user?.id}>
+    <PageLayout title="alt-poll" userId={user?.id}>
       <ReactQueryDevtools />
       <div style={{ height: "50%", padding: "20px" }}>
         <Button>Login</Button>
@@ -30,12 +21,9 @@ const App: React.FC = () => {
 };
 
 export default function Home() {
-  return <App />;
+  return (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  );
 }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-
-//   return {
-//     props: {},
-//   };
-// };

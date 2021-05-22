@@ -1,4 +1,5 @@
 import { GridItem, Grid, Heading, Center, Flex } from "@chakra-ui/react";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { Button } from "./Button";
 import { Card } from "./Card";
@@ -28,9 +29,9 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
               <Button
                 onClick={() => {
                   if (userId) {
-                    router.push("/auth/logout");
+                    router.push("https://alt-poll.dev/auth/logout");
                   } else {
-                    router.push("/auth/google");
+                    router.push("https://alt-poll.dev/auth/google");
                   }
                 }}
               >

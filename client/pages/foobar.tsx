@@ -1,10 +1,4 @@
-import {
-  QueryClient,
-  useMutation,
-  UseMutationResult,
-  useQuery,
-  QueryClientProvider,
-} from "react-query";
+import { useMutation, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import axios from "axios";
 import { useState } from "react";
@@ -54,12 +48,11 @@ const App: React.FC = () => {
 };
 
 export default function Home({ queryClient }: hasClient) {
+  console.log("here");
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools />
-      </QueryClientProvider>
+      <App />
+      <ReactQueryDevtools />
     </>
   );
 }

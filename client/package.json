@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "serve": "node server.js"
   },
   "dependencies": {
     "@js-alt-poll/common": "^1.0.30",

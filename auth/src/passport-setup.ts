@@ -43,7 +43,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID.trim(),
       clientSecret: process.env.GOOGLE_CLIENT_SECRET.trim(),
-      callbackURL: "http://alt-poll.dev/auth/callback", // TODO: PUT IN CONFIG MAP
+      callbackURL: "/auth/callback", // TODO: PUT IN CONFIG MAP
     },
 
     async function (accessToken, refreshToken, profile, done) {

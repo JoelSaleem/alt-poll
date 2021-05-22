@@ -17,7 +17,8 @@ export const initAuthRoutes = (app: Express) => {
     "/auth/callback",
     passport.authenticate("google", { failureRedirect: "/auth/failed" }),
     (req, res) => {
-      res.redirect("/");
+      res.redirect("http://localhost:3000/");
+      // res.redirect("/");
     }
   );
 

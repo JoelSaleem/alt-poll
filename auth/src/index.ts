@@ -13,8 +13,15 @@ import { initAuthRoutes } from "./routes/googleAuth";
 const app = express();
 
 app.set("trust proxy", true);
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    allowedHeaders: "*",
+    origin: ["*"],
+  })
+);
 app.use(bodyParser.json());
+app.set("trust proxy", 1);
 app.use(
   cookieSession({
     signed: false,
