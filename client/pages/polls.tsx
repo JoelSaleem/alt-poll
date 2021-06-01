@@ -50,6 +50,7 @@ const App = ({ user }: { user?: UserDbProps }) => {
             maxH={24}
             padding={3}
             hoverColour={"brand.accent"}
+            activeColour={"brand.superAccent"}
           >
             <div>
               <b>{title}</b>
