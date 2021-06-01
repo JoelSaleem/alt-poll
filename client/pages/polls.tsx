@@ -42,13 +42,23 @@ const App = ({ user }: { user?: UserDbProps }) => {
   console.log("%c data ", "background: purple; color: white", data);
   return (
     <PageLayout title="My Polls" userId={user?.id}>
-      {data?.map(({ title, description, open }) => (
-        <Card depth={2} margin={2} maxH={24}>
-          <div>{title}</div>
-          <div>{description}</div>
-          <div>Open: {open + ""}</div>
-        </Card>
-      ))}
+      <Box padding={3}>
+        {data?.map(({ title, description, open }) => (
+          <Card
+            depth={2}
+            margin={2}
+            maxH={24}
+            padding={3}
+            hoverColour={"brand.accent"}
+          >
+            <div>
+              <b>{title}</b>
+            </div>
+            <div>{description}</div>
+            <div>Open: {open + ""}</div>
+          </Card>
+        ))}
+      </Box>
       <ReactQueryDevtools />
     </PageLayout>
   );
