@@ -76,7 +76,7 @@ const App = ({ user }: { user?: UserDbProps }) => {
   const renderSelectedPoll = () => {
     if (!selectedPoll) return;
 
-    const { title, open, closed, created_at, description } = selectedPoll;
+    const { title, open, closed, description } = selectedPoll;
 
     return (
       <div>
@@ -91,6 +91,10 @@ const App = ({ user }: { user?: UserDbProps }) => {
         </Box>
         <Text>Description</Text>
         <Textarea value={description} />
+
+        <Center>
+          <Button>Save</Button>
+        </Center>
       </div>
     );
   };
