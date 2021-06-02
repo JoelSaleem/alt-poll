@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Heading, Switch, Text, Textarea } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { PageLayout } from "../src/components/PageLayout";
 import { Card } from "../src/components/Card";
@@ -7,8 +7,10 @@ import { Button } from "../src/components/Button";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { PollDbProps, UserDbProps } from "@js-alt-poll/common";
 import { UserProvider } from "./UserProvider";
+import { useRouter } from "next/router";
 
 const App = ({ user }: { user?: UserDbProps }) => {
+  const { push, pathname, query } = useRouter();
   const { data } = useQuery("user", async () => {
     // const res = await axios.get("https://alt-poll.dev/polls", {
     //   withCredentials: true,
@@ -39,18 +41,24 @@ const App = ({ user }: { user?: UserDbProps }) => {
     return d;
   });
 
-  console.log("%c data ", "background: purple; color: white", data);
-  return (
-    <PageLayout title="My Polls" userId={user?.id}>
-      <Box padding={3}>
-        {data?.map(({ title, description, open }) => (
+  const renderPollList = () => {
+    return (
+      <>
+        {data?.map(({ title, description, open, id }) => (
           <Card
+            key={id}
             depth={2}
             margin={2}
             maxH={24}
             padding={3}
             hoverColour={"brand.accent"}
             activeColour={"brand.superAccent"}
+            onClick={() => {
+              push({
+                pathname,
+                query: { ...query, id },
+              });
+            }}
           >
             <div>
               <b>{title}</b>
@@ -59,6 +67,39 @@ const App = ({ user }: { user?: UserDbProps }) => {
             <div>Open: {open + ""}</div>
           </Card>
         ))}
+      </>
+    );
+  };
+
+  const selectedPollId = query.id;
+  const selectedPoll = data?.find(({ id }) => id == selectedPollId);
+  const renderSelectedPoll = () => {
+    if (!selectedPoll) return;
+
+    const { title, open, closed, created_at, description } = selectedPoll;
+
+    return (
+      <div>
+        <Center>
+          <Heading>{title}</Heading>
+        </Center>
+        <Box>
+          Open: <Switch isChecked={open} />
+        </Box>
+        <Box>
+          Closed: <Switch isChecked={closed} />
+        </Box>
+        <Text>Description</Text>
+        <Textarea value={description} />
+      </div>
+    );
+  };
+
+  return (
+    <PageLayout title="My Polls" userId={user?.id}>
+      <Box padding={3}>
+        {selectedPoll && renderSelectedPoll()}
+        {!selectedPoll && renderPollList()}
       </Box>
       <ReactQueryDevtools />
     </PageLayout>
