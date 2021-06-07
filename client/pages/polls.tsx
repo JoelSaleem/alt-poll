@@ -54,6 +54,7 @@ const App = ({ user }: { user?: UserDbProps }) => {
             hoverColour={"brand.accent"}
             activeColour={"brand.superAccent"}
             onClick={() => {
+              delete query.view;
               push({
                 pathname,
                 query: { ...query, id },
@@ -93,7 +94,20 @@ const App = ({ user }: { user?: UserDbProps }) => {
         <Textarea value={description} />
 
         <Center>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              delete query.id;
+              push({
+                pathname,
+                query,
+              });
+            }}
+          >
+            Back
+          </Button>
           <Button>Save</Button>
+          <Button>Send voting link</Button>
         </Center>
       </div>
     );
@@ -103,7 +117,38 @@ const App = ({ user }: { user?: UserDbProps }) => {
     <PageLayout title="My Polls" userId={user?.id}>
       <Box padding={3}>
         {selectedPoll && renderSelectedPoll()}
-        {!selectedPoll && renderPollList()}
+        {query.view != "create" && !selectedPoll && (
+          <>
+            {renderPollList()}
+            <Center>
+              <Button
+                onClick={() => {
+                  push({
+                    pathname,
+                    query: { ...query, view: "create" },
+                  });
+                }}
+              >
+                Create Poll
+              </Button>
+            </Center>
+          </>
+        )}
+        {query.view == "create" && (
+          <Center>
+            <Button
+              onClick={() => {
+                delete query.view;
+                push({
+                  pathname,
+                  query,
+                });
+              }}
+            >
+              Back
+            </Button>
+          </Center>
+        )}
       </Box>
       <ReactQueryDevtools />
     </PageLayout>
