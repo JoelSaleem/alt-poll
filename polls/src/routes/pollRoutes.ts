@@ -11,7 +11,7 @@ import { version } from "typescript";
 import { Poll } from "../db/models/Poll";
 
 export const initPollRoutes = (app: Express) => {
-  app.get("/polls/:id", requireAuth, async (req, res) => {
+  app.get("/api/polls/:id", requireAuth, async (req, res) => {
     console.log(req.params);
     let polls = [];
     try {
@@ -29,7 +29,7 @@ export const initPollRoutes = (app: Express) => {
     res.send(polls);
   });
 
-  app.get("/polls", requireAuth, async (req, res) => {
+  app.get("/api/polls", requireAuth, async (req, res) => {
     let polls = [];
     try {
       polls =
@@ -44,7 +44,7 @@ export const initPollRoutes = (app: Express) => {
   });
 
   app.post(
-    "/polls",
+    "/api/polls",
     requireAuth,
     body("title").exists().isString(),
     body("description").isString().optional({ nullable: true }),
@@ -79,7 +79,7 @@ export const initPollRoutes = (app: Express) => {
   );
 
   app.put(
-    "/polls/:id",
+    "/api/polls/:id",
     requireAuth,
     body("title").isString().optional({ nullable: true }),
     body("description").isString().optional({ nullable: true }),

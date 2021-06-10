@@ -12,33 +12,34 @@ import { useRouter } from "next/router";
 const App = ({ user }: { user?: UserDbProps }) => {
   const { push, pathname, query } = useRouter();
   const { data } = useQuery("user", async () => {
-    // const res = await axios.get("https://alt-poll.dev/polls", {
-    //   withCredentials: true,
-    // });
-    // return res.data;
-    const d: PollDbProps[] = [
-      {
-        closed: false,
-        open: true,
-        created_at: "2021-05-22T16:39:59.771Z",
-        description: "some poll",
-        id: "1",
-        title: "abc",
-        user_id: "1",
-        version: 1,
-      },
-      {
-        closed: false,
-        open: true,
-        created_at: "2021-05-22T16:39:59.771Z",
-        description: "some poll",
-        id: "2",
-        title: "this is my title",
-        user_id: "1",
-        version: 3,
-      },
-    ];
-    return d;
+    const res = await axios.get("https://alt-poll.dev/api/polls", {
+      withCredentials: true,
+    });
+    console.log("%c response ", "background: purple; color: white", res);
+    return res.data as PollDbProps[];
+    // const d: PollDbProps[] = [
+    //   {
+    //     closed: false,
+    //     open: true,
+    //     created_at: "2021-05-22T16:39:59.771Z",
+    //     description: "some poll",
+    //     id: "1",
+    //     title: "abc",
+    //     user_id: "1",
+    //     version: 1,
+    //   },
+    //   {
+    //     closed: false,
+    //     open: true,
+    //     created_at: "2021-05-22T16:39:59.771Z",
+    //     description: "some poll",
+    //     id: "2",
+    //     title: "this is my title",
+    //     user_id: "1",
+    //     version: 3,
+    //   },
+    // ];
+    // return d;
   });
 
   const renderPollList = () => {
@@ -73,7 +74,14 @@ const App = ({ user }: { user?: UserDbProps }) => {
   };
 
   const selectedPollId = query.id;
-  const selectedPoll = data?.find(({ id }) => id == selectedPollId);
+  console.log(
+    "%c data ",
+    "background: purple; color: white",
+    data,
+    selectedPollId
+  );
+  const selectedPoll =
+    selectedPollId && data?.find(({ id }) => id == selectedPollId);
   const renderSelectedPoll = () => {
     if (!selectedPoll) return;
 

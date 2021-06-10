@@ -9,7 +9,7 @@ import { Option } from "../db/models/Option";
 import { optionProducer } from "../messaging/optionProducer";
 
 export const initOptionRoutes = (app: Express) => {
-  app.get("/polls/:pollId/options", requireAuth, async (req, res) => {
+  app.get("/api/polls/:pollId/options", requireAuth, async (req, res) => {
     const pollId = req.params.pollId;
 
     let options = [];
@@ -25,7 +25,7 @@ export const initOptionRoutes = (app: Express) => {
     res.send(options);
   });
 
-  app.get("/polls/:pollId/options/:optionId", requireAuth, async (req, res) => {
+  app.get("/api/polls/:pollId/options/:optionId", requireAuth, async (req, res) => {
     const { pollId, optionId } = req.params;
 
     let option = null;
@@ -52,7 +52,7 @@ export const initOptionRoutes = (app: Express) => {
   });
 
   app.put(
-    "/polls/:pollId/options/:optionId",
+    "/api/polls/:pollId/options/:optionId",
     requireAuth,
     body("title").exists().isString(),
     body("description").isString().optional({ nullable: true }),
@@ -105,7 +105,7 @@ export const initOptionRoutes = (app: Express) => {
   );
 
   app.post(
-    "/polls/:pollId/options",
+    "/api/polls/:pollId/options",
     requireAuth,
     body("title").exists().isString(),
     body("description").isString().optional({ nullable: true }),

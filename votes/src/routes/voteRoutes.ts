@@ -8,7 +8,7 @@ import { Vote } from "../db/models/Vote";
 
 export const initVoteRoutes = (app: Express) => {
   app.get(
-    "/votes",
+    "/api/votes",
     requireAuth,
     query("pollId").isString().exists(),
     async (req, res) => {
@@ -34,7 +34,7 @@ export const initVoteRoutes = (app: Express) => {
     }
   );
 
-  app.get("/votes/:voteId", requireAuth, async (req, res) => {
+  app.get("/api/votes/:voteId", requireAuth, async (req, res) => {
     const voteId = req.params.voteId;
 
     const vote = await Vote.getById(voteId, req.currentUser!.id);
@@ -42,12 +42,12 @@ export const initVoteRoutes = (app: Express) => {
     res.send(vote?.serialise());
   });
 
-  app.put("/votes/:voteId", requireAuth, (req, res) => {
+  app.put("/api/votes/:voteId", requireAuth, (req, res) => {
     // TODO
   });
 
   app.post(
-    "/votes",
+    "/api/votes",
     requireAuth,
     body("optionId").isString().exists(),
     body("pollId").isString().exists(),
