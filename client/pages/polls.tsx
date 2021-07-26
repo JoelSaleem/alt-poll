@@ -13,11 +13,11 @@ import { PollForm } from "../src/components/PollForm";
 
 const App = ({ user }: { user?: UserDbProps }) => {
   const { push, pathname, query } = useRouter();
-  const { data: polls } = useQuery("user", async () => {
-    // const res = await axios.get("https://alt-poll.dev/api/polls", {
-    //   withCredentials: true,
-    // });
-    // return res.data as PollDbProps[];
+  const { data: polls } = useQuery("polls", async () => {
+    const res = await axios.get("https://alt-poll.dev/api/polls", {
+      withCredentials: true,
+    });
+    return res.data as PollDbProps[];
     const d: PollDbProps[] = [
       {
         closed: false,

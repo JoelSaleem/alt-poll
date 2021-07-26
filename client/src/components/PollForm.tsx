@@ -3,8 +3,10 @@ import { Box, Center, Heading, Text } from "@chakra-ui/layout";
 import { Switch } from "@chakra-ui/switch";
 import { Textarea } from "@chakra-ui/textarea";
 import { PollDbProps } from "@js-alt-poll/common";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { Button } from "./Button";
 
 export const PollForm = ({ poll }: { poll: PollDbProps }) => {
@@ -20,6 +22,18 @@ export const PollForm = ({ poll }: { poll: PollDbProps }) => {
   const [open, setOpen] = useState(initialOpen);
   const [closed, setClosed] = useState(initialClosed);
   const [description, setDescription] = useState(initialDescription);
+  const queryClient = useQueryClient();
+
+  const updatePoll = useMutation(async () => {
+    await axios.put(`/api/polls/${poll.id}`, {
+      title,
+      open,
+      closed,
+      description,
+    });
+
+    queryClient.invalidateQueries("polls");
+  });
 
   return (
     <div>
@@ -64,7 +78,13 @@ export const PollForm = ({ poll }: { poll: PollDbProps }) => {
         >
           Back
         </Button>
-        <Button onClick={() => {}}>Save</Button>
+        <Button
+          onClick={() => {
+            updatePoll.mutate();
+          }}
+        >
+          Save
+        </Button>
         <Button>Send voting link</Button>
       </Center>
     </div>

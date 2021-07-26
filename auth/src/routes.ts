@@ -28,8 +28,8 @@ export const initRoutes = (app: Express) => {
     passport.authenticate("google", { failureRedirect: "/failed" }),
     (req, res) => {
       console.log("success");
-      res.redirect("http://localhost:3000/");
-      // res.redirect("/");
+      // res.redirect("http://localhost:3000/");
+      res.redirect("/");
     }
   );
 
