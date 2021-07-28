@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Box, Center, Heading, Switch, Text, Textarea } from "@chakra-ui/react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { PageLayout } from "../src/components/PageLayout";
 import { Card } from "../src/components/Card";
 import { Button } from "../src/components/Button";
@@ -10,6 +10,8 @@ import { UserProvider } from "./UserProvider";
 import { useRouter } from "next/router";
 import { PollsList } from "../src/components/PollsList";
 import { PollForm } from "../src/components/PollForm";
+import { PollCreate } from "../src/components/PollCreate";
+import { PollUpdate } from "../src/components/PollUpdate";
 
 const App = ({ user }: { user?: UserDbProps }) => {
   const { push, pathname, query } = useRouter();
@@ -18,29 +20,29 @@ const App = ({ user }: { user?: UserDbProps }) => {
       withCredentials: true,
     });
     return res.data as PollDbProps[];
-    const d: PollDbProps[] = [
-      {
-        closed: false,
-        open: true,
-        created_at: "2021-05-22T16:39:59.771Z",
-        description: "some poll",
-        id: "1",
-        title: "abc",
-        user_id: "1",
-        version: 1,
-      },
-      {
-        closed: false,
-        open: true,
-        created_at: "2021-05-22T16:39:59.771Z",
-        description: "some poll",
-        id: "2",
-        title: "this is my title",
-        user_id: "1",
-        version: 3,
-      },
-    ];
-    return d;
+    // const d: PollDbProps[] = [
+    //   {
+    //     closed: false,
+    //     open: true,
+    //     created_at: "2021-05-22T16:39:59.771Z",
+    //     description: "some poll",
+    //     id: "1",
+    //     title: "abc",
+    //     user_id: "1",
+    //     version: 1,
+    //   },
+    //   {
+    //     closed: false,
+    //     open: true,
+    //     created_at: "2021-05-22T16:39:59.771Z",
+    //     description: "some poll",
+    //     id: "2",
+    //     title: "this is my title",
+    //     user_id: "1",
+    //     version: 3,
+    //   },
+    // ];
+    // return d;
   });
 
   const renderPollList = () => {
@@ -69,24 +71,34 @@ const App = ({ user }: { user?: UserDbProps }) => {
 
   const showPollsList = () => {
     delete query.view;
+    delete query.id;
     push({
       pathname,
       query,
     });
   };
+  const queryClient = useQueryClient();
+
+  console.log(
+    "%c selectedPoll ",
+    "background: purple; color: white",
+    selectedPoll
+  );
 
   return (
     <PageLayout title="My Polls" userId={user?.id}>
       <Box padding={3}>
-        {selectedPoll && <PollForm poll={selectedPoll} />}
+        {selectedPoll && (
+          <PollUpdate poll={selectedPoll} onBack={showPollsList} />
+        )}
         {query.view != "create" && !selectedPoll && (
           <>
-          {/* TODO: clean up to show display logic */}
+            {/* TODO: clean up to show display logic */}
             {polls && <PollsList polls={polls} />}
             {renderButton("Create Poll", showCreateView)}
           </>
         )}
-        {query.view == "create" && renderButton("Back", showPollsList)}
+        {query.view == "create" && <PollCreate onBack={showPollsList} />}
       </Box>
       <ReactQueryDevtools />
     </PageLayout>

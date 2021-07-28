@@ -5,35 +5,33 @@ import { Textarea } from "@chakra-ui/textarea";
 import { PollDbProps } from "@js-alt-poll/common";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { PollCreate } from "../../types";
 import { Button } from "./Button";
 
-export const PollForm = ({ poll }: { poll: PollDbProps }) => {
-  const { pathname, query, push } = useRouter();
-  const {
-    title: initialTitle,
-    open: initialOpen,
-    closed: initialClosed,
-    description: initialDescription,
-  } = poll;
+interface PollFormProps {
+  poll: PollCreate & Partial<PollDbProps>;
+  setTitle: Dispatch<SetStateAction<string>>;
+  setDescription: Dispatch<SetStateAction<string>>;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  setClosed: Dispatch<SetStateAction<boolean>>;
+  onBack: () => void;
+  onSubmit: () => void;
+  isLoading: boolean;
+}
 
-  const [title, setTitle] = useState(initialTitle);
-  const [open, setOpen] = useState(initialOpen);
-  const [closed, setClosed] = useState(initialClosed);
-  const [description, setDescription] = useState(initialDescription);
-  const queryClient = useQueryClient();
-
-  const updatePoll = useMutation(async () => {
-    await axios.put(`/api/polls/${poll.id}`, {
-      title,
-      open,
-      closed,
-      description,
-    });
-
-    queryClient.invalidateQueries("polls");
-  });
+export const PollForm: React.FC<PollFormProps> = ({
+  poll,
+  setTitle,
+  setDescription,
+  setOpen,
+  setClosed,
+  onBack,
+  onSubmit,
+  isLoading,
+}) => {
+  const { title, open, closed, description } = poll;
 
   return (
     <div>
@@ -66,25 +64,14 @@ export const PollForm = ({ poll }: { poll: PollDbProps }) => {
       />
 
       <Center>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            delete query.id;
-            push({
-              pathname,
-              query,
-            });
-          }}
-        >
+        <Button variant="secondary" onClick={onBack}>
           Back
         </Button>
-        <Button
-          onClick={() => {
-            updatePoll.mutate();
-          }}
-        >
-          Save
-        </Button>
+        {isLoading ? (
+          "// TODO: spinner"
+        ) : (
+          <Button onClick={onSubmit}>Save</Button>
+        )}
         <Button>Send voting link</Button>
       </Center>
     </div>
