@@ -90,8 +90,6 @@ const App = ({ user }: { user?: UserDbProps }) => {
             );
           } else if (query.view == "create") {
             return <PollCreate onBack={showPollsList} />;
-          } else if (query.view == "options") {
-            return <Options />;
           }
         })()}
       </Box>

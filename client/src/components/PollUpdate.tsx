@@ -51,7 +51,7 @@ export const PollUpdate = ({
       setOpen={setOpen}
       setTitle={setTitle}
       onSubmit={updatePoll}
-      poll={{ title, closed, open, description }}
+      poll={{ title, closed, open, description, id: poll.id }}
       isLoading={isLoading}
     />
   );

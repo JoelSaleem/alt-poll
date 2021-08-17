@@ -31,8 +31,9 @@ export const PollForm: React.FC<PollFormProps> = ({
   onSubmit,
   isLoading,
 }) => {
-  const { title, open, closed, description } = poll;
+  const { title, open, closed, description, id } = poll;
   const { push, query } = useRouter();
+  console.log("%c id ", "background: purple; color: white", id);
 
   return (
     <div>
@@ -73,9 +74,15 @@ export const PollForm: React.FC<PollFormProps> = ({
         ) : (
           <Button onClick={onSubmit}>Save</Button>
         )}
-        <Button onClick={() => push({ query: { ...query, view: "options" } })}>
-          Options
-        </Button>
+        {poll.id && (
+          <Button
+            onClick={() =>
+              push({ query: { pollId: id }, pathname: "/options" })
+            }
+          >
+            Options
+          </Button>
+        )}
         <Button>Send voting link</Button>
       </Center>
     </div>
