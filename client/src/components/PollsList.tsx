@@ -1,6 +1,7 @@
 import { PollDbProps } from "@js-alt-poll/common";
 import { useRouter } from "next/router";
 import { Card } from "./Card";
+import { ListItemWrapper } from "./ListItemWrapper";
 
 export const PollsList = ({ polls }: { polls: PollDbProps[] }) => {
   const { query, push, pathname } = useRouter();
@@ -8,14 +9,7 @@ export const PollsList = ({ polls }: { polls: PollDbProps[] }) => {
   return (
     <>
       {polls?.map(({ title, description, open, id }) => (
-        <Card
-          key={id}
-          depth={2}
-          margin={2}
-          maxH={24}
-          padding={3}
-          hoverColour={"brand.accent"}
-          activeColour={"brand.superAccent"}
+        <ListItemWrapper
           onClick={() => {
             delete query.view;
             push({
@@ -29,7 +23,7 @@ export const PollsList = ({ polls }: { polls: PollDbProps[] }) => {
           </div>
           <div>{description}</div>
           <div>Open: {open + ""}</div>
-        </Card>
+        </ListItemWrapper>
       ))}
     </>
   );
