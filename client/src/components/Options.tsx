@@ -2,10 +2,10 @@ import { Box, Center, Heading, Input } from "@chakra-ui/react";
 import { OptionDbProps } from "@js-alt-poll/common";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useOptionView } from "../hooks/useOptionView";
 import { Button } from "./Button";
 import { ListItemWrapper } from "./ListItemWrapper";
-
-type OptionViews = "create" | "update" | "list";
+import { OptionsForm } from "./OptionsForm";
 
 export const Options = () => {
   const options: OptionDbProps[] = [
@@ -28,18 +28,13 @@ export const Options = () => {
       version: 2,
     },
   ];
-  const [title, setTitle] = React.useState("");
   const { push, pathname, query } = useRouter();
-  const [optionView, setOptionView] = React.useState<OptionViews>("list");
+  const [view, setView] = useOptionView();
 
   return (
     <div>
-      <Center>
-        <Heading>Options</Heading>
-      </Center>
-
       {(() => {
-        if (optionView == "list") {
+        if (view == "list") {
           return (
             <>
               {options.map(({ title, description, id }) => {
@@ -56,19 +51,29 @@ export const Options = () => {
                 <Button
                   variant="secondary"
                   onClick={() => {
-                    delete query.view;
-                    push({ query: { ...query }, pathname });
+                    push({ query: { id: query.pollId }, pathname: "/polls" });
                   }}
                 >
                   Back
                 </Button>
+                <Button
+                  onClick={() => {
+                    setView("create");
+                  }}
+                >
+                  Add Option
+                </Button>
               </Center>
             </>
           );
-        } else if (optionView == "create") {
-          return <div>Create</div>;
-        } else if (optionView == "update") {
-          return <div>Update</div>;
+        } else if (view == "create") {
+          return (
+            <OptionsForm onBack={() => setView("list")} onSubmit={() => {}} />
+          );
+        } else if (view == "update") {
+          return (
+            <OptionsForm onBack={() => setView("list")} onSubmit={() => {}} />
+          );
         }
       })()}
     </div>
