@@ -13,37 +13,41 @@ import { PollCreate } from "../src/components/PollCreate";
 import { PollUpdate } from "../src/components/PollUpdate";
 import { Options } from "../src/components/Options";
 import axios from "axios";
+import { isLocalDev } from "../src/isLocalDev";
 
 const App = ({ user }: { user?: UserDbProps }) => {
   const { push, pathname, query } = useRouter();
   const { data: polls } = useQuery("polls", async () => {
-    const res = await axios.get("https://alt-poll.dev/api/polls", {
-      withCredentials: true,
-    });
-    return res.data as PollDbProps[];
-    // const d: PollDbProps[] = [
-    //   {
-    //     closed: false,
-    //     open: true,
-    //     created_at: "2021-05-22T16:39:59.771Z",
-    //     description: "some poll",
-    //     id: "1",
-    //     title: "abc",
-    //     user_id: "1",
-    //     version: 1,
-    //   },
-    //   {
-    //     closed: false,
-    //     open: true,
-    //     created_at: "2021-05-22T16:39:59.771Z",
-    //     description: "some poll",
-    //     id: "2",
-    //     title: "this is my title",
-    //     user_id: "1",
-    //     version: 3,
-    //   },
-    // ];
-    // return d;
+    if (!isLocalDev) {
+      const res = await axios.get("https://alt-poll.dev/api/polls", {
+        withCredentials: true,
+      });
+      return res.data as PollDbProps[];
+    }
+
+    const d: PollDbProps[] = [
+      {
+        closed: false,
+        open: true,
+        created_at: "2021-05-22T16:39:59.771Z",
+        description: "some poll",
+        id: "1",
+        title: "abc",
+        user_id: "1",
+        version: 1,
+      },
+      {
+        closed: false,
+        open: true,
+        created_at: "2021-05-22T16:39:59.771Z",
+        description: "some poll",
+        id: "2",
+        title: "this is my title",
+        user_id: "1",
+        version: 3,
+      },
+    ];
+    return d;
   });
 
   const selectedPollId = query.id;

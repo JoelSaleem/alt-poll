@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { useQuery } from "react-query";
 import { useOptionView } from "../hooks/useOptionView";
+import { isLocalDev } from "../isLocalDev";
 import { Button } from "./Button";
 import { ListItemWrapper } from "./ListItemWrapper";
 import { OptionsCreate } from "./OptionsCreate";
@@ -16,21 +17,25 @@ export const Options = () => {
   const [view, setView] = useOptionView();
 
   const { data, isLoading } = useQuery<OptionDbProps[]>("options", async () => {
-    const d = await axios.get(`/api/polls/${query.pollId}/options`);
-    return d.data;
+    if (!isLocalDev) {
+      const d = await axios.get(`/api/polls/${query.pollId}/options`);
+      return d.data;
+    }
+
+    const data: OptionDbProps[] = [
+      {
+        created_at: "adsf",
+        description: "asdf",
+        id: "2",
+        poll_id: "1",
+        title: "234",
+        user_id: "2",
+        version: 3,
+      },
+    ];
+    return data;
   });
 
-  // const data: OptionDbProps[] = [
-  //   {
-  //     created_at: "adsf",
-  //     description: "asdf",
-  //     id: "2",
-  //     poll_id: "1",
-  //     title: "234",
-  //     user_id: "2",
-  //     version: 3,
-  //   },
-  // ];
   console.log("%c options ", "background: purple; color: white", data);
 
   const isValidIdParam = (id: string | string[] | undefined) =>

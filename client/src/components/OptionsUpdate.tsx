@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import { OptionsForm, OptionsFormProps } from "./OptionsForm";
 import axios from "axios";
+import { isLocalDev } from "../isLocalDev";
 
 interface OptionsUpdateProps
   extends Omit<
@@ -22,7 +23,19 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
   const [opt, setOpt] = React.useState({ title: "", description: "" });
 
   const { data } = useQuery(["option", optionId], async () => {
-    return axios.get(`/api/polls/${pollId}/options/${optionId}`);
+    if (!isLocalDev) {
+      const r = await axios.get(`/api/polls/${pollId}/options/${optionId}`);
+      return r.data;
+    }
+    return {
+      created_at: "adsf",
+      description: "asdf",
+      id: "2",
+      poll_id: "1",
+      title: "234",
+      user_id: "2",
+      version: 3,
+    };
   });
 
   const { mutate: updateOption, isLoading } = useMutation(async () => {
@@ -34,7 +47,6 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
     onBack();
   });
 
-  console.log("%c data ", "background: purple; color: white", data);
   return (
     <OptionsForm
       onBack={onBack}
