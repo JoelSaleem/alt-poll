@@ -22,7 +22,6 @@ export const OptionsForm: React.FC<OptionsFormProps> = ({
   const [description, setDescription] = React.useState(initialDesc);
 
   React.useEffect(() => {
-    console.log("%c here ", "background: purple; color: white");
     onDataChange({ title, description });
   }, [title, description]);
 

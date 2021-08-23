@@ -36,8 +36,6 @@ export const Options = () => {
     return data;
   });
 
-  console.log("%c options ", "background: purple; color: white", data);
-
   const isValidIdParam = (id: string | string[] | undefined) =>
     !Array.isArray(id) && !!id;
 
@@ -49,7 +47,15 @@ export const Options = () => {
             <>
               {data?.map(({ title, description, id }) => {
                 return (
-                  <ListItemWrapper key={id}>
+                  <ListItemWrapper
+                    onClick={() => {
+                      setView("update", {
+                        pollId: query.pollId as string,
+                        optionId: id,
+                      });
+                    }}
+                    key={id}
+                  >
                     <div>
                       <b>{title}</b>
                     </div>
@@ -68,7 +74,8 @@ export const Options = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    setView("create");
+                    // @ts-ignore
+                    setView("create", { pollId: query.pollId });
                   }}
                 >
                   Add Option
@@ -79,7 +86,8 @@ export const Options = () => {
         } else if (view == "create" && query.pollId) {
           return (
             <OptionsCreate
-              onBack={() => setView("list")}
+              // @ts-ignore
+              onBack={() => setView("list", { ...query })}
               pollId={query.pollId as string}
             />
           );
@@ -90,11 +98,14 @@ export const Options = () => {
         ) {
           return (
             <OptionsUpdate
-              onBack={() => setView("list")}
+              // @ts-ignore
+              onBack={() => setView("list", { ...query })}
               optionId={query.optionId as string}
               pollId={query.pollId as string}
             />
           );
+        } else {
+          // setView("list". {...query});
         }
       })()}
     </div>

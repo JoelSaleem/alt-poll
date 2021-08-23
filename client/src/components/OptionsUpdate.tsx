@@ -20,6 +20,7 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
   pollId,
   optionId,
 }) => {
+  console.log("%c update ", "background: purple; color: white");
   const [opt, setOpt] = React.useState({ title: "", description: "" });
 
   const { data } = useQuery(["option", optionId], async () => {
@@ -47,6 +48,8 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
     onBack();
   });
 
+  console.log("%c here ", "background: purple; color: white", data);
+
   return (
     <OptionsForm
       onBack={onBack}
@@ -54,6 +57,8 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
         setOpt({ title, description })
       }
       onSubmit={updateOption}
+      initialDesc={data?.description}
+      initialTitle={data?.title}
     />
   );
 };

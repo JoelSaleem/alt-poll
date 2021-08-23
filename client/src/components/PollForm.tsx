@@ -33,7 +33,6 @@ export const PollForm: React.FC<PollFormProps> = ({
 }) => {
   const { title, open, closed, description, id } = poll;
   const { push, query } = useRouter();
-  console.log("%c id ", "background: purple; color: white", id);
 
   return (
     <div>
