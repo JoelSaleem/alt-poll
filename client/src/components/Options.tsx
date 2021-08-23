@@ -1,35 +1,40 @@
 import { Box, Center, Heading, Input } from "@chakra-ui/react";
 import { OptionDbProps } from "@js-alt-poll/common";
+import axios from "axios";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { useQuery } from "react-query";
 import { useOptionView } from "../hooks/useOptionView";
 import { Button } from "./Button";
 import { ListItemWrapper } from "./ListItemWrapper";
+import { OptionsCreate } from "./OptionsCreate";
 import { OptionsForm } from "./OptionsForm";
+import { OptionsUpdate } from "./OptionsUpdate";
 
 export const Options = () => {
-  const options: OptionDbProps[] = [
-    {
-      created_at: "10-10-10",
-      description: "desc",
-      title: "title d",
-      id: "1",
-      poll_id: "2",
-      user_id: "adfadsf",
-      version: 2,
-    },
-    {
-      created_at: "10-10-10",
-      description: "descd ",
-      title: "title",
-      id: "2",
-      poll_id: "2",
-      user_id: "adfadsf",
-      version: 2,
-    },
-  ];
   const { push, pathname, query } = useRouter();
   const [view, setView] = useOptionView();
+
+  const { data, isLoading } = useQuery<OptionDbProps[]>("options", async () => {
+    const d = await axios.get(`/api/polls/${query.pollId}/options`);
+    return d.data;
+  });
+
+  // const data: OptionDbProps[] = [
+  //   {
+  //     created_at: "adsf",
+  //     description: "asdf",
+  //     id: "2",
+  //     poll_id: "1",
+  //     title: "234",
+  //     user_id: "2",
+  //     version: 3,
+  //   },
+  // ];
+  console.log("%c options ", "background: purple; color: white", data);
+
+  const isValidIdParam = (id: string | string[] | undefined) =>
+    !Array.isArray(id) && !!id;
 
   return (
     <div>
@@ -37,9 +42,9 @@ export const Options = () => {
         if (view == "list") {
           return (
             <>
-              {options.map(({ title, description, id }) => {
+              {data?.map(({ title, description, id }) => {
                 return (
-                  <ListItemWrapper>
+                  <ListItemWrapper key={id}>
                     <div>
                       <b>{title}</b>
                     </div>
@@ -66,13 +71,24 @@ export const Options = () => {
               </Center>
             </>
           );
-        } else if (view == "create") {
+        } else if (view == "create" && query.pollId) {
           return (
-            <OptionsForm onBack={() => setView("list")} onSubmit={() => {}} />
+            <OptionsCreate
+              onBack={() => setView("list")}
+              pollId={query.pollId as string}
+            />
           );
-        } else if (view == "update") {
+        } else if (
+          view == "update" &&
+          isValidIdParam(query.pollId) &&
+          isValidIdParam(query.optionId)
+        ) {
           return (
-            <OptionsForm onBack={() => setView("list")} onSubmit={() => {}} />
+            <OptionsUpdate
+              onBack={() => setView("list")}
+              optionId={query.optionId as string}
+              pollId={query.pollId as string}
+            />
           );
         }
       })()}
