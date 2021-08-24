@@ -22,8 +22,15 @@ export const OptionsForm: React.FC<OptionsFormProps> = ({
   const [description, setDescription] = React.useState(initialDesc);
 
   React.useEffect(() => {
-    onDataChange({ title, description });
+    if (title != null && description != null) {
+      onDataChange({ title, description });
+    }
   }, [title, description]);
+
+  React.useEffect(() => {
+    setTitle(initialTitle);
+    setDescription(initialDesc);
+  }, [initialTitle, initialDesc]);
 
   return (
     <>

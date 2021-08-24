@@ -10,6 +10,7 @@ export const PollsList = ({ polls }: { polls: PollDbProps[] }) => {
     <>
       {polls?.map(({ title, description, open, id }) => (
         <ListItemWrapper
+          key={id}
           onClick={() => {
             delete query.view;
             push({

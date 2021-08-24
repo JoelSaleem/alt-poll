@@ -20,9 +20,6 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
   pollId,
   optionId,
 }) => {
-  console.log("%c update ", "background: purple; color: white");
-  const [opt, setOpt] = React.useState({ title: "", description: "" });
-
   const { data } = useQuery(["option", optionId], async () => {
     if (!isLocalDev) {
       const r = await axios.get(`/api/polls/${pollId}/options/${optionId}`);
@@ -38,6 +35,16 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
       version: 3,
     };
   });
+  const [opt, setOpt] = React.useState({
+    title: data?.title,
+    description: data?.description,
+  });
+
+  React.useEffect(() => {
+    if (data) {
+      setOpt({ title: data.title, description: data.description });
+    }
+  }, [data]);
 
   const { mutate: updateOption, isLoading } = useMutation(async () => {
     await axios.put(`/api/polls/${pollId}/options/${optionId}`, {
@@ -48,14 +55,12 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
     onBack();
   });
 
-  console.log("%c here ", "background: purple; color: white", data);
-
   return (
     <OptionsForm
       onBack={onBack}
-      onDataChange={({ title = "", description = "" }) =>
-        setOpt({ title, description })
-      }
+      onDataChange={({ title = "", description = "" }) => {
+        setOpt({ title, description });
+      }}
       onSubmit={updateOption}
       initialDesc={data?.description}
       initialTitle={data?.title}
