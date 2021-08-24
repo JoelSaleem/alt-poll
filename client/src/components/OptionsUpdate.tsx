@@ -1,7 +1,7 @@
 import * as React from "react";
 import { OptionDbProps } from "@js-alt-poll/common";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { OptionsForm, OptionsFormProps } from "./OptionsForm";
 import axios from "axios";
 import { isLocalDev } from "../isLocalDev";
@@ -46,12 +46,14 @@ export const OptionsUpdate: React.FC<OptionsUpdateProps> = ({
     }
   }, [data]);
 
+  const queryClient = useQueryClient();
+
   const { mutate: updateOption, isLoading } = useMutation(async () => {
     await axios.put(`/api/polls/${pollId}/options/${optionId}`, {
       ...opt,
     });
 
-    // await queryClient.refetchQueries("polls");
+    await queryClient.refetchQueries(["options"]);
     onBack();
   });
 

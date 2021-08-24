@@ -1,7 +1,7 @@
 import * as React from "react";
 import { OptionDbProps } from "@js-alt-poll/common";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { OptionsForm, OptionsFormProps } from "./OptionsForm";
 import axios from "axios";
 
@@ -19,10 +19,12 @@ export const OptionsCreate: React.FC<OptionsCreateProps> = ({
 }) => {
   const [option, setOption] = React.useState({ title: "", description: "" });
 
+  const queryClient = useQueryClient();
+
   const { mutate: createOption, isLoading } = useMutation(async () => {
     await axios.post(`/api/polls/${pollId}/options`, { ...option });
 
-    // await queryClient.refetchQueries("options");
+    await queryClient.refetchQueries("options");
     onBack();
   });
 
