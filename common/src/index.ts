@@ -16,6 +16,7 @@ export * from "./db/models/User";
 export * from "./db/models/Poll";
 export * from "./db/models/Vote";
 export * from "./db/models/Option";
+export * from "./db/models/Otp";
 
 // middlewares
 export * from "./middleware/requireAuth";
