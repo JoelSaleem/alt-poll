@@ -11,6 +11,7 @@ import { UserDbProps } from "@js-alt-poll/common";
 
 import "./passport-setup";
 import { initOptionRoutes } from "./routes/optionRoutes";
+import { initOtpRoutes } from "./routes/otpRoutes";
 
 declare namespace Express {
   interface Request {
@@ -37,6 +38,7 @@ app.use(passport.session());
 // Routes
 initPollRoutes(app);
 initOptionRoutes(app);
+initOtpRoutes(app);
 
 // Messaging Consumers
 new UserCreatedConsumer().init();

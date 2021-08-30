@@ -41,3 +41,15 @@ export const CREATE_OPTION = `
     VALUES(?, ?, ?, ?)
     RETURNING *
 `;
+
+export const GET_OTP_BY_VALUE = `
+    SELECT * FROM "Otps" o
+    JOIN "Polls" po on po.id = o.poll_id
+    WHERE o.id = ?
+`;
+
+export const CREATE_OTP = `
+    INSERT INTO "Otps"(id, expiry, poll_id, user_id, version)
+    VALUES(?, ?, ?, ?, ?)
+    RETURNING *
+`;
