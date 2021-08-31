@@ -49,7 +49,7 @@ export const GET_OTP_BY_VALUE = `
 `;
 
 export const CREATE_OTP = `
-    INSERT INTO "Otps"(id, expiry, poll_id, user_id, version)
+    INSERT INTO "Otps"(id, expired, poll_id, user_id, version)
     VALUES(?, ?, ?, ?, ?)
     RETURNING *
 `;

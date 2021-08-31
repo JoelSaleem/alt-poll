@@ -1,6 +1,5 @@
 import { requireAuth } from "@js-alt-poll/common";
 import { Express } from "express";
-import { GET_OPTIONS } from "../db/queries";
 import { logger } from "../logger";
 import { Poll } from "../db/models/Poll";
 import { Otp } from "../db/models/Otp";

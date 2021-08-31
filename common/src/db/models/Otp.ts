@@ -1,6 +1,6 @@
 export interface OtpDBProps {
   id: string;
-  expiry: string;
+  expired: boolean;
   created_at: string;
   poll_id: string;
   user_id: string;
@@ -9,7 +9,7 @@ export interface OtpDBProps {
 
 export class BaseOtpModel {
   public id: string;
-  public expiry: Date;
+  public expired: boolean;
   public createdAt: Date;
   public pollId: string;
   public userId: string;
@@ -18,7 +18,7 @@ export class BaseOtpModel {
   constructor(
     id: string,
     userId: string,
-    expiry: string,
+    expired: boolean,
     pollId: string,
     createdAt: string | null = null,
     version: number = 0
@@ -28,7 +28,7 @@ export class BaseOtpModel {
     this.pollId = pollId;
     this.createdAt = (createdAt && new Date(createdAt)) || new Date();
     this.version = version;
-    this.expiry = new Date(expiry);
+    this.expired = expired;
   }
 
   serialise = (): OtpDBProps => ({
@@ -36,7 +36,7 @@ export class BaseOtpModel {
     user_id: this.userId,
     poll_id: this.pollId,
     created_at: this.createdAt.toISOString(),
-    expiry: this.expiry.toISOString(),
+    expired: this.expired,
     version: this.version,
   });
 }

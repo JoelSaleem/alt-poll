@@ -8,7 +8,7 @@ import { buildUpdateQuery } from "../utils";
 interface OtpModelProps {
   id: string;
   userId: string;
-  expiry: string;
+  expired: boolean;
   pollId: string;
   createdAt: string;
   version: number;
@@ -18,16 +18,16 @@ export class Otp extends BaseOtpModel {
   constructor({
     id,
     userId,
-    expiry,
+    expired,
     createdAt,
     pollId,
     version,
   }: OtpModelProps) {
-    super(id, userId, expiry, pollId, createdAt, version);
+    super(id, userId, expired, pollId, createdAt, version);
   }
 
   static getById = async (id: string): Promise<Otp | undefined> => {
-    console.log(format(GET_OTP_BY_VALUE, [id]))
+    console.log(format(GET_OTP_BY_VALUE, [id]));
     const otp = (await pool.query(format(GET_OTP_BY_VALUE, [id])))
       ?.rows?.[0] as OtpDBProps;
 
@@ -35,7 +35,7 @@ export class Otp extends BaseOtpModel {
     return new Otp({
       id: otp.id,
       createdAt: otp.created_at,
-      expiry: otp.expiry,
+      expired: otp.expired,
       pollId: otp.poll_id,
       userId: otp.user_id,
       version: otp.version,
@@ -43,23 +43,14 @@ export class Otp extends BaseOtpModel {
   };
 
   static create = async (pollId: string, userId: string) => {
-    const expiry = Date.now() + 1 * 1000 * 60 * 30; // 30 mins
     const otp = (
-      await pool.query(
-        format(CREATE_OTP, [
-          cuid(),
-          new Date(expiry).toISOString(),
-          pollId,
-          userId,
-          0,
-        ])
-      )
+      await pool.query(format(CREATE_OTP, [cuid(), false, pollId, userId, 0]))
     )?.rows?.[0] as OtpDBProps;
 
     return new Otp({
       id: otp.id,
       createdAt: otp.created_at,
-      expiry: otp.expiry,
+      expired: otp.expired,
       pollId: otp.poll_id,
       userId: otp.user_id,
       version: otp.version,
@@ -67,7 +58,6 @@ export class Otp extends BaseOtpModel {
   };
 
   // Would we ever update an otp??
-  // What about to refresh expiry?
 
   // save = async (): Promise<Otp> => {
   //   const q = buildUpdateQuery(
