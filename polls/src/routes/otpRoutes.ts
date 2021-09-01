@@ -44,4 +44,27 @@ export const initOtpRoutes = (app: Express) => {
       res.status(500).send({ errors: ["Could not create otp"] });
     }
   });
+
+  app.put("/api/polls/otp/:otpId", requireAuth, async (req, res) => {
+    const { otpId } = req.params;
+
+    try {
+      const otp = await Otp.getById(otpId);
+      if (!otp) {
+        return res
+          .status(404)
+          .send({ errors: [`No otp with id ${otpId} found`] });
+      }
+
+      await otp.expire();
+
+      const serialisedOtp = otp.serialise();
+      console.log("serialised", serialisedOtp);
+
+      return res.send(serialisedOtp);
+    } catch (e) {
+      logger.error(e);
+      res.status(500).send({ errors: ["Could not expire otp"] });
+    }
+  });
 };

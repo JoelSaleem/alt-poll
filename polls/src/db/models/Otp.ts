@@ -27,13 +27,13 @@ export class Otp extends BaseOtpModel {
   }
 
   static getById = async (id: string): Promise<Otp | undefined> => {
-    console.log(format(GET_OTP_BY_VALUE, [id]));
+    const result = await pool.query(format(GET_OTP_BY_VALUE, [id]));
     const otp = (await pool.query(format(GET_OTP_BY_VALUE, [id])))
-      ?.rows?.[0] as OtpDBProps;
+      ?.rows?.[0] as OtpDBProps & { otp_id: string };
 
     if (!otp) return;
     return new Otp({
-      id: otp.id,
+      id: otp.otp_id,
       createdAt: otp.created_at,
       expired: otp.expired,
       pollId: otp.poll_id,
@@ -55,6 +55,16 @@ export class Otp extends BaseOtpModel {
       userId: otp.user_id,
       version: otp.version,
     });
+  };
+
+  expire = async () => {
+    const q = buildUpdateQuery("Otps", ["expired"], ["id"]);
+
+    const res = await pool.query(format(q, [true, this.id]));
+
+    this.expired = true;
+
+    return this;
   };
 
   // Would we ever update an otp??
