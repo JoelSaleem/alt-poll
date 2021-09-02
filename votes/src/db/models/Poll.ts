@@ -53,7 +53,7 @@ export class Poll extends BasePollModel {
     return poll;
   };
 
-  static getPollById = async (id: string, userId: string) => {
+  static getById = async (id: string, userId: string) => {
     const pollData: PollDbProps | undefined = (
       await pool.query(format(GET_POLL, [userId, id]))
     )?.rows?.[0];

@@ -21,7 +21,7 @@ export class PollUpdatedConsumer extends Consumer {
       version,
     }: PollDbProps = JSON.parse(msg.content.toString());
 
-    const poll = await Poll.getPollById(id, user_id);
+    const poll = await Poll.getById(id, user_id);
     if (!poll || poll.version != version - 1) {
       logger.error(`Could not update poll: ${poll}`);
       this.nack(msg, 20 * 1000);

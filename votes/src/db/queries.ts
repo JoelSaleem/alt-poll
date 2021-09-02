@@ -57,3 +57,15 @@ export const CREATE_VOTE = `
     VALUES(?, ?, ?, ?)
     RETURNING *
 `;
+
+export const GET_OTP_BY_VALUE = `
+    SELECT *, o.id as otp_id FROM "Otps" o
+    JOIN "Polls" po on po.id = o.poll_id
+    WHERE o.id = ? AND expired = false
+`;
+
+export const CREATE_OTP = `
+    INSERT INTO "Otps"(id, expired, poll_id, user_id, version)
+    VALUES(?, ?, ?, ?, ?)
+    RETURNING *
+`;

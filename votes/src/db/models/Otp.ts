@@ -43,6 +43,7 @@ export class Otp extends BaseOtpModel {
   };
 
   static create = async (pollId: string, userId: string) => {
+    console.log(format(CREATE_OTP, [cuid(), false, pollId, userId, 0]))
     const otp = (
       await pool.query(format(CREATE_OTP, [cuid(), false, pollId, userId, 0]))
     )?.rows?.[0] as OtpDBProps;

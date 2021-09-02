@@ -4,7 +4,7 @@
   "main": "index.ts",
   "license": "MIT",
   "dependencies": {
-    "@js-alt-poll/common": "^1.0.30",
+    "@js-alt-poll/common": "^1.0.32",
     "@types/cookie-session": "^2.0.42",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
@@ -15,6 +15,7 @@
     "body-parser": "^1.19.0",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
+    "cuid": "^2.1.8",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "passport": "^0.4.1",

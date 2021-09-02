@@ -45,7 +45,7 @@ export const CREATE_OPTION = `
 export const GET_OTP_BY_VALUE = `
     SELECT *, o.id as otp_id FROM "Otps" o
     JOIN "Polls" po on po.id = o.poll_id
-    WHERE o.id = ?
+    WHERE o.id = ? AND expired = false
 `;
 
 export const CREATE_OTP = `

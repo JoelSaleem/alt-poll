@@ -38,7 +38,7 @@ app.use(passport.session());
 // Routes
 initPollRoutes(app);
 initOptionRoutes(app);
-initOtpRoutes(app);
+// initOtpRoutes(app); // Moved to votes
 
 // Messaging Consumers
 new UserCreatedConsumer().init();
