@@ -23,7 +23,7 @@ export const initOtpRoutes = (app: Express) => {
   });
 
   app.post("/api/votes/:pollId/otp/", requireAuth, async (req, res) => {
-    const { pollId, otpId } = req.params;
+    const { pollId } = req.params;
 
     const poll = await Poll.getById(pollId, req.currentUser!.id);
     if (!poll) {

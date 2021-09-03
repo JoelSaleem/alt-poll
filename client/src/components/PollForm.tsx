@@ -82,7 +82,13 @@ export const PollForm: React.FC<PollFormProps> = ({
             Options
           </Button>
         )}
-        <Button>Send voting link</Button>
+        <Button
+          onClick={() =>
+            push({ pathname: "/voting-link", query: { pollId: id } })
+          }
+        >
+          Send voting link
+        </Button>
       </Center>
     </div>
   );
