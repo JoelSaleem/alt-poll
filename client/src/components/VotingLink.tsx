@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
+import { useCopyToClipboard } from "react-use";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useEffectOnce } from "react-use";
+import { Input } from "@chakra-ui/input";
+import Icon from "@chakra-ui/icon";
+import { LinkIcon } from "@chakra-ui/icons";
+import { Center, Flex } from "@chakra-ui/layout";
+import { Button } from "./Button";
 
 export const VotingLink = () => {
   const {
     query: { pollId },
   } = useRouter();
+
+  const [, copyToClipboard] = useCopyToClipboard();
 
   const {
     mutate: getOtp,
@@ -23,7 +31,25 @@ export const VotingLink = () => {
     getOtp();
   });
 
-
   console.log("%c data ", "background: purple; color: white", data);
-  return <div>your voting link: {data?.id}</div>;
+  const votingUrl = `https://alt-poll.dev/votes?otp=${data?.id}`;
+  return (
+    <div>
+      your voting link:
+      {data?.id && (
+        <Flex>
+          <Input
+            disabled
+            style={{ cursor: "pointer", opacity: 0.9 }}
+            value={votingUrl}
+          />
+          <Center pl="2">
+            <Button onClick={() => copyToClipboard(votingUrl)}>
+              <LinkIcon />
+            </Button>
+          </Center>
+        </Flex>
+      )}
+    </div>
+  );
 };
