@@ -12,6 +12,7 @@ import "./passport-setup";
 import { OptionCreatedConsumer } from "./messaging/OptionCreatedConsumer";
 import { OptionUpdatedConsumer } from "./messaging/OptionUpdatedConsumer";
 import { initOtpRoutes } from "./routes/otpRoutes";
+import { initOptionRoutes } from "./routes/optionRoutes";
 
 const app = express();
 
@@ -37,6 +38,7 @@ new OptionUpdatedConsumer().init();
 
 initVoteRoutes(app);
 initOtpRoutes(app);
+initOptionRoutes(app);
 
 app.listen(3000, () => {
   console.log("Listening on port: 3000");

@@ -47,6 +47,20 @@ SELECT * FROM "Votes"
 WHERE user_id = ? AND poll_id = ?
 `;
 
+export const GET_OPTIONS_FROM_OTP = `
+    SELECT 
+        opt.title as opt_title, 
+        opt.description as opt_descr, 
+        po.title as poll_title, 
+        po.description as poll_descr 
+    FROM "Otps" otp
+    JOIN "Options" opt 
+    ON otp.poll_id = opt.poll_id
+    JOIN "Polls" po
+    ON po.id = otp.poll_id
+    WHERE otp.id = ?
+`;
+
 export const GET_VOTE = `
 SELECT * FROM "Votes"
 WHERE user_id = ? AND id = ?
