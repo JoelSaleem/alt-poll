@@ -1019,6 +1019,11 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
+"@types/sortablejs@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/@types/sortablejs/-/sortablejs-1.10.7.tgz#ab9039c85429f0516955ec6dbc0bb20139417b15"
+  integrity sha512-lGCwwgpj8zW/ZmaueoPVSP7nnc9t8VqVWXS+ASX3eoUUENmiazv0rlXyTRludXzuX9ALjPsMqBu85TgJNWbTOg==
+
 "@types/tinycolor2@1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@types/tinycolor2/-/tinycolor2-1.4.2.tgz#721ca5c5d1a2988b4a886e35c2ffc5735b6afbdf"
@@ -3253,10 +3258,10 @@ react-use@^17.3.1:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
-react@^0.0.0-8af27aeed:
-  version "0.0.0-8af27aeed"
-  resolved "https://registry.yarnpkg.com/react/-/react-0.0.0-8af27aeed.tgz#2c8e9bb04fbfdc793a2caa83593ff7d20ba52e3b"
-  integrity sha512-qsmwpHH741LwnCkT/JJ+w0Z5KIJsCOedtJhuQ0zGrhKzqRAZzQJ81E8HQFHd6GO3BRR0yAk7ioJvjA7tlj/4bA==
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -3505,6 +3510,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+sortablejs@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
+  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
 
 source-map@0.5.6:
   version "0.5.6"

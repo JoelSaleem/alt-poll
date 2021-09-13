@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { isLocalDev } from "../isLocalDev";
 import { Card } from "./Card";
+import { DragAndDropList } from "./DragAndDropList";
 
 type Opt = {
   otp_title: string;
@@ -64,6 +65,7 @@ export const Votes = () => {
           </Card>
         );
       })}
+      <DragAndDropList />
     </div>
   );
 };
