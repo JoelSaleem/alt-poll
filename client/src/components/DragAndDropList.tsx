@@ -53,16 +53,33 @@ export const DragAndDropList = () => {
     Sortable.create(el, {
       group: "items",
       animation: 100,
+      onUpdate: (e) => {
+        console.log("%c e ", "background: purple; color: white", e);
+      },
     });
 
-  console.log("%c  ", "background: purple; color: white", s);
+  //   console.log(
+  //     "%c test ",
+  //     "background: purple; color: white",
+  //     ?.map((el) => el?.id)
+  //   );
+
+  // @ts-ignore
+  const a = Array.from(s?.el?.children ?? []);
+
+  console.log(
+    "%c a ",
+    "background: purple; color: white",
+    // @ts-ignore
+    a.map((el) => el?.id)
+  );
 
   return (
     <div>
       <div id="items">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
+        <div id="asdfasf">1</div>
+        <div id="aaaa">2</div>
+        <div id="asdfafd">3</div>
       </div>
     </div>
   );
