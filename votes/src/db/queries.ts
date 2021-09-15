@@ -49,6 +49,7 @@ WHERE user_id = ? AND poll_id = ?
 
 export const GET_OPTIONS_FROM_OTP = `
     SELECT 
+        opt.id as opt_id,
         opt.title as opt_title, 
         opt.description as opt_descr, 
         po.title as poll_title, 
