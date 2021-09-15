@@ -6,8 +6,9 @@ import { isLocalDev } from "../isLocalDev";
 import { Card } from "./Card";
 import { DragAndDropList } from "./DragAndDropList";
 
-type Opt = {
-  otp_title: string;
+export type Opt = {
+  opt_id: string;
+  opt_title: string;
   opt_descr: string;
   poll_title: string;
   poll_descr: string;
@@ -28,15 +29,24 @@ export const Votes = () => {
       if (isLocalDev) {
         return [
           {
-            otp_title: "abc",
+            opt_id: "asdassf",
+            opt_title: "abc",
             opt_descr: "asdf",
             poll_descr: "poll descr",
             poll_title: "my poll",
           },
           {
-            otp_title: "vote for m3",
+            opt_id: "asdf",
+            opt_title: "vote for m3",
             opt_descr: "asdfdasfasdf",
             poll_descr: "poll descr",
+            poll_title: "my poll",
+          },
+          {
+            opt_id: "asdfass",
+            opt_title: "vote",
+            opt_descr: "asdf sdfdasfasdf",
+            poll_descr: "poll d asdescr",
             poll_title: "my poll",
           },
         ];
@@ -55,17 +65,7 @@ export const Votes = () => {
   return (
     <div>
       voting page
-      {data?.map(({ opt_descr, otp_title, poll_descr, poll_title }) => {
-        return (
-          <Card depth={2} margin="2">
-            <Container padding="3">
-              <div>{otp_title}</div>
-              <div>{opt_descr}</div>
-            </Container>
-          </Card>
-        );
-      })}
-      <DragAndDropList />
+      <DragAndDropList options={data ?? []} />
     </div>
   );
 };
