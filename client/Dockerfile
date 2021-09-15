@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Todo: build and serve for prod
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "yarn.lock", "./"]
 
 RUN npm install --production
 
