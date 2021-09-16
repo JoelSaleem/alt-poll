@@ -47,6 +47,14 @@ SELECT * FROM "Votes"
 WHERE user_id = ? AND poll_id = ?
 `;
 
+export type OptionFromOtp = {
+  opt_id: string;
+  opt_title: string;
+  opt_descr: string;
+  poll_title: string;
+  poll_descr: string;
+};
+
 export const GET_OPTIONS_FROM_OTP = `
     SELECT 
         opt.id as opt_id,
