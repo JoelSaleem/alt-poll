@@ -21,6 +21,7 @@ export const throwIfInvalidVotes = (
   votes.forEach(({ optId }) => {
     voteOptions.add(optId);
   });
+  console.log(optionsSet, votes);
 
   if (voteOptions.size != options.length) {
     throw new Error(`Received wrong number or duplicate options.`);
@@ -31,6 +32,8 @@ export const throwIfInvalidVotes = (
       `Invalid number of votes. Expected: ${optionsSet.size}, received: ${votes.length}`
     );
   }
+
+  console.log(optionsSet, votes);
 
   const rankSet = new Set();
   votes.forEach(({ optId, rank }) => {

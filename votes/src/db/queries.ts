@@ -44,11 +44,12 @@ export const CREATE_OPTION = `
 
 export const GET_VOTES = `
 SELECT * FROM "Votes"
-WHERE user_id = ? AND poll_id = ?
+WHERE poll_id = ?
 `;
 
 export type OptionFromOtp = {
   opt_id: string;
+  poll_id: string;
   opt_title: string;
   opt_descr: string;
   poll_title: string;
@@ -61,7 +62,8 @@ export const GET_OPTIONS_FROM_OTP = `
         opt.title as opt_title, 
         opt.description as opt_descr, 
         po.title as poll_title, 
-        po.description as poll_descr 
+        po.description as poll_descr,
+        po.id as poll_id
     FROM "Otps" otp
     JOIN "Options" opt 
     ON otp.poll_id = opt.poll_id
@@ -72,12 +74,12 @@ export const GET_OPTIONS_FROM_OTP = `
 
 export const GET_VOTE = `
 SELECT * FROM "Votes"
-WHERE user_id = ? AND id = ?
+WHERE id = ?
 `;
 
 export const CREATE_VOTE = `
-    INSERT INTO "Votes"(user_id, poll_id, option_id, rank)
-    VALUES(?, ?, ?, ?)
+    INSERT INTO "Votes"(option_id, rank)
+    VALUES(?, ?)
     RETURNING *
 `;
 

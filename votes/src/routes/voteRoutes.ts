@@ -14,6 +14,7 @@ export const initVoteRoutes = (app: Express) => {
     requireAuth,
     query("pollId").isString().exists(),
     async (req, res) => {
+      // TODO: MAKE SURE POLL BELONGS TO USER
       const errs = validationResult(req);
       if (!errs.isEmpty()) {
         return res.status(400).json({ errors: errs.array() });
@@ -39,7 +40,7 @@ export const initVoteRoutes = (app: Express) => {
   app.get("/api/votes/:voteId", requireAuth, async (req, res) => {
     const voteId = req.params.voteId;
 
-    const vote = await VoteModel.getById(voteId, req.currentUser!.id);
+    const vote = await VoteModel.getById(voteId);
 
     res.send(vote?.serialise());
   });
@@ -55,6 +56,7 @@ export const initVoteRoutes = (app: Express) => {
     }
 
     const otp = req.params?.otpId;
+    console.log(otp, req.body);
     if (!otp) {
       return res
         .status(403)
@@ -71,7 +73,9 @@ export const initVoteRoutes = (app: Express) => {
     }
 
     const votes = req.body.votes as VoteType[];
+    console.log("DEFINIETELY WENT THROUGH HERE");
     try {
+      console.log("numbah 2");
       throwIfInvalidVotes(votes, opts, otp);
     } catch (e) {
       return res
@@ -79,7 +83,20 @@ export const initVoteRoutes = (app: Express) => {
         .send({ errors: [`${e}: received: ${JSON.stringify(votes)}`] });
     }
 
-    // TODO: actually persist the vote
+    try {
+      for (let i = 0; i < votes.length; i++) {
+        await VoteModel.create(
+          votes[i].optId,
+          votes[i].rank
+        );
+      }
+    } catch (e) {
+      return res.status(500).send({
+        errors: [
+          `Could not create votes for ${JSON.stringify(votes)}. Reason: ${e}`,
+        ],
+      });
+    }
 
     res.send({});
   });
