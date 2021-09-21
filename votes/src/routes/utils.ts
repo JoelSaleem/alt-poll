@@ -4,7 +4,7 @@ export type Vote = { optId: string; rank: number };
 
 export const throwIfInvalidVotes = (
   votes: Vote[],
-  options: OptionFromOtp[],
+  optionsFromOtp: OptionFromOtp[],
   otp: string
 ) => {
   // Validation:
@@ -13,7 +13,7 @@ export const throwIfInvalidVotes = (
   // all ranks are between 0 - optionsCount - 1
 
   const optionsSet = new Set();
-  options.forEach(({ opt_id }) => {
+  optionsFromOtp.forEach(({ opt_id }) => {
     optionsSet.add(opt_id);
   });
 
@@ -23,7 +23,7 @@ export const throwIfInvalidVotes = (
   });
   console.log(optionsSet, votes);
 
-  if (voteOptions.size != options.length) {
+  if (voteOptions.size != optionsFromOtp.length) {
     throw new Error(`Received wrong number or duplicate options.`);
   }
 

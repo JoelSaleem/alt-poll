@@ -1,4 +1,3 @@
-import cuid from "cuid";
 import { BaseVoteModel, VoteDBProps } from "@js-alt-poll/common";
 import { format } from "sqlstring";
 import { pool } from "../dbConnection";
