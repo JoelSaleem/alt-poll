@@ -1,8 +1,10 @@
-import { Container } from "@chakra-ui/layout";
+import { Center, Container, Heading, Text } from "@chakra-ui/layout";
+import { typography } from "@chakra-ui/styled-system";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { isLocalDev } from "../isLocalDev";
+import { Button } from "./Button";
 import { Card } from "./Card";
 import { DragAndDropList } from "./DragAndDropList";
 
@@ -64,7 +66,12 @@ export const Votes = () => {
 
   return (
     <div>
-      voting page
+      <Center padding="3">
+        <Heading>{title}</Heading>
+      </Center>
+      <Center padding="3">
+        <Text>Order your votes</Text>
+      </Center>
       <DragAndDropList options={data ?? []} />
     </div>
   );
