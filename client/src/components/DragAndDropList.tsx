@@ -19,6 +19,7 @@ export const DragAndDropList = ({ options }: { options: Opt[] }) => {
 
   const {
     query: { otp },
+    push,
   } = useRouter();
 
   const {
@@ -55,8 +56,9 @@ export const DragAndDropList = ({ options }: { options: Opt[] }) => {
       </ReactSortable>
       <Center>
         <Button
-          onClick={() => {
-            vote();
+          onClick={async () => {
+            await vote();
+            push("/thank-you");
           }}
         >
           Save
