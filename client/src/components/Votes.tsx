@@ -4,8 +4,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { isLocalDev } from "../isLocalDev";
-import { Button } from "./Button";
-import { Card } from "./Card";
 import { DragAndDropList } from "./DragAndDropList";
 
 export type Opt = {

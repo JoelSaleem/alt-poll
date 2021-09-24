@@ -69,7 +69,7 @@ export const GET_OPTIONS_FROM_OTP = `
     ON otp.poll_id = opt.poll_id
     JOIN "Polls" po
     ON po.id = otp.poll_id
-    WHERE otp.id = ?
+    WHERE otp.id = ? AND otp.expired = false
 `;
 
 export const GET_VOTE = `

@@ -7,6 +7,7 @@ import { GET_OPTIONS_FROM_OTP, GET_VOTES, OptionFromOtp } from "../db/queries";
 import { Otp } from "../db/models/Otp";
 import { throwIfInvalidVotes, Vote as VoteType } from "./utils";
 import { Vote as VoteModel } from "../db/models/Vote";
+import { buildUpdateQuery } from "../db/utils";
 
 export const initVoteRoutes = (app: Express) => {
   app.get(
@@ -45,10 +46,6 @@ export const initVoteRoutes = (app: Express) => {
     res.send(vote?.serialise());
   });
 
-  app.put("/api/votes/:voteId", requireAuth, (req, res) => {
-    // TODO
-  });
-
   app.post("/api/votes/:otpId", body("votes").exists(), async (req, res) => {
     const errs = validationResult(req);
     if (!errs.isEmpty()) {
@@ -73,7 +70,6 @@ export const initVoteRoutes = (app: Express) => {
     }
 
     const votes = req.body.votes as VoteType[];
-    console.log("DEFINIETELY WENT THROUGH HERE");
     try {
       console.log("numbah 2");
       throwIfInvalidVotes(votes, opts, otp);
@@ -85,11 +81,14 @@ export const initVoteRoutes = (app: Express) => {
 
     try {
       for (let i = 0; i < votes.length; i++) {
-        await VoteModel.create(
-          votes[i].optId,
-          votes[i].rank
-        );
+        await VoteModel.create(votes[i].optId, votes[i].rank);
       }
+
+      const expireOtpQuery = buildUpdateQuery("Otps", ["expired"], ["id"]);
+      console.log(expireOtpQuery, "\n");
+      console.log(format(expireOtpQuery, [true, otp]));
+
+      await pool.query(format(expireOtpQuery, [true, otp]));
     } catch (e) {
       return res.status(500).send({
         errors: [
