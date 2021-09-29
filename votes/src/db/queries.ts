@@ -54,16 +54,20 @@ export type OptionFromOtp = {
   opt_descr: string;
   poll_title: string;
   poll_descr: string;
+  poll_open: boolean;
+  poll_closed: boolean;
 };
 
 export const GET_OPTIONS_FROM_OTP = `
-    SELECT 
+    SELECT
         opt.id as opt_id,
         opt.title as opt_title, 
         opt.description as opt_descr, 
         po.title as poll_title, 
         po.description as poll_descr,
-        po.id as poll_id
+        po.id as poll_id,
+        po.open as poll_open,
+        po.closed as poll_closed
     FROM "Otps" otp
     JOIN "Options" opt 
     ON otp.poll_id = opt.poll_id

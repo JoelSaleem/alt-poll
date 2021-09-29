@@ -7,6 +7,7 @@ import { GET_OPTIONS } from "../db/queries";
 import { logger } from "../logger";
 import { Option } from "../db/models/Option";
 import { optionProducer } from "../messaging/optionProducer";
+import { Poll } from "../db/models/Poll";
 
 export const initOptionRoutes = (app: Express) => {
   app.get("/api/polls/:pollId/options", requireAuth, async (req, res) => {
@@ -25,31 +26,35 @@ export const initOptionRoutes = (app: Express) => {
     res.send(options);
   });
 
-  app.get("/api/polls/:pollId/options/:optionId", requireAuth, async (req, res) => {
-    const { pollId, optionId } = req.params;
+  app.get(
+    "/api/polls/:pollId/options/:optionId",
+    requireAuth,
+    async (req, res) => {
+      const { pollId, optionId } = req.params;
 
-    let option = null;
-    try {
-      option = await Option.getOptionById(
-        optionId,
-        pollId,
-        req.currentUser!.id
-      );
-
-      if (!option) {
-        throw new Error(
-          `Could not find poll with userId: ${
-            req.currentUser!.id
-          }, pollId: ${pollId}, optionId: ${optionId}`
+      let option = null;
+      try {
+        option = await Option.getOptionById(
+          optionId,
+          pollId,
+          req.currentUser!.id
         );
-      }
-    } catch (e) {
-      logger.error(e);
-      return res.send({ errors: ["Failed to fetch option"] });
-    }
 
-    res.send(option.serialise());
-  });
+        if (!option) {
+          throw new Error(
+            `Could not find poll with userId: ${
+              req.currentUser!.id
+            }, pollId: ${pollId}, optionId: ${optionId}`
+          );
+        }
+      } catch (e) {
+        logger.error(e);
+        return res.send({ errors: ["Failed to fetch option"] });
+      }
+
+      res.send(option.serialise());
+    }
+  );
 
   app.put(
     "/api/polls/:pollId/options/:optionId",
@@ -119,6 +124,22 @@ export const initOptionRoutes = (app: Express) => {
       const { title, description } = req.body;
 
       try {
+        const poll = await Poll.getById(pollId, req.currentUser!.id);
+        if (!poll) {
+          return res.status(400).send({
+            errors: [
+              `Could not create option. Reason: Could not find poll for id: ${pollId}`,
+            ],
+          });
+        }
+        if (poll.open) {
+          return res.status(403).send({
+            errors: [
+              `Cannot add options after the poll is marked open for voting`,
+            ],
+          });
+        }
+
         const option = await Option.create({
           title,
           description,
@@ -137,7 +158,9 @@ export const initOptionRoutes = (app: Express) => {
         return res.status(201).send(serialisedOption);
       } catch (e) {
         logger.error(e);
-        res.status(500).send({ errors: ["Could not create option"] });
+        res
+          .status(500)
+          .send({ errors: ["Could not create option. Reason: " + e] });
       }
     }
   );

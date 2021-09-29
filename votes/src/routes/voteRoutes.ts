@@ -15,7 +15,6 @@ export const initVoteRoutes = (app: Express) => {
     requireAuth,
     query("pollId").isString().exists(),
     async (req, res) => {
-      // TODO: MAKE SURE POLL BELONGS TO USER
       const errs = validationResult(req);
       if (!errs.isEmpty()) {
         return res.status(400).json({ errors: errs.array() });
@@ -47,6 +46,7 @@ export const initVoteRoutes = (app: Express) => {
   });
 
   app.post("/api/votes/:otpId", body("votes").exists(), async (req, res) => {
+    // TODO: split this request handler up into smaller functions
     const errs = validationResult(req);
     if (!errs.isEmpty()) {
       return res.status(400).json({ errors: errs.array() });
@@ -69,9 +69,22 @@ export const initVoteRoutes = (app: Express) => {
         .send({ errors: ["No poll or options exist for the otp " + otp] });
     }
 
+    const isPollOpenForVoting = opts[0].poll_open;
+    if (!isPollOpenForVoting) {
+      return res
+        .status(403)
+        .send({ errors: [`The poll is yet to be opened for voting`] });
+    }
+
+    const isPollClosedForVoting = opts[0].poll_closed;
+    if (isPollClosedForVoting) {
+      return res
+        .status(403)
+        .send({ errors: [`The poll is closed. You can no longer cast votes`] });
+    }
+
     const votes = req.body.votes as VoteType[];
     try {
-      console.log("numbah 2");
       throwIfInvalidVotes(votes, opts, otp);
     } catch (e) {
       return res

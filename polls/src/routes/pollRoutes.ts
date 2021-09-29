@@ -114,9 +114,30 @@ export const initPollRoutes = (app: Express) => {
           poll.description = description;
         }
         if (open != null && open != undefined) {
+          if (poll.open && !open) {
+            status = 403;
+            throw new Error(
+              "Once poll is open for voting it cannot be unopened"
+            );
+          }
           poll.open = open;
         }
         if (closed != null && closed != undefined) {
+          // once closed cannot set closed = false
+          if (poll.closed && !closed) {
+            status = 403;
+            throw new Error(
+              "Once poll is closed for voting it cannot be reopened"
+            );
+          }
+
+          if (closed && !poll.open) {
+            status = 403;
+            throw new Error(
+              "Poll cannot be closed for voting before having been opened for voting"
+            );
+          }
+
           poll.closed = closed;
         }
 
