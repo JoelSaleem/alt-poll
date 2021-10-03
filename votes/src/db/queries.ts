@@ -43,8 +43,13 @@ export const CREATE_OPTION = `
 `;
 
 export const GET_VOTES = `
-SELECT * FROM "Votes"
-WHERE poll_id = ?
+    SELECT v.id as id, o.id as option_id, title, rank, description FROM "Votes" v
+    JOIN "Options" o
+    ON v.option_id = o.id
+    WHERE option_id in (
+    	SELECT id FROM "Options"
+    	WHERE user_id = ? AND poll_id = ? 
+    )
 `;
 
 export type OptionFromOtp = {

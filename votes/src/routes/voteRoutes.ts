@@ -22,6 +22,10 @@ export const initVoteRoutes = (app: Express) => {
 
       let votes: VoteDBProps[] = [];
       try {
+        console.log(
+          "votes for ",
+          format(GET_VOTES, [req.currentUser!.id, req.query.pollId])
+        );
         votes = ((
           await pool.query(
             format(GET_VOTES, [req.currentUser!.id, req.query.pollId])
@@ -30,7 +34,7 @@ export const initVoteRoutes = (app: Express) => {
       } catch (e) {
         return res
           .status(500)
-          .send({ errors: ["Could not get votes for poll"] });
+          .send({ errors: ["Could not get votes for poll: " + e] });
       }
 
       res.send(votes);
