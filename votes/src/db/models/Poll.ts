@@ -36,6 +36,18 @@ export class Poll extends BasePollModel {
     createdAt: string,
     version: number = 0
   ) => {
+    console.log(
+      "creating poll",
+      format(CREATE_POLL, [
+        id,
+        title,
+        description,
+        userId,
+        open,
+        closed,
+        createdAt,
+      ])
+    );
     const poll = (
       await pool.query(
         format(CREATE_POLL, [
@@ -60,7 +72,7 @@ export class Poll extends BasePollModel {
 
     if (!pollData) return;
 
-    const { open, closed, description, title, created_at } = pollData;
+    const { open, closed, description, title, created_at, version } = pollData;
 
     return new Poll(
       id,
@@ -69,20 +81,14 @@ export class Poll extends BasePollModel {
       description,
       open,
       closed,
-      new Date(created_at)
+      new Date(created_at),
+      version
     );
   };
 
   save = async () => {
-    const {
-      title,
-      open,
-      closed,
-      description,
-      id,
-      user_id,
-      version,
-    } = this.serialise();
+    const { title, open, closed, description, id, user_id, version } =
+      this.serialise();
     const q = buildUpdateQuery(
       "Polls",
       ["title", "description", "open", "closed", "version"],

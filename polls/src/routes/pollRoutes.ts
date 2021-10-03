@@ -148,7 +148,7 @@ export const initPollRoutes = (app: Express) => {
       }
 
       if (err || !poll) {
-        res.status(status).send(err);
+        return res.status(status).send(err);
       }
 
       pollProducer.publish(

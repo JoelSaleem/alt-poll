@@ -76,6 +76,8 @@ export const initVoteRoutes = (app: Express) => {
         .send({ errors: [`The poll is yet to be opened for voting`] });
     }
 
+    console.log(JSON.stringify(opts[0]));
+
     const isPollClosedForVoting = opts[0].poll_closed;
     if (isPollClosedForVoting) {
       return res

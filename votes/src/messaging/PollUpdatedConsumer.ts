@@ -5,6 +5,7 @@ import { version } from "typescript";
 import { logger } from "../logger";
 
 export class PollUpdatedConsumer extends Consumer {
+  // poll not updating when closed??
   constructor() {
     super("alt-poll-exchange", "poll.updated", "votes-poll-updated");
   }
@@ -20,8 +21,10 @@ export class PollUpdatedConsumer extends Consumer {
       title,
       version,
     }: PollDbProps = JSON.parse(msg.content.toString());
+    console.log("closed", closed);
 
     const poll = await Poll.getById(id, user_id);
+    console.log("existig poll", poll?.serialise(), version);
     if (!poll || poll.version != version - 1) {
       logger.error(`Could not update poll: ${poll}`);
       this.nack(msg, 20 * 1000);
@@ -35,7 +38,8 @@ export class PollUpdatedConsumer extends Consumer {
     poll.version = version;
 
     try {
-      await poll?.save();
+      const p = await poll?.save();
+      console.log("db res", JSON.stringify(p));
     } catch (e) {
       this.nack(msg, 20 * 1000);
     }
