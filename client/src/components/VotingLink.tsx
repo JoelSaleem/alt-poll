@@ -13,6 +13,7 @@ import { Button } from "./Button";
 export const VotingLink = () => {
   const {
     query: { pollId },
+    push,
   } = useRouter();
 
   const [, copyToClipboard] = useCopyToClipboard();
@@ -50,6 +51,19 @@ export const VotingLink = () => {
           </Center>
         </Flex>
       )}
+      <Center>
+        <Button
+          variant="secondary"
+          onClick={() =>
+            push({
+              pathname: "/polls",
+              query: { pollId },
+            })
+          }
+        >
+          Back
+        </Button>
+      </Center>
     </div>
   );
 };
