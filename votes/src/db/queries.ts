@@ -43,7 +43,7 @@ export const CREATE_OPTION = `
 `;
 
 export const GET_VOTES = `
-    SELECT v.id as id, o.id as option_id, title, rank, description FROM "Votes" v
+    SELECT v.id as id, o.id as option_id, title, rank, description, voter_id FROM "Votes" v
     JOIN "Options" o
     ON v.option_id = o.id
     WHERE option_id in (
@@ -87,8 +87,8 @@ WHERE id = ?
 `;
 
 export const CREATE_VOTE = `
-    INSERT INTO "Votes"(option_id, rank)
-    VALUES(?, ?)
+    INSERT INTO "Votes"(option_id, rank, voter_id)
+    VALUES(?, ?, ?)
     RETURNING *
 `;
 

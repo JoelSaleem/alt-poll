@@ -8,6 +8,7 @@ import { Otp } from "../db/models/Otp";
 import { throwIfInvalidVotes, Vote as VoteType } from "./utils";
 import { Vote as VoteModel } from "../db/models/Vote";
 import { buildUpdateQuery } from "../db/utils";
+import cuid from "cuid";
 
 export const initVoteRoutes = (app: Express) => {
   app.get(
@@ -98,9 +99,11 @@ export const initVoteRoutes = (app: Express) => {
         .send({ errors: [`${e}: received: ${JSON.stringify(votes)}`] });
     }
 
+    const voterId = cuid();
+
     try {
       for (let i = 0; i < votes.length; i++) {
-        await VoteModel.create(votes[i].optId, votes[i].rank);
+        await VoteModel.create(votes[i].optId, votes[i].rank, voterId);
       }
 
       const expireOtpQuery = buildUpdateQuery("Otps", ["expired"], ["id"]);
