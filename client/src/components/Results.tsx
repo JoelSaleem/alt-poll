@@ -344,6 +344,7 @@ class WinnerCalculator {
       }
     }
 
+    // resassign votes from losers
     Object.entries(this.votesForOption).forEach(([optId, votes]) => {
       if (losers.has(optId)) {
         votes.forEach(({ voter_id, rank }) => {
