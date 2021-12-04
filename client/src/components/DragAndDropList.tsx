@@ -31,12 +31,6 @@ export const DragAndDropList = ({ options }: { options: Opt[] }) => {
     return axios.post(`/api/votes/${otp}`, { votes });
   });
 
-  console.log(
-    "%c data ",
-    "background: purple; color: white",
-    postData,
-    postErr
-  );
 
   return (
     <>

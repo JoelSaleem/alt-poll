@@ -32,7 +32,6 @@ export const VotingLink = () => {
     getOtp();
   });
 
-  console.log("%c data ", "background: purple; color: white", data);
   const votingUrl = `https://alt-poll.dev/votes?otp=${data?.id}`;
   return (
     <div>
