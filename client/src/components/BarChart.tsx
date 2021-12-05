@@ -50,18 +50,23 @@ export const BarChart = ({
           const barX = xScale(letter);
           const barY = yMax - barHeight;
           return (
-            <Bar
-              key={`bar-${letter}`}
-              x={barX}
-              y={barY}
-              width={barWidth}
-              height={barHeight}
-              fill="rgba(23, 233, 217, .5)"
-              onClick={() => {
-                if (events)
-                  alert(`clicked: ${JSON.stringify(Object.values(d))}`);
-              }}
-            />
+            <>
+              <Bar
+                key={`bar-${letter}`}
+                x={barX}
+                y={barY}
+                width={barWidth}
+                height={barHeight}
+                fill="rgba(23, 233, 217, .5)"
+                onClick={() => {
+                  if (events)
+                    alert(`clicked: ${JSON.stringify(Object.values(d))}`);
+                }}
+              />
+              <text x={barX} y={barY - 12} style={{ color: "white" }}>
+                {d.optId}
+              </text>
+            </>
           );
         })}
       </Group>

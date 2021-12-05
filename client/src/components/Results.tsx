@@ -276,27 +276,19 @@ export const Results = () => {
     }
   );
 
-  // const a = new WinnerCalculator(data ?? []);
-  // const x = React.useRef(a);
   const [bars, setBars] = React.useState<any>([]);
   const { advanceRound, getWinner, round, votesForOption, votesForVoter } =
     useWinnerCalculator(data ?? []);
 
-  // React.useEffect(() => {
-  //   let b: any = [];
+  React.useEffect(() => {
+    let b: any = [];
 
-  //   console.log(
-  //     "%c  ",
-  //     "background: orange; color: white",
-  //     JSON.stringify(x.current.votesForOption, null, 3)
-  //   );
-  //   for (const [optId, votes] of Object.entries(x.current.votesForOption)) {
-  //     b.push({ optId, votes: votes.length });
-  //   }
+    for (const [optId, votes] of Object.entries(votesForOption)) {
+      b.push({ optId, votes: votes.length });
+    }
 
-  //   console.log("%c b ", "background: purple; color: white", b);
-  //   setBars([...b]);
-  // }, []);
+    setBars([...b]);
+  }, [votesForOption, round, data]);
 
   return (
     <>
