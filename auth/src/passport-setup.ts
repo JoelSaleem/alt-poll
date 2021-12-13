@@ -64,6 +64,8 @@ passport.use(
       if (!err && !existingUser) {
         try {
           createdUser = (await User.createUser(name, googleId))?.serialise();
+
+          logger.info("publish: " + JSON.stringify(createdUser, null, 4));
           userProducer.publish(
             UserEvents.USER_CREATED,
             JSON.stringify(createdUser)

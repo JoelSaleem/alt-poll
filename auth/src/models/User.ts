@@ -29,7 +29,7 @@ export class User extends BaseUserModel {
       logger.error(e);
     }
     if (err) {
-      throw new Error(err);
+      throw new Error(err as string);
     }
 
     if (user) {
@@ -47,7 +47,7 @@ export class User extends BaseUserModel {
       logger.error(e);
     }
     if (err) {
-      throw new Error(err);
+      throw new Error(err as string);
     }
 
     if (user) {
@@ -69,7 +69,7 @@ export class User extends BaseUserModel {
 
     if (err) {
       logger.error(err);
-      throw new Error(err);
+      throw new Error(err as string);
     }
 
     return user;

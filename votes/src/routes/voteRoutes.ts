@@ -99,11 +99,9 @@ export const initVoteRoutes = (app: Express) => {
         .send({ errors: [`${e}: received: ${JSON.stringify(votes)}`] });
     }
 
-    const voterId = cuid();
-
     try {
       for (let i = 0; i < votes.length; i++) {
-        await VoteModel.create(votes[i].optId, votes[i].rank, voterId);
+        await VoteModel.create(votes[i].optId, votes[i].rank, otp);
       }
 
       const expireOtpQuery = buildUpdateQuery("Otps", ["expired"], ["id"]);

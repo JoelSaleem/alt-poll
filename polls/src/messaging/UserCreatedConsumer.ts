@@ -1,5 +1,5 @@
 import { ConsumeMessage } from "amqplib";
-import { Consumer, UserDbProps } from "@js-alt-poll/common";
+import { Consumer, UserDbProps, UserEvents } from "@js-alt-poll/common";
 import { User } from "../db/models/User";
 import { logger } from "../logger";
 
@@ -7,7 +7,7 @@ const DEFAULT_RABBIT_NACK_DELAY = 10 * 1000; // 10 secs
 
 export class UserCreatedConsumer extends Consumer {
   constructor() {
-    super("alt-poll-exchange", "user.created", "polls-user-created");
+    super("alt-poll-exchange", UserEvents.USER_CREATED, "polls-user-created");
   }
 
   onMessage = async (msg: ConsumeMessage) => {
