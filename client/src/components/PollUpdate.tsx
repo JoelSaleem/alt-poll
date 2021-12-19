@@ -19,6 +19,7 @@ export const PollUpdate = ({
   poll: PollCreate & Partial<PollDbProps>;
   onBack: () => void;
 }) => {
+  const { push } = useRouter();
   const {
     title,
     description,
@@ -44,15 +45,33 @@ export const PollUpdate = ({
   });
 
   return (
-    <PollForm
-      onBack={onBack}
-      setClosed={setClosed}
-      setDescription={setDescription}
-      setOpen={setOpen}
-      setTitle={setTitle}
-      onSubmit={updatePoll}
-      poll={{ title, closed, open, description, id: poll.id }}
-      isLoading={isLoading}
-    />
+    <>
+      <PollForm
+        onBack={onBack}
+        setClosed={setClosed}
+        setDescription={setDescription}
+        setOpen={setOpen}
+        setTitle={setTitle}
+        onSubmit={updatePoll}
+        poll={{ title, closed, open, description, id: poll.id }}
+        isLoading={isLoading}
+      />
+      {closed ? (
+        <Center padding={"4"}>
+          <Button
+            onClick={() => {
+              push({
+                pathname: "/results",
+                query: {
+                  pollId: poll.id,
+                },
+              });
+            }}
+          >
+            Results
+          </Button>
+        </Center>
+      ) : null}
+    </>
   );
 };

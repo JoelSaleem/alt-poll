@@ -27,7 +27,7 @@ const App = ({ user }: { user?: UserDbProps }) => {
 
     const d: PollDbProps[] = [
       {
-        closed: false,
+        closed: true,
         open: true,
         created_at: "2021-05-22T16:39:59.771Z",
         description: "some poll",
