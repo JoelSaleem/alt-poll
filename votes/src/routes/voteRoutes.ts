@@ -38,7 +38,7 @@ export const initVoteRoutes = (app: Express) => {
           .send({ errors: ["Could not get votes for poll: " + e] });
       }
 
-      res.send(votes);
+      res.send(votes.map((v) => ({ ...v, rank: Number(v.rank) })));
     }
   );
 

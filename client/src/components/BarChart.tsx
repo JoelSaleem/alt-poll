@@ -13,7 +13,7 @@ export type BarsProps = {
   width: number;
   height: number;
   events?: boolean;
-  data: { optId: string; votes: number }[];
+  data: { optId: string; votes: number; title: string }[];
 };
 
 export const BarChart = ({
@@ -64,7 +64,7 @@ export const BarChart = ({
                 }}
               />
               <text x={barX} y={barY - 12} style={{ color: "white" }}>
-                {d.optId}
+                {d.title} {d.votes}
               </text>
             </>
           );

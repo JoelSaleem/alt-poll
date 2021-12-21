@@ -18,7 +18,170 @@ import {
   WinnerCalculator,
 } from "./WinnerCalculator";
 
-const results: Vote[] = [
+const results = [
+  {
+    id: "5",
+    option_id: "7",
+    title: "aaaa",
+    rank: 0,
+    description: "a",
+    voter_id: "ckxdr2749000110mhhw4tdvu3",
+  },
+  {
+    id: "6",
+    option_id: "4",
+    title: "asdf",
+    rank: 1,
+    description: "asdf",
+    voter_id: "ckxdr2749000110mhhw4tdvu3",
+  },
+  {
+    id: "7",
+    option_id: "5",
+    title: "a",
+    rank: 2,
+    description: "",
+    voter_id: "ckxdr2749000110mhhw4tdvu3",
+  },
+  {
+    id: "8",
+    option_id: "6",
+    title: "g",
+    rank: 3,
+    description: "",
+    voter_id: "ckxdr2749000110mhhw4tdvu3",
+  },
+  {
+    id: "9",
+    option_id: "6",
+    title: "g",
+    rank: 0,
+    description: "",
+    voter_id: "ckxdr3xhi000310mh4clu8o55",
+  },
+  {
+    id: "10",
+    option_id: "7",
+    title: "aaaa",
+    rank: 1,
+    description: "a",
+    voter_id: "ckxdr3xhi000310mh4clu8o55",
+  },
+  {
+    id: "11",
+    option_id: "4",
+    title: "asdf",
+    rank: 2,
+    description: "asdf",
+    voter_id: "ckxdr3xhi000310mh4clu8o55",
+  },
+  {
+    id: "12",
+    option_id: "5",
+    title: "a",
+    rank: 3,
+    description: "",
+    voter_id: "ckxdr3xhi000310mh4clu8o55",
+  },
+  {
+    id: "13",
+    option_id: "7",
+    title: "aaaa",
+    rank: 0,
+    description: "a",
+    voter_id: "ckxdr4h33000510mhgroo7bhl",
+  },
+  {
+    id: "14",
+    option_id: "5",
+    title: "a",
+    rank: 1,
+    description: "",
+    voter_id: "ckxdr4h33000510mhgroo7bhl",
+  },
+  {
+    id: "15",
+    option_id: "4",
+    title: "asdf",
+    rank: 2,
+    description: "asdf",
+    voter_id: "ckxdr4h33000510mhgroo7bhl",
+  },
+  {
+    id: "16",
+    option_id: "6",
+    title: "g",
+    rank: 3,
+    description: "",
+    voter_id: "ckxdr4h33000510mhgroo7bhl",
+  },
+  {
+    id: "17",
+    option_id: "7",
+    title: "aaaa",
+    rank: 0,
+    description: "a",
+    voter_id: "ckxdr4va3000710mh2xomey8c",
+  },
+  {
+    id: "18",
+    option_id: "6",
+    title: "g",
+    rank: 1,
+    description: "",
+    voter_id: "ckxdr4va3000710mh2xomey8c",
+  },
+  {
+    id: "19",
+    option_id: "5",
+    title: "a",
+    rank: 2,
+    description: "",
+    voter_id: "ckxdr4va3000710mh2xomey8c",
+  },
+  {
+    id: "20",
+    option_id: "4",
+    title: "asdf",
+    rank: 3,
+    description: "asdf",
+    voter_id: "ckxdr4va3000710mh2xomey8c",
+  },
+  {
+    id: "21",
+    option_id: "4",
+    title: "asdf",
+    rank: 0,
+    description: "asdf",
+    voter_id: "ckxdr50kl000910mh87wb6pf9",
+  },
+  {
+    id: "22",
+    option_id: "7",
+    title: "aaaa",
+    rank: 1,
+    description: "a",
+    voter_id: "ckxdr50kl000910mh87wb6pf9",
+  },
+  {
+    id: "23",
+    option_id: "6",
+    title: "g",
+    rank: 2,
+    description: "",
+    voter_id: "ckxdr50kl000910mh87wb6pf9",
+  },
+  {
+    id: "24",
+    option_id: "5",
+    title: "a",
+    rank: 3,
+    description: "",
+    voter_id: "ckxdr50kl000910mh87wb6pf9",
+  },
+];
+
+const _results: Vote[] = [
   {
     id: "104",
     option_id: "51",
@@ -284,7 +447,7 @@ export const Results = () => {
     let b: any = [];
 
     for (const [optId, votes] of Object.entries(votesForOption)) {
-      b.push({ optId, votes: votes.length });
+      b.push({ optId, votes: votes.length, title: votes?.[0].title });
     }
 
     setBars([...b]);
