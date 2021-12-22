@@ -20,31 +20,33 @@ export const useWinnerCalculator = (results: Vote[]) => {
   }>({});
 
   useEffect(() => {
-    const vFv: {
-      [voteId: string]: Vote[];
-    } = {};
-    const vFo: {
-      [optionId: string]: Vote[];
-    } = {};
-    results.forEach((v) => {
-      vFv[v.voter_id] = vFv[v.voter_id] || [];
-      vFv[v.voter_id].push(v);
+    if (Object.values(votesForOption).length == 0 && results.length != 0) {
+      const vFv: {
+        [voteId: string]: Vote[];
+      } = {};
+      const vFo: {
+        [optionId: string]: Vote[];
+      } = {};
+      results.forEach((v) => {
+        vFv[v.voter_id] = vFv[v.voter_id] || [];
+        vFv[v.voter_id].push(v);
 
-      if (v.rank == 0) {
-        vFo[v.option_id] = vFo[v.option_id] || [];
+        if (v.rank == 0) {
+          vFo[v.option_id] = vFo[v.option_id] || [];
 
-        vFo[v.option_id].push(v);
+          vFo[v.option_id].push(v);
+        }
+      });
+
+      for (let votes of Object.values(vFv)) {
+        votes.sort((a, b) => a.rank - b.rank);
       }
-    });
+      setVotesForOption(vFo);
+      setVotesForVoter(vFv);
 
-    for (let votes of Object.values(vFv)) {
-      votes.sort((a, b) => a.rank - b.rank);
+      console.log(vFv, "v4v");
+      console.log(vFo, "v4o");
     }
-    setVotesForOption(vFo);
-    setVotesForVoter(vFv);
-
-    console.log(vFv, "v4v");
-    console.log(vFo, "v4o");
   }, [results]);
 
   const getWinner = () => {

@@ -8,7 +8,7 @@ import { UserProvider } from "./UserProvider";
 const App = ({ user }: { user?: UserDbProps }) => {
   return (
     <PageLayout title="Results" userId={user?.id}>
-      <Box padding={3}>
+      <Box padding={3} height={"80%"}>
         <Results />
       </Box>
       <ReactQueryDevtools />

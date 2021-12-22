@@ -1,9 +1,10 @@
-import { Box, Center, Heading, Input } from "@chakra-ui/react";
+import { Box, Center, Heading, Input, Text } from "@chakra-ui/react";
 import { OptionDbProps } from "@js-alt-poll/common";
 import axios from "axios";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useQuery } from "react-query";
+import { useMeasure } from "react-use";
 import { useOptionView } from "../hooks/useOptionView";
 import { isLocalDev } from "../isLocalDev";
 import { BarChart } from "./BarChart";
@@ -240,6 +241,9 @@ export const Results = () => {
   const { advanceRound, getWinner, round, votesForOption, votesForVoter } =
     useWinnerCalculator(data ?? []);
 
+  const [ref, { width, height }] = useMeasure();
+  console.log("{ width, height }", { width, height });
+
   React.useEffect(() => {
     let b: any = [];
 
@@ -250,27 +254,22 @@ export const Results = () => {
     setBars([...b]);
   }, [votesForOption, round, data]);
 
+  const winner =
+    (getWinner() != null && votesForOption[getWinner() ?? 0]?.[0]?.title) ||
+    "??";
   return (
     <>
-      <div
-        onClick={() => {
-          advanceRound();
-        }}
-      >
-        adv
-      </div>
-      <div
-        onClick={() => {
-          console.log(
-            "%c winnder ",
-            "background: blue; color: white",
-            getWinner()
-          );
-        }}
-      >
-        winnder
-      </div>
-      <BarChart height={300} width={500} data={bars} />
+      <Center>
+        <Text fontSize="5xl">Winner: {winner}</Text>
+      </Center>
+      <Center ref={(c) => c && ref(c)} height="100%">
+        <BarChart height={height * 0.6} width={width * 0.8} data={bars} />
+      </Center>
+      {Object.keys(votesForOption).length > 1 ? (
+        <Center>
+          <Button onClick={advanceRound}>Next round</Button>
+        </Center>
+      ) : null}
     </>
   );
 };
