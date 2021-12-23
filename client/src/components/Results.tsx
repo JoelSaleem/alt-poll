@@ -223,7 +223,7 @@ const results = [
 ];
 
 export const Results = () => {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   // TODO: if no query.id
 
@@ -257,6 +257,7 @@ export const Results = () => {
   const winner =
     (getWinner() != null && votesForOption[getWinner() ?? 0]?.[0]?.title) ||
     "??";
+
   return (
     <>
       <Center>
@@ -265,11 +266,20 @@ export const Results = () => {
       <Center ref={(c) => c && ref(c)} height="100%">
         <BarChart height={height * 0.6} width={width * 0.8} data={bars} />
       </Center>
-      {Object.keys(votesForOption).length > 1 ? (
-        <Center>
-          <Button onClick={advanceRound}>Next round</Button>
-        </Center>
-      ) : null}
+
+      <Center>
+        <Button
+          style={{ margin: 4 }}
+          onClick={() => push({ pathname: "/polls", query: { ...query } })}
+        >
+          Back
+        </Button>
+        {Object.keys(votesForOption).length > 1 ? (
+          <Button style={{ margin: 4 }} onClick={advanceRound}>
+            Next round
+          </Button>
+        ) : null}
+      </Center>
     </>
   );
 };
