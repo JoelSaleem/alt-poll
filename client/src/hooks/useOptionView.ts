@@ -23,5 +23,5 @@ export const useOptionView = (): [
     setView("list", { ...query });
   }
 
-  return [view, setView];
+  return [view as typeof OPTION_VIEWS[number], setView];
 };

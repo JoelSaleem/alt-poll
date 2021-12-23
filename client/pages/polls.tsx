@@ -6,7 +6,7 @@ import { Card } from "../src/components/Card";
 import { Button } from "../src/components/Button";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { PollDbProps, UserDbProps } from "@js-alt-poll/common";
-import { UserProvider } from "./UserProvider";
+import { UserProvider } from "../src/components/UserProvider";
 import { useRouter } from "next/router";
 import { PollsList } from "../src/components/PollsList";
 import { PollCreate } from "../src/components/PollCreate";

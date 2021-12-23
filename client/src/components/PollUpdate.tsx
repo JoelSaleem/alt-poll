@@ -56,22 +56,6 @@ export const PollUpdate = ({
         poll={{ title, closed, open, description, id: poll.id }}
         isLoading={isLoading}
       />
-      {closed ? (
-        <Center padding={"4"}>
-          <Button
-            onClick={() => {
-              push({
-                pathname: "/results",
-                query: {
-                  pollId: poll.id,
-                },
-              });
-            }}
-          >
-            Results
-          </Button>
-        </Center>
-      ) : null}
     </>
   );
 };

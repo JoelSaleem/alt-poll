@@ -5,7 +5,7 @@ import { Button } from "../src/components/Button";
 import { ReactQueryDevtools } from "react-query/devtools";
 import axios from "axios";
 import { UserDbProps } from "@js-alt-poll/common";
-import { UserProvider } from "./UserProvider";
+import { UserProvider } from "../src/components/UserProvider";
 
 const App = ({ user }: { user?: UserDbProps }) => {
   console.log("user from indesx", user);

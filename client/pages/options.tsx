@@ -3,7 +3,7 @@ import { UserDbProps } from "@js-alt-poll/common";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Options } from "../src/components/Options";
 import { PageLayout } from "../src/components/PageLayout";
-import { UserProvider } from "./UserProvider";
+import { UserProvider } from "../src/components/UserProvider";
 
 const App = ({ user }: { user?: UserDbProps }) => {
   return (

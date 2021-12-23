@@ -2,7 +2,7 @@ import { UserDbProps } from "@js-alt-poll/common";
 import axios from "axios";
 import React, { ReactElement } from "react";
 import { useQuery } from "react-query";
-import { isLocalDev } from "../src/isLocalDev";
+import { isLocalDev } from "../isLocalDev";
 
 export const UserProvider: React.FC = ({ children }) => {
   const { data } = useQuery("user", async () => {

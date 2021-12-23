@@ -11,4 +11,6 @@ RUN npm install --production
 
 COPY . .
 
-CMD [ "yarn", "dev" ]
+RUN yarn build
+
+CMD [ "yarn", "start" ]
