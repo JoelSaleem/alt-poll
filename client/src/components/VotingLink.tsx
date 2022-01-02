@@ -55,7 +55,7 @@ export const VotingLink = () => {
           variant="secondary"
           onClick={() =>
             push({
-              pathname: "/polls",
+              pathname: "/",
               query: { pollId },
             })
           }

@@ -270,7 +270,7 @@ export const Results = () => {
       <Center>
         <Button
           style={{ margin: 4 }}
-          onClick={() => push({ pathname: "/polls", query: { ...query } })}
+          onClick={() => push({ pathname: "/", query: { ...query } })}
         >
           Back
         </Button>

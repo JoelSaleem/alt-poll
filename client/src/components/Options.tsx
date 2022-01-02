@@ -67,7 +67,7 @@ export const Options = () => {
                 <Button
                   variant="secondary"
                   onClick={() => {
-                    push({ query: { id: query.pollId }, pathname: "/polls" });
+                    push({ query: { id: query.pollId }, pathname: "/" });
                   }}
                 >
                   Back
