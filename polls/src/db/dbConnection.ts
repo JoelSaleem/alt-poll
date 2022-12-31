@@ -5,9 +5,9 @@ if (!process.env.DB_PASSWORD) {
 }
 
 export const pool = new PgPool({
-  user: "postgres",
+  user: process.env.PG_USER?.trim() as string,
   password: process.env.DB_PASSWORD?.trim(),
-  host: "alt-poll-polls-db.default.svc.cluster.local",
-  port: 5432,
+  host: process.env.PG_HOST?.trim() as string,
+  port: Number(process.env.PG_PORT),
   database: "polls",
 });

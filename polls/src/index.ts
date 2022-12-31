@@ -41,7 +41,12 @@ initOptionRoutes(app);
 // initOtpRoutes(app); // Moved to votes
 
 // Messaging Consumers
-new UserCreatedConsumer().init();
+new UserCreatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
 
 app.listen(3000, () => {
   logger.info("listening on port 3000");
