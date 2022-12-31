@@ -30,11 +30,36 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-new UserCreatedConsumer().init();
-new PollCreatedConsumer().init();
-new PollUpdatedConsumer().init();
-new OptionCreatedConsumer().init();
-new OptionUpdatedConsumer().init();
+new UserCreatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
+new PollCreatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
+new PollUpdatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
+new OptionCreatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
+new OptionUpdatedConsumer().init(
+  process.env.RABBIT_HOSTNAME as string,
+  process.env.RABBIT_USERNAME as string,
+  process.env.RABBIT_PASSWORD as string,
+  Number(process.env.RABBIT_PORT)
+);
 
 initVoteRoutes(app);
 initOtpRoutes(app);
