@@ -33,6 +33,18 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: PG_HOST
+              value: postgres://myuser:mypassword@postgres:5432/auth
+            - name: PG_PORT
+              value: 5432
+            - name: RABBIT_HOSTNAME
+              value: amqp://admin:password@rabbitmq:5672
+            - name: RABBIT_USERNAME
+              value: admin
+            - name: RABBIT_PASSWORD
+              value: password
+            - name: RABBIT_PORT
+              value: 5672
             - name: GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef: 

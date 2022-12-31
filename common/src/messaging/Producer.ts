@@ -8,8 +8,8 @@ export class Producer extends BaseRabbitConnection {
     this.id = id;
   }
 
-  init = async () => {
-    await this.attemptInitMq();
+  init = async (hostname: string, username: string, password: string, port: number) => {
+    await this.attemptInitMq(hostname, username, password, port);
   };
 
   publish = (key: string, msg: string) => {

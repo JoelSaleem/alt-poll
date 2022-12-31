@@ -11,8 +11,8 @@ export abstract class Consumer extends BaseRabbitConnection {
     this.pattern = pattern;
   }
 
-  init = async () => {
-    await this.attemptInitMq();
+  init = async (hostname: string, username: string, password: string, port: number) => {
+    await this.attemptInitMq(hostname, username, password, port);
 
     await this.setupListner();
   };
