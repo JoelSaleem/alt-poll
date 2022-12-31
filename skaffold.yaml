@@ -24,7 +24,7 @@ deploy:
         # artifactOverrides:
         #   image: jsaleem/alt-poll-auth
         # Skaffold continuously tags your image, so no need to put one here.
-        chartPath: /Users/joelsaleem/Documents/GitHub/alt-poll/alt
+        chartPath: ./alt-k8s
         # valuesFile: /Users/joelsaleem/Documents/GitHub/alt-poll/alt/values.yaml
         setValues:
           auth.postgresqlPassword: foobar
