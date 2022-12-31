@@ -9,4 +9,4 @@ RUN npm install --production
 
 COPY . .
 
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "dev" ] # Todo: Change to production
