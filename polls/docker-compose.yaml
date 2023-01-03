@@ -37,7 +37,8 @@ services:
   #     RABBIT_PASSWORD: password
   #     RABBIT_PORT: 5672
   #     JWT_SECRET: abc123
+  #     API_KEY: abc
   #   ports:
   #     - "3000:3000"
 
-# DB_PASSWORD=mypassword PG_USER=myuser PG_HOST=localhost PG_PORT=5432 RABBIT_HOSTNAME=localhost RABBIT_USERNAME=admin RABBIT_PASSWORD=password RABBIT_PORT=5672 yarn dev
+# DB_PASSWORD=mypassword PG_USER=myuser PG_HOST=localhost PG_PORT=5432 RABBIT_HOSTNAME=localhost RABBIT_USERNAME=admin RABBIT_PASSWORD=password RABBIT_PORT=5672 API_KEY=abc yarn dev

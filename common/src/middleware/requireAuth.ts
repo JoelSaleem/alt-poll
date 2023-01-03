@@ -16,7 +16,16 @@ export const requireAuth = (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.user) {
+  const receivedApiKey = req.headers["x-api-key"];
+  const setApiKey = process.env.API_KEY;
+  if (setApiKey && receivedApiKey) {
+    if (receivedApiKey !== setApiKey) {
+    res.status(401);
+    next("You are not authorized for this action")
+  } else {
+    next();
+  }
+  } else if (!req.user) {
     res.status(401);
     next("You are not authorized for this action");
   } else {
